@@ -21,6 +21,9 @@ import static com.darkz.skintotem.utils.CodecUtils.option;
 @Setter
 @AllArgsConstructor
 public class MyTotemDollConfig {
+    public boolean isModEnabled() { return modEnabled; }
+    public boolean isDebugLogEnabled() { return debugLogEnabled; }
+    public boolean isSupportOtherModsTotems() { return supportOtherModsTotems; }
 
 	public static final Codec<MyTotemDollConfig> CODEC = RecordCodecBuilder.create(instance -> instance.group(
 			option("mod_enabled", true, Codec.BOOL, MyTotemDollConfig::isModEnabled),

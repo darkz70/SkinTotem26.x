@@ -1,6 +1,6 @@
 package com.darkz.skintotem.mixin.modmenu;
 
-import com.terraformersmc.modmenu.util.mod.fabric.FabricMod;
+// import com.terraformersmc.modmenu.util.mod.fabric.FabricMod;
 import java.util.*;
 import net.fabricmc.loader.api.metadata.ModMetadata;
 import com.darkz.skintotem.MyTotemDoll;
@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Pseudo
-@Mixin(FabricMod.class)
+@Mixin(targets = "com.terraformersmc.modmenu.util.mod.fabric.FabricMod", remap = false)
 public class FabricModMixin {
 
 	@Unique

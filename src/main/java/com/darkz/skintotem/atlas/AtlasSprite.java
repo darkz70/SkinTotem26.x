@@ -32,6 +32,19 @@ public class AtlasSprite {
 
 	private volatile boolean uploaded;
 
+	public Identifier getSpriteId() { return spriteId; }
+	public void setSpriteId(Identifier spriteId) { this.spriteId = spriteId; }
+	public SpriteContents getContents() { return contents; }
+	public void setContents(SpriteContents contents) { this.contents = contents; }
+	public boolean isClosable() { return closable; }
+	public void setClosable(boolean closable) { this.closable = closable; }
+	public Runnable getUnregisterAction() { return unregisterAction; }
+	public void setUnregisterAction(Runnable unregisterAction) { this.unregisterAction = unregisterAction; }
+	public long getCachedId() { return cachedId; }
+	public void setCachedId(long cachedId) { this.cachedId = cachedId; }
+	public boolean isUploaded() { return uploaded; }
+	public void setUploadAction(OnSpriteUploaded uploadAction) { this.uploadAction = uploadAction; }
+
 	public AtlasSprite(@NotNull Identifier spriteId) {
 		this.spriteId = spriteId;
 	}

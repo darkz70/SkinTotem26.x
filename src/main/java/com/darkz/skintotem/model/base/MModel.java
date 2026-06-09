@@ -23,8 +23,9 @@ import org.slf4j.Logger;
 @Getter
 @Setter
 @ExtensionMethod({ModelTransformExtension.class, DilationExtension.class, IdentifierExtension.class})
-public class MModel extends ModelPart {
+public class MModel {
 
+	private final ModelPart modelPart;
 	private final Map<String, MModel> mChildren;
 	private final List<MModel> mChildrenModels;
 	private final List<MCuboid> mCuboids;
@@ -41,8 +42,14 @@ public class MModel extends ModelPart {
 	@Nullable
 	private AtlasSprite builtinTexture;
 
+	public boolean visible = true;
+	public boolean skipDraw = false;
+	public float xScale = 1.0f;
+	public float yScale = 1.0f;
+	public float zScale = 1.0f;
+
 	public MModel(List<MCuboid> mCuboids, Map<String, MModel> mChildren, ModelState state, String name, @Nullable AtlasSprite builtinTexture) {
-		super(mCuboids.stream().map(MCuboid::asCuboid).toList(), mChildren.entrySet().stream().collect(Collectors.toMap(Entry::getKey, e -> e.getValue().asModelPart())));
+		this.modelPart = new ModelPart(mCuboids.stream().map(MCuboid::asCuboid).toList(), mChildren.entrySet().stream().collect(Collectors.toMap(Entry::getKey, e -> e.getValue().asModelPart())));
 		this.state           = state;
 		this.name            = name;
 		this.mChildren       = mChildren;
@@ -50,6 +57,18 @@ public class MModel extends ModelPart {
 		this.mChildrenModels.forEach((mmodel) -> mmodel.setParent(this));
 		this.mCuboids       = mCuboids;
 		this.builtinTexture = builtinTexture;
+	}
+
+	public void translateAndRotate(PoseStack matrices) {
+		this.modelPart.translateAndRotate(matrices);
+	}
+
+	public void compile(PoseStack.Pose pose, VertexConsumer vertices, int light, int overlay, int color) {
+		this.modelPart.compile(pose, vertices, light, overlay, color);
+	}
+
+	public net.minecraft.client.model.geom.PartPose storePose() {
+		return this.modelPart.storePose();
 	}
 
 	public MModel initAfterBuild(BBModel model) {
@@ -88,7 +107,7 @@ public class MModel extends ModelPart {
 	}
 
 	public ModelPart asModelPart() {
-		return this;
+		return this.modelPart;
 	}
 
 	public void draw(PoseStack matrices, MultiBufferSource provider, TextureAtlas atlas, RenderType atlasRenderLayer, AtlasSprite mainSprite, Map<String, AtlasSprite> requestedParts, int light, int overlay, int color) {
