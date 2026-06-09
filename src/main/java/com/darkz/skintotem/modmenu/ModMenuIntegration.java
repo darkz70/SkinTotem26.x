@@ -1,5 +1,6 @@
 package com.darkz.skintotem.modmenu;
 
+/*? if dep.modmenu != "unknown" {*/
 import com.terraformersmc.modmenu.api.*;
 import net.fabricmc.loader.api.*;
 import com.darkz.skintotem.MyTotemDoll;
@@ -27,3 +28,8 @@ public class ModMenuIntegration implements ModMenuApi {
 		return (com.terraformersmc.modmenu.api.ConfigScreenFactory<?>) NoConfigLibraryScreen::createScreen;
 	}
 }
+/*?} else {*/
+/*
+public class ModMenuIntegration {}
+*/
+/*?}*/
