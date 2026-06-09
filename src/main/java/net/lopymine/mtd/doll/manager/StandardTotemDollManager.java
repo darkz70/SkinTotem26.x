@@ -11,6 +11,8 @@ import net.lopymine.mtd.config.MyTotemDollConfig;
 import net.lopymine.mtd.config.totem.TotemDollSkinType;
 import net.lopymine.mtd.doll.data.*;
 import net.lopymine.mtd.skin.provider.extended.MojangSkinProvider;
+import net.lopymine.mtd.skin.provider.extended.TLauncherSkinProvider;
+import net.lopymine.mtd.skin.provider.extended.ElyBySkinProvider;
 import net.lopymine.mtd.utils.texture.*;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.*;
@@ -123,10 +125,31 @@ public class StandardTotemDollManager {
 
 	public static TotemDollData loadPlayerSkin(@NotNull String data) {
 		if (MojangSkinProvider.getInstance().canProcess(data)) {
-			TotemDollData totemDollData = MojangSkinProvider.getInstance().createNewDoll(data);
-			MojangSkinProvider.getInstance().loadDoll(data, true, totemDollData);
-			return totemDollData;
-		}
-		return getSteveDoll();
+				TotemDollData totemDollData = MojangSkinProvider.getInstance().createNewDoll(data);
+				
+				// Пытаемся загрузить с Mojang
+				MojangSkinProvider.getInstance().loadDoll(data, true, totemDollData);
+				
+				// Если скин не загрузился (например, пиратский ник), пробуем TLauncher и Ely.by
+				CompletableFuture.runAsync(() -> {
+					try {
+						// Ждем немного, чтобы Mojang API успел ответить (обычно это быстро)
+						Thread.sleep(1000); 
+						if (totemDollData.getStandardSprites().getState() != LoadingState.DOWNLOADED) {
+							MyTotemDollClient.LOGGER.info("[SkinTotem] Mojang skin not found for {}, trying TLauncher...", data);
+							TLauncherSkinProvider.getInstance().loadDoll(data, true, totemDollData);
+							
+							Thread.sleep(1000);
+							if (totemDollData.getStandardSprites().getState() != LoadingState.DOWNLOADED) {
+								MyTotemDollClient.LOGGER.info("[SkinTotem] TLauncher skin not found for {}, trying Ely.by...", data);
+								ElyBySkinProvider.getInstance().loadDoll(data, true, totemDollData);
+							}
+						}
+					} catch (Exception ignored) {}
+				});
+				
+				return totemDollData;
+			}
+			return getSteveDoll();
 	}
 }

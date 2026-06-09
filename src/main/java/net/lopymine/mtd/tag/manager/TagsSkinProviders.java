@@ -5,6 +5,8 @@ import net.lopymine.mtd.doll.data.TotemDollData;
 import net.lopymine.mtd.doll.manager.StandardTotemDollManager;
 import net.lopymine.mtd.skin.provider.SkinProvider;
 import net.lopymine.mtd.skin.provider.extended.NameMCSkinProvider;
+import net.lopymine.mtd.skin.provider.extended.TLauncherSkinProvider;
+import net.lopymine.mtd.skin.provider.extended.ElyBySkinProvider;
 import org.jetbrains.annotations.Nullable;
 
 
@@ -18,6 +20,8 @@ public class TagsSkinProviders {
 
 	public static void register() {
 		registerProvider("NameMC", NameMCSkinProvider.getInstance());
+		registerProvider("TLauncher", TLauncherSkinProvider.getInstance());
+		registerProvider("ElyBy", ElyBySkinProvider.getInstance());
 	}
 
 	public static void registerProvider(String id, SkinProvider provider) {
