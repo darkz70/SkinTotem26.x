@@ -18,3 +18,6 @@ accessiblefieldcom/mojang/blaze3d/vertex/PoseStack$PosetrustedNormalsZ
 
 # AbstractSelectionList
 accessiblefieldnet/minecraft/client/gui/components/AbstractSelectionListchildrenLjava/util/List;
+
+# AbstractContainerScreen / ItemCombinerScreen
+mutablefieldnet/minecraft/client/gui/screens/inventory/AbstractContainerScreenimageWidthI
