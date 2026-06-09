@@ -138,7 +138,8 @@ public class MyTotemDollAtlasSpriteManager {
 	private static void loadFromResource(Identifier id, Consumer<NativeImage> consumer) {
 		Resource resource = Minecraft.getInstance().getResourceManager().getResource(id).orElse(null);
 		if (resource == null) {
-			AbstractTexture texture = Minecraft.getInstance().getTextureManager().byPath.get(id);
+				// byPath is accessible via AW in 26.1
+				AbstractTexture texture = Minecraft.getInstance().getTextureManager().byPath.get(id);
 
 			if (!(texture instanceof DynamicTexture backedTexture)) {
 				MyTotemDollClient.LOGGER.error("Failed to register mod's texture as a sprite in atlas! Failed to find texture even from TextureManager! Id: \"{}\", Texture Class: \"{}\"", id, texture == null ? "null" : texture.getClass().getSimpleName());

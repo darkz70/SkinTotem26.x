@@ -13,6 +13,7 @@ public class ItemStackExtension {
 
 	@Nullable
 	public static Component getRealCustomName(ItemStack itemStack) {
+		// components is accessible via AW in 26.1
 		return itemStack.components.get(net.minecraft.core.component.DataComponents.CUSTOM_NAME);
 	}
 
@@ -44,19 +45,19 @@ public class ItemStackExtension {
 	}
 
 	public static void setModdedModel(ItemStack itemStack, boolean modded) {
-		((ItemStackWithModdedBakedModel) itemStack).myTotemDoll$setModdedModel(modded);
+		((ItemStackWithModdedBakedModel) (Object) itemStack).myTotemDoll$setModdedModel(modded);
 	}
 
 	public static boolean hasModdedModel(ItemStack itemStack) {
-		return ((ItemStackWithModdedBakedModel) itemStack).myTotemDoll$isModdedModel();
+		return ((ItemStackWithModdedBakedModel) (Object) itemStack).myTotemDoll$isModdedModel();
 	}
 
 	public static void setPlayerEntity(ItemStack itemStack, AbstractClientPlayer playerEntity) {
-		((ItemStackWithPlayerEntity) itemStack).myTotemDoll$setPlayerEntity(playerEntity);
+		((ItemStackWithPlayerEntity) (Object) itemStack).myTotemDoll$setPlayerEntity(playerEntity);
 	}
 
 	public static AbstractClientPlayer getPlayerEntity(ItemStack itemStack) {
-		return ((ItemStackWithPlayerEntity) itemStack).myTotemDoll$getPlayerEntity();
+		return ((ItemStackWithPlayerEntity) (Object) itemStack).myTotemDoll$getPlayerEntity();
 	}
 
 }

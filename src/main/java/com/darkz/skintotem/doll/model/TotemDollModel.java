@@ -49,7 +49,7 @@ public class TotemDollModel extends Model<Object> {
 	private Drawer drawer;
 
 	public TotemDollModel(MModel root, boolean slim) {
-		super(root, RenderTypes::entityTranslucent);
+		super(root.asModelPart(), RenderTypes::entityTranslucent);
 
 		this.head         = root.findModels("head");
 		this.body         = root.findModels("body");

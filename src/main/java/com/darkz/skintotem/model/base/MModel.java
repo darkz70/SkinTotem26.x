@@ -64,6 +64,7 @@ public class MModel {
 	}
 
 	public void compile(PoseStack.Pose pose, VertexConsumer vertices, int light, int overlay, int color) {
+		// compile might be private in 26.1, we use AW to make it accessible
 		this.modelPart.compile(pose, vertices, light, overlay, color);
 	}
 
@@ -82,7 +83,7 @@ public class MModel {
 		this.mChildren.forEach((modelName, model) -> model.setLocation(location));
 	}
 
-	@Override
+	// @Override // Model is not an interface we implement anymore
 	public void render(PoseStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
 		// NO-OP
 	}
@@ -212,7 +213,7 @@ public class MModel {
 		float maxY = 0F;
 		float maxZ = 0F;
 
-		for (Cube cuboid : this.mCuboids) {
+		for (ModelPart.Cube cuboid : this.mCuboids) {
 			minX = Math.min(minX, cuboid.minX);
 			minY = Math.min(minY, cuboid.minY);
 			minZ = Math.min(minZ, cuboid.minZ);

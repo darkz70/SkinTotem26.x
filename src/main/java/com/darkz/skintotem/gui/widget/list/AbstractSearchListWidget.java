@@ -54,7 +54,7 @@ public abstract class AbstractSearchListWidget<E extends Entry<E>> extends Abstr
 
 	@Override
 	protected void extractListBackground(GuiGraphicsExtractor context) {
-		if (this.searching && this.children.isEmpty()) {
+		if (this.searching && this.children().isEmpty()) {
 			int a = (this.getWidth() - this.getRowWidth()) / 2;
 			DrawUtils.drawText(context, NOTHING_FOUND_TEXT, this.getX() + a, this.getY(), this.getWidth() - a, this.getHeight() + 4);
 		}
@@ -71,8 +71,8 @@ public abstract class AbstractSearchListWidget<E extends Entry<E>> extends Abstr
 		if (string.isEmpty()) {
 			if (!this.savedWidgets.isEmpty()) {
 				this.setSelected(null);
-				this.children.clear();
-				this.children.addAll(this.savedWidgets);
+				this.children().clear();
+				this.children().addAll(this.savedWidgets);
 			}
 			this.searching = false;
 			this.updateCurrentWidgets();
@@ -81,18 +81,18 @@ public abstract class AbstractSearchListWidget<E extends Entry<E>> extends Abstr
 
 		if (!this.searching) {
 			this.savedWidgets.clear();
-			this.savedWidgets.addAll(this.children);
+			this.savedWidgets.addAll(this.children());
 		}
 		this.setSelected(null);
-		this.children.clear();
+		this.children().clear();
 
 		for (E child : this.savedWidgets) {
 			if (this.searched(string, child)) {
-				this.children.add(child);
+				this.children().add(child);
 			}
 		}
 
-		this.children.sort(this.getComparator());
+		this.children().sort(this.getComparator());
 		this.searching = true;
 		this.updateCurrentWidgets();
 	}

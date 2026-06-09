@@ -1,0 +1,20 @@
+accessWidenerv2named
+
+# ModelPart
+accessibleclassnet/minecraft/client/model/geom/ModelPart
+accessiblemethodnet/minecraft/client/model/geom/ModelPartcompile(Lcom/mojang/blaze3d/vertex/PoseStack$Pose;Lcom/mojang/blaze3d/vertex/VertexConsumer;III)V
+
+# TextureManager
+accessiblefieldnet/minecraft/client/renderer/texture/TextureManagerbyPathLjava/util/Map;
+
+# SpriteLoader
+accessiblemethodnet/minecraft/client/renderer/texture/SpriteLoaderstitch(Ljava/util/List;ILjava/util/concurrent/Executor;)Lnet/minecraft/client/renderer/texture/SpriteLoader$Preparations;
+
+# ItemStack
+accessiblefieldnet/minecraft/world/item/ItemStackcomponentsLnet/minecraft/core/component/PatchedDataComponentMap;
+
+# Pose (MatrixStack.Entry)
+accessiblefieldcom/mojang/blaze3d/vertex/PoseStack$PosetrustedNormalsZ
+
+# AbstractSelectionList
+accessiblefieldnet/minecraft/client/gui/components/AbstractSelectionListchildrenLjava/util/List;

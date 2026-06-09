@@ -73,9 +73,10 @@ public class MyTotemDollAtlasManager {
 
 		List<SpriteContents> contents = sprites.stream().map(AtlasSprite::getContents).filter(Objects::nonNull).toList();
 
-		CompletableFuture<Preparations> future = CompletableFuture.supplyAsync(
-				() -> SpriteLoader.create(atlasTexture).stitch(contents, 0, prepareExecutor)
-		);
+			CompletableFuture<Preparations> future = CompletableFuture.supplyAsync(
+					// stitch is accessible via AW in 26.1
+					() -> SpriteLoader.create(atlasTexture).stitch(contents, 0, prepareExecutor)
+			);
 
 		if (synchronizer != null) {
 			future = future.thenCompose(synchronizer::wait);
