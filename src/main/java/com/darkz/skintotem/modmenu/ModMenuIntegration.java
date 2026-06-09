@@ -7,10 +7,10 @@ import com.darkz.skintotem.MyTotemDoll;
 import com.darkz.skintotem.client.MyTotemDollClient;
 import com.darkz.skintotem.yacl.YACLConfigurationScreen;
 
-public class ModMenuIntegration implements ModMenuApi {
+@Pseudo
+public class ModMenuIntegration {
 
-	@Override
-	public ConfigScreenFactory<?> getModConfigScreenFactory() {
+	public Object getModConfigScreenFactory() {
 		FabricLoader fabricLoader = FabricLoader.getInstance();
 		if (fabricLoader.isModLoaded("yet_another_config_lib_v3")) {
 			ModContainer modContainer = fabricLoader.getModContainer("yet_another_config_lib_v3").orElseThrow();
@@ -23,9 +23,9 @@ public class ModMenuIntegration implements ModMenuApi {
 			} catch (VersionParsingException e) {
 				MyTotemDollClient.LOGGER.error("Failed to compare YACL version, tell mod author about this error: ", e);
 			}
-			return (com.terraformersmc.modmenu.api.ConfigScreenFactory<?>) parent -> NoConfigLibraryScreen.createScreenAboutOldVersion(parent, version.getFriendlyString());
+			return (com.terraformersmc.modmenu.api.ConfigScreenFactory<?>) (Object) (parent -> NoConfigLibraryScreen.createScreenAboutOldVersion(parent, version.getFriendlyString()));
 		}
-		return (com.terraformersmc.modmenu.api.ConfigScreenFactory<?>) NoConfigLibraryScreen::createScreen;
+		return (com.terraformersmc.modmenu.api.ConfigScreenFactory<?>) (Object) (NoConfigLibraryScreen::createScreen);
 	}
 }
 /*?} else {*/

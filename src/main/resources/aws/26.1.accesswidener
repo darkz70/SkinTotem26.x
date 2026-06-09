@@ -1,20 +1,28 @@
-accessWidenerv2named
+accessWidener	v2	named
 
 # ModelPart
-accessibleclassnet/minecraft/client/model/geom/ModelPart
-accessiblemethodnet/minecraft/client/model/geom/ModelPartcompile(Lcom/mojang/blaze3d/vertex/PoseStack$Pose;Lcom/mojang/blaze3d/vertex/VertexConsumer;III)V
+accessible	class	net/minecraft/client/model/geom/ModelPart
+accessible	method	net/minecraft/client/model/geom/ModelPart	compile	(Lcom/mojang/blaze3d/vertex/PoseStack$Pose;Lcom/mojang/blaze3d/vertex/VertexConsumer;III)V
+accessible	field	net/minecraft/client/model/geom/ModelPart	cubes	Ljava/util/List;
+accessible	field	net/minecraft/client/model/geom/ModelPart	children	Ljava/util/Map;
 
 # TextureManager
-accessiblefieldnet/minecraft/client/renderer/texture/TextureManagerbyPathLjava/util/Map;
+accessible	field	net/minecraft/client/renderer/texture/TextureManager	byPath	Ljava/util/Map;
 
 # SpriteLoader
-accessiblemethodnet/minecraft/client/renderer/texture/SpriteLoaderstitch(Ljava/util/List;ILjava/util/concurrent/Executor;)Lnet/minecraft/client/renderer/texture/SpriteLoader$Preparations;
+accessible	method	net/minecraft/client/renderer/texture/SpriteLoader	stitch	(Ljava/util/List;ILjava/util/concurrent/Executor;)Lnet/minecraft/client/renderer/texture/SpriteLoader$Preparations;
 
 # ItemStack
-accessiblefieldnet/minecraft/world/item/ItemStackcomponentsLnet/minecraft/core/component/PatchedDataComponentMap;
+accessible	field	net/minecraft/world/item/ItemStack	components	Lnet/minecraft/core/component/PatchedDataComponentMap;
 
 # Pose (MatrixStack.Entry)
-accessiblefieldcom/mojang/blaze3d/vertex/PoseStack$PosetrustedNormalsZ
+accessible	field	com/mojang/blaze3d/vertex/PoseStack$Pose	trustedNormals	Z
 
 # AbstractSelectionList
-accessiblefieldnet/minecraft/client/gui/components/AbstractSelectionListchildrenLjava/util/List;
+accessible	field	net/minecraft/client/gui/components/AbstractSelectionList	children	Ljava/util/List;
+
+# AbstractContainerScreen
+mutable	field	net/minecraft/client/gui/screens/inventory/AbstractContainerScreen	imageWidth	I
+
+# NativeImage
+accessible	field	com/mojang/blaze3d/platform/NativeImage	pixels	J

@@ -11,4 +11,6 @@ public interface MTDAnvilScreen {
 	@Nullable
 	TagMenuWidget myTotemDoll$getTagMenuWidget();
 
+	default void myTotemDoll$setImageWidth(int width) {}
+
 }

@@ -19,6 +19,7 @@ public class SpriteContentsMixin {
 			method = "uploadFirstFrame"
 	)
 	private void validateImageBeforeUpload(com.mojang.blaze3d.systems.CommandEncoder instance, com.mojang.blaze3d.textures.GpuTexture target, NativeImage source, int mipLevel, int depth, int offsetX, int offsetY, int width, int height, int skipPixels, int skipRows, Operation<Void> original) {
+		// pixels is accessible via AW in 26.1
 		if (source.pixels == 0L) {
 			throw new IllegalArgumentException(TEXT);
 		}
