@@ -32,6 +32,9 @@ public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> imp
 
 	@Shadow
 	private EditBox name;
+	@Mutable
+    @Shadow
+    protected int imageWidth;
 	@Unique
 	@Nullable
 	private DraggingTagButtonWidget tagButtonWidget = null;
