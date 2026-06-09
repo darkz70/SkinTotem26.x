@@ -1,0 +1,37 @@
+{
+    "required": true,
+    "package": "com.darkz.skintotem.mixin.yacl",
+    "refmap": "${mod_id}.refmap.json",
+    "compatibilityLevel": "JAVA_${java}",
+	"plugin": "com.darkz.skintotem.compat.yacl.YACLCompatPlugin",
+    "mixins": [
+    ],
+	"client": [
+		//? =1.20.1 {
+		/*"category.TabButtonWidgetMixin",
+		"category.TabNavigationWidgetMixin",
+		*///?}
+
+		//? >=1.21.4 {
+		"category.ScrollableWidgetMixin",
+		//?}
+
+		"ScreenMixin",
+		"YACLScreenMixin",
+		"YetAnotherConfigLibImplBuilderMixin",
+		"YetAnotherConfigLibImplMixin",
+
+		"category.HeldItemRendererMixin",
+		"category.EntryListWidgetMixin",
+		"category.ConfigCategoryImplBuilderImplMixin",
+
+		"widget.ListEntryWidgetMixin",
+	    "widget.PressableWidgetMixin",
+	    "widget.AbstractWidgetMixin",
+	    "widget.TextFieldWidgetMixin",
+	    "widget.OptionDescriptionWidgetMixin"
+	],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

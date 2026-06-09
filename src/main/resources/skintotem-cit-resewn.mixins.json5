@@ -1,0 +1,14 @@
+{
+    "required": true,
+    "package": "com.darkz.skintotem.mixin.citresewn",
+    "refmap": "${mod_id}.refmap.json",
+    "compatibilityLevel": "JAVA_${java}",
+	"plugin": "com.darkz.skintotem.compat.citresewn.CITResewnCompatPlugin",
+    "mixins": [],
+    "client": [
+	    "ItemRendererMixinMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

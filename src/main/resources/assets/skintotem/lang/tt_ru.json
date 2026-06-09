@@ -1,0 +1,36 @@
+{
+	"modmenu.descriptionTranslation.my_totem_doll": "Барлык тотемнар уенчы курчаклары белән алыштырыла торган гади Fabric моды.",
+	"skintotem.modmenu.title": "§lMy Totem Doll",
+	"skintotem.modmenu.no_config_library_screen.message": "My Totem Doll көйләүләре экранын ачу өчен Сезгә §6§lYet Another Config Lib [YACL]§f утыртырга кирәк\n\n§6§lYACL §a§lModrinth битен ачаргамы?",
+	"skintotem.modmenu.old_config_library_screen.message": "My Totem Doll көйләнү өчен Сезнең %s версиясендәге §6§lYet Another Config Lib [YACL]§f искергән. §6§lYACL§f %s версиясенә яки югарырак яңартыгызчы.\n\n§6§lYACL §a§lModrinth битен ачаргамы?",
+
+	"skintotem.modmenu.category.general.name": "§lТөп",
+	"skintotem.modmenu.option.mod_enabled.name": "Модны кушу",
+	"skintotem.modmenu.option.mod_enabled.description": "Кушылса, барлык тотемнар уенчы курчаклары белән алыштырылачак; сүндерелсә, алыштырылмаячак.",
+	"skintotem.modmenu.option.debug_log_enabled.name": "§6Төзәтү журналын кушу",
+	"skintotem.modmenu.option.debug_log_enabled.description": "Кушылса, төзәтү өчен өстәмә мәгълүмат консольгә язылачак; сүндерелсә, язылмаячак.",
+
+	"skintotem.modmenu.category.rendering.name": "§lКүрсәтелү",
+	"skintotem.modmenu.group.right_hand.name": "§lУң кул",
+	"skintotem.modmenu.group.left_hand.name": "§lСул кул",
+	"skintotem.modmenu.option.scale.name": "Зурлык",
+	"skintotem.modmenu.option.rotation_x.name": "Янтаю",
+	"skintotem.modmenu.option.rotation_y.name": "Борылу",
+	"skintotem.modmenu.option.rotation_z.name": "Тангаж",
+	"skintotem.modmenu.option.offset_x.name": "X буенча күчерү",
+	"skintotem.modmenu.option.offset_y.name": "Y буенча күчерү",
+	"skintotem.modmenu.option.offset_z.name": "Z буенча күчерү",
+	"skintotem.modmenu.option.copy_right_hand_settings.name": "§eУң кул көйләүләрен күчереп алу",
+	"skintotem.modmenu.option.copy_left_hand_settings.name": "§eСул кул көйләүләрен күчереп алу",
+
+	"skintotem.command.id": "[§lMy Totem Doll§r]",
+
+	"skintotem.command.refresh.all.start": "§6Барлык кыяфәт текстуралары яңартып башланды",
+	"skintotem.command.refresh.all.end": "§aБарлык кыяфәт текстуралары §f%s§a секундтан соң яңартылды",
+
+	"skintotem.command.refresh.player.start": "§f%s§6 уенчысы өчен кыяфәт текстуралары яңартып башланды",
+	"skintotem.command.refresh.player.end": "§f%s§a өчен кыяфәт текстуралары §f%s§a секундтан соң яңартылды",
+
+	"skintotem.modmenu.formatter.enabled_or_disabled.true": "Кушык",
+	"skintotem.modmenu.formatter.enabled_or_disabled.false": "Сүнек"
+}

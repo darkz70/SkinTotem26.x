@@ -1,0 +1,132 @@
+{
+  "modmenu.descriptionTranslation.skintotem": "全てのトーテムをプレイヤー人形に置き換えるシンプルなFabricModです。金床でトーテムの名前をプレイヤーのニックネームに変更すると、そのスキンが反映されます！",
+		"skintotem.modmenu.title": "&lMy Totem Doll",
+		"skintotem.modmenu.no_config_library_screen.message": "MyTotemDollの設定画面を開くには&6&lYetAnotherConfigLib[YACL]&fをインストールする必要があります。\n\n&a&lYACL &6&lModrinthページを開きますか？",
+		"skintotem.modmenu.old_config_library_screen.message": "お使いの&6&lYetAnotherConfigLib[YACL]&fバージョン%sはMyTotemDollの設定には古すぎます。&6&lYACL&fをバージョン%s以上に更新してください。\n\n&a&lYACL &6&lModrinthページを開きますか？",
+	
+  		"skintotem.modmenu.category.general.name": "&l一般",
+
+		"skintotem.modmenu.group.main.name": "&lメイン",
+		"skintotem.modmenu.group.main.description": "MyTotemDollModのメイン設定",
+		"skintotem.modmenu.option.mod_enabled.name": "Modを有効化",
+		"skintotem.modmenu.option.mod_enabled.description": "有効時に全てのトーテムがプレイヤー人形に置き換わります。無効時には変更されません",
+		"skintotem.modmenu.option.support_other_mods_totems.name": "他Modのトーテム対応",
+		"skintotem.modmenu.option.support_other_mods_totems.description": "有効時に他Modのトーテムにも人形モデルが適用されます。無効時には適用されません",
+		"skintotem.modmenu.option.debug_log_enabled.name": "&6デバッグログ有効化",
+		"skintotem.modmenu.option.debug_log_enabled.description": "有効時にデバッグ用に追加情報がコンソールに出力されます。無効時には出力されません",
+	
+		"skintotem.modmenu.group.parallel_tasks.name": "&l並列タスク",
+		"skintotem.modmenu.group.parallel_tasks.description": "パフォーマンスに影響する可能性のある並列タスクの設定",
+		"skintotem.modmenu.option.parallel_tasks_count.name": "並列タスク数",
+		"skintotem.modmenu.option.parallel_tasks_count.description": "スキンの並列ダウンロードなど、Modのタスクを同時に実行できる数を設定します",
+
+		"skintotem.modmenu.category.rendering.name": "&l描画",
+		"skintotem.modmenu.group.right_hand.name": "&l右手",
+		"skintotem.modmenu.group.left_hand.name": "&l左手",
+		"skintotem.modmenu.option.scale.name": "スケール",
+		"skintotem.modmenu.option.rotation_x.name": "回転 X",
+		"skintotem.modmenu.option.rotation_y.name": "回転 Y",
+		"skintotem.modmenu.option.rotation_z.name": "回転 Z",
+		"skintotem.modmenu.option.offset_x.name": "位置調整 X",
+		"skintotem.modmenu.option.offset_y.name": "位置調整 Y",
+		"skintotem.modmenu.option.offset_z.name": "位置調整 Z",
+		"skintotem.modmenu.option.copy_right_hand_settings.name": "&e右手設定をコピー",
+		"skintotem.modmenu.option.copy_left_hand_settings.name": "&e左手設定をコピー",
+
+		"skintotem.modmenu.category.standard_doll.name": "&l標準トーテム人形",
+
+		"skintotem.modmenu.group.standard_doll_model.name": "&l標準モデル",
+		"skintotem.modmenu.group.standard_doll_skin.name": "&l標準スキン",
+
+		"skintotem.modmenu.group.standard_doll_model.description": "",
+		"skintotem.modmenu.group.standard_doll_skin.description": "",
+
+		"skintotem.modmenu.option.use_vanilla_totem_model.name": "バニラのトーテムモデルを使用",
+
+		"skintotem.modmenu.option.standard_doll_skin_type.name": "スキンタイプ",
+		"skintotem.modmenu.option.standard_doll_skin_type.steve": "スティーブ",
+		"skintotem.modmenu.option.standard_doll_skin_type.player": "プレイヤー",
+		"skintotem.modmenu.option.standard_doll_skin_type.holding_player": "所持しているプレイヤー",
+		"skintotem.modmenu.option.standard_doll_skin_type.url_skin": "URLスキン",
+		"skintotem.modmenu.option.standard_doll_skin_type.file_skin": "ファイルスキン",
+
+		"skintotem.modmenu.option.standard_doll_skin_type.player.suggestion": "『スキン情報』にプレイヤー名を入力すると、人形にそのスキンが適用されます",
+		"skintotem.modmenu.option.standard_doll_skin_type.holding_player.suggestion": "各人形は、それを手に持っているプレイヤーのスキンになります。誰も手に持っていない場合はスティーブのスキンが適用されます",
+		"skintotem.modmenu.option.standard_doll_skin_type.url_skin.suggestion": "『スキン情報』にスキンのリンクを入力すると、人形に適用されます",
+		"skintotem.modmenu.option.standard_doll_skin_type.file_skin.suggestion": "『スキン情報』にスキンファイルのパスを入力すると、人形に適用されます",
+
+		"skintotem.modmenu.option.standard_doll_skin_type.result.error": "&4エラー（再試行可能）",
+		"skintotem.modmenu.option.standard_doll_skin_type.result.critical_error": "&c重大なエラー（再試行不可）",
+		"skintotem.modmenu.option.standard_doll_skin_type.result.not_found": "&6見つかりません",
+		"skintotem.modmenu.option.standard_doll_skin_type.result.destroyed": "&c破損",
+		"skintotem.modmenu.option.standard_doll_skin_type.result.not_downloaded": "&6未ダウンロード",
+		"skintotem.modmenu.option.standard_doll_skin_type.result.waiting_downloading": "&6ダウンロード待機中",
+		"skintotem.modmenu.option.standard_doll_skin_type.result.downloading": "&6ダウンロード中",
+		"skintotem.modmenu.option.standard_doll_skin_type.result.registering": "&6登録中",
+		"skintotem.modmenu.option.standard_doll_skin_type.result.downloaded": "&aダウンロード完了",
+		"skintotem.modmenu.option.standard_doll_skin_data.name": "スキン情報",
+
+		"skintotem.modmenu.option.standard_doll_model_path.name": "モデルパス",
+		"skintotem.modmenu.option.standard_doll_model_arms_type.name": "モデル腕タイプ",
+		"skintotem.modmenu.option.standard_doll_model_arms_type.wide": "ワイド",
+		"skintotem.modmenu.option.standard_doll_model_arms_type.slim": "スリム",
+
+		"skintotem.modmenu.formatter.enabled_or_disabled.true": "有効",
+		"skintotem.modmenu.formatter.enabled_or_disabled.false": "無効",
+
+		"skintotem.standard_model_selection_screen.title": "標準モデル選択画面",
+
+		"skintotem.tags.info.title": "&lこれは何？",
+		"skintotem.tags.info.text": "これは&e人形タグメニュー&fです。\nこのメニューでは&eボタン&fの一覧を見ることができます。\nボタンをクリックすると、トーテムの&e外見を変更&fできます。例えば、&e特定パーツの有効/無効の切替&fや、&eカスタムモデルの選択&fなどです",
+
+		"skintotem.tags.tips.title": "&e&lヒント！",
+ 		"skintotem.tags.tips.text": "  &e&l1。&rトーテムにカーソルを合わせて &7[Shift]&rを押すと、そのステータスを確認できます。金床では常に有効です。\n\n &e&l2 &rコマンド &7/skintotem refresh [...]&r を使って、人形のスキンを更新できます",
+
+ 		"skintotem.tags.title": "&7人形タグ：",
+		"skintotem.tags.0": "アレックスの腕に設定",
+		"skintotem.tags.1": "スティーブの腕に設定",
+		"skintotem.tags.2": "マント無効化",
+		"skintotem.tags.3": "エリトラ有効化",
+		"skintotem.tags.0.applied": "&9アレックス腕",
+		"skintotem.tags.1.applied": "&9スティーブ腕",
+		"skintotem.tags.2.applied": "&9マント無効",
+		"skintotem.tags.3.applied": "&9エリトラ有効",
+
+		"skintotem.command.id": "[&lMy Totem Doll&r]",
+
+		"skintotem.command.refresh.all.start": "&6全てのスキンテクスチャの更新を開始しました",
+		"skintotem.command.refresh.all.end": "&a全てのスキンテクスチャを&f%s&a秒で更新しました",
+
+		"skintotem.command.refresh.player.start": "&6プレイヤー&f%s&6のスキンテクスチャの更新を開始しました",
+		"skintotem.command.refresh.player.end": "&aプレイヤー&f%s&aのスキンテクスチャを&f%s&a秒で更新しました",
+
+		"skintotem.welcome_screen.title": "はじめに",
+		"skintotem.welcome_screen.text": "&lようこそ。&r初めて&lMy Totem Doll mod&rを導入してゲームを起動しました。トーテムに使用する標準モデルを選択して下さい",
+		"skintotem.welcome_screen.option.3d": "&l3D人形",
+		"skintotem.welcome_screen.option.2d": "&l2Dトーテム",
+
+		"skintotem.placeholder.search": "検索…",
+		"skintotem.button.select_current": "&a現在のものを選択",
+		"skintotem.button.close": "&c閉じる",
+		"skintotem.text.select_text": "&o*クリックで選択*",
+		"skintotem.text.full_model_path": "全身モデルのパス：",
+		"skintotem.text.standard_doll": "標準人形",
+		"skintotem.text.key": "キー：",
+		"skintotem.text.value": "値：",
+		"skintotem.text.char": "文字：",
+		"skintotem.text.nothing_found": "見つかりませんでした:(",
+		"skintotem.text.found_models": "見つかったモデル：&e%s",
+		"skintotem.text.nice_id": "&6%s:%s",
+		"skintotem.text.nice_id.quoted": "&6\"%s:%s\"",
+		"skintotem.text.status": "ステータス：",
+		"skintotem.text.loading.0": "読み込み中",
+		"skintotem.text.loading.1": "読み込み中.",
+		"skintotem.text.loading.2": "読み込み中..",
+		"skintotem.text.loading.3": "読み込み中...",
+		"skintotem.text.loading.failed": "&c&l読み込み失敗！",
+	    "skintotem.text.loading.failed.unsupported_format": "&c& l対応していない形式です！",
+        "skintotem.text.loading.failed.wrong_metadata": "&c&lメタデータが正しくありません！",
+
+		"skintotem.tag_menu.title": "タグ",
+		"skintotem.tag_menu.custom_models.title": "カスタムモデルは&7[Shift]&r+&7[スクロール]&rでツールチップのサイズを変更 &7[Ctrl]&r+&7[Scroll]&rでツールチップ内のモデルサイズを変更"
+}

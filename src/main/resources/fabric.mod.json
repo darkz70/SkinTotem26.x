@@ -1,0 +1,42 @@
+{
+    "schemaVersion": 1,
+    "id": "${mod_id}",
+    "version": "${mod_version}",
+    "name": "${mod_name}",
+    "description": "${mod_description}",
+    "authors": [
+        "${mod_authors}"
+    ],
+    "contact": {
+"homepage": "https://github.com/darkz70/SkinTotem26.x",
+	        "issues": "https://github.com/darkz70/SkinTotem26.x/issues"
+    },
+    "license": "${mod_license}",
+    "icon": "icon/icon.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "com.darkz.skintotem.MyTotemDoll"
+        ],
+        "client": [
+            "com.darkz.skintotem.client.MyTotemDollClient"
+        ],
+        "modmenu": [
+            "com.darkz.skintotem.modmenu.ModMenuIntegration"
+        ]
+    },
+    "depends": {
+        "fabricloader": ">=${fabric_loader}",
+        "minecraft": ">=${minecraft}",
+        "java": ">=${java}",
+        "${fabric_api_id}": "*"
+    },
+    "accessWidener": "aws/${minecraft}.accesswidener",
+    "mixins": [
+        "${mod_id}.mixins.json",
+	    "${mod_id}-yacl.mixins.json",
+	    "${mod_id}-modmenu.mixins.json",
+	    "${mod_id}-sodium.mixins.json",
+	    "${mod_id}-cit-resewn.mixins.json"
+    ]
+}
