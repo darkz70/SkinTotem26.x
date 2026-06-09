@@ -72,6 +72,14 @@ public class MModel {
 		return this.modelPart.storePose();
 	}
 
+	public void loadPose(net.minecraft.client.model.geom.PartPose pose) {
+		this.modelPart.loadPose(pose);
+	}
+
+	public void setInitialPose(net.minecraft.client.model.geom.PartPose pose) {
+		this.modelPart.setInitialPose(pose);
+	}
+
 	public MModel initAfterBuild(BBModel model) {
 		this.setLocation(model.getLocation());
 		this.setTransformation(model.getTransformation());
