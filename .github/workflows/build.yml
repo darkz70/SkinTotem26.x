@@ -1,0 +1,31 @@
+name: Debug Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  debug_build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'microsoft'
+      - name: Make Gradle wrapper executable
+        run: chmod +x ./gradlew
+      - name: Build with Gradle
+        run: ./gradlew buildAndCollect+All || ./gradlew buildAndCollect || ./gradlew build
+      - name: List all files (Debug)
+        run: |
+          echo "Listing all .jar files in the project:"
+          find . -name "*.jar"
+      - name: Capture ALL .jar files
+        uses: actions/upload-artifact@v4
+        with:
+          name: All-Jars-Found
+          path: "**/*.jar"
