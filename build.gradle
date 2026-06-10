@@ -9,14 +9,10 @@ mossyDependencies {
 	fabricApi = prop("build.fabric_api")
 	fabricLoader = prop("build.fabric_loader")
 
-//	forge = prop("build.forge")
-//
-//	neoForge = prop("build.neoforge")
-//	parchment = prop("build.parchment")
-
 	additional {
 		//override("modCompileOnly", "yacl")
 		disable("cit-resewn")
+		add("fabric-command-api-v2")
 	}
 }
 
@@ -31,9 +27,6 @@ repositories {
 dependencies {
 	// Mixin^2
 	include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:${prop("build.mixin_squared")}")))
-
-	// Fabric Command API
-    modImplementation fabricApi.module("fabric-command-api-v2", prop("build.fabric_api"))
 
 	// CIT Resewn
 	def cit = prop("dep.cit-resewn")
