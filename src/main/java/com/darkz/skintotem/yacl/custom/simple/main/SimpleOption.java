@@ -5,22 +5,13 @@ import dev.isxander.yacl3.gui.YACLScreen;
 import dev.isxander.yacl3.gui.image.ImageRenderer;
 import java.util.List;
 import java.util.function.*;
-import lombok.Getter;
 import lombok.experimental.ExtensionMethod;
 import com.darkz.skintotem.extension.YACLAPIExtension;
 import com.darkz.skintotem.utils.ModMenuUtils;
 import com.darkz.skintotem.yacl.custom.simple.utils.SimpleContent;
-	
+
 @ExtensionMethod(YACLAPIExtension.class)
 public class SimpleOption {
-
-	// Builder
-	//
-	// Binding
-	// Description (optional)
-	// Controller
-	//
-	// Build
 
 	public static <T> Builder<T> startBuilder(String optionId) {
 		return new Builder<>(optionId);
@@ -38,7 +29,6 @@ public class SimpleOption {
 
 		private final String optionId;
 		private final String optionKey;
-		@Getter
 		private final Option.Builder<T> optionBuilder;
 
 		public Builder(String optionId) {
@@ -46,6 +36,10 @@ public class SimpleOption {
 			this.optionKey     = ModMenuUtils.getOptionKey(optionId);
 			this.optionBuilder = Option.<T>createBuilder()
 					.name(ModMenuUtils.getName(this.optionKey));
+		}
+
+		public Option.Builder<T> getOptionBuilder() {
+			return this.optionBuilder;
 		}
 
 		public Builder<T> withCustomDescription(ImageRenderer renderer) {
@@ -85,7 +79,6 @@ public class SimpleOption {
 
 		private final String optionId;
 		private final String optionKey;
-		@Getter
 		private final ButtonOption.Builder optionBuilder;
 
 		public ButtonBuilder(String optionId, BiConsumer<YACLScreen, ButtonOption> biConsumer) {
@@ -94,6 +87,10 @@ public class SimpleOption {
 			this.optionBuilder = ButtonOption.createBuilder()
 					.name(ModMenuUtils.getName(this.optionKey))
 					.action(biConsumer);
+		}
+
+		public ButtonOption.Builder getOptionBuilder() {
+			return this.optionBuilder;
 		}
 
 		public ButtonBuilder withCustomDescription(ImageRenderer renderer) {
@@ -123,7 +120,6 @@ public class SimpleOption {
 
 		private final String optionId;
 		private final String optionKey;
-		@Getter
 		private final ListOption.Builder<T> optionBuilder;
 
 		public ListOptionBuilder(String optionId) {
@@ -131,6 +127,10 @@ public class SimpleOption {
 			this.optionKey     = ModMenuUtils.getGroupKey(optionId);
 			this.optionBuilder = ListOption.<T>createBuilder()
 					.name(ModMenuUtils.getName(this.optionKey));
+		}
+
+		public ListOption.Builder<T> getOptionBuilder() {
+			return this.optionBuilder;
 		}
 
 		public ListOptionBuilder<T> withCustomDescription(ImageRenderer renderer) {
