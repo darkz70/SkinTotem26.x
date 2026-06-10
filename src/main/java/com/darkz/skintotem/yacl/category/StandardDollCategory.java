@@ -81,7 +81,7 @@ public class StandardDollCategory {
 				).build();
 	}
 
-	private static OptionGroup getStandardDollModelGroup(SkinTotemDollConfig defConfig, SkinTotemConfig config, SkinTotemPreviewRenderer renderer) {
+	private static OptionGroup getStandardDollModelGroup(SkinTotemConfig defConfig, SkinTotemConfig config, SkinTotemPreviewRenderer renderer) {
 		Option<Identifier> standardDollModelPathOption = SimpleOption.<Identifier>startBuilder("standard_doll_model_path")
 				.withCustomDescription(renderer)
 				.withBinding(config.getSelectedStandardSkinTotemModelValue(), config::getStandardSkinTotemModelValue, (value) -> {
