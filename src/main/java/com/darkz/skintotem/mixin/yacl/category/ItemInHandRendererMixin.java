@@ -79,7 +79,7 @@ public class ItemInHandRendererMixin {
 			),
 			method = "renderHandsWithItems(FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/player/LocalPlayer;I)V"
 	)
-	private boolean swapRenderValue1(Object instance, Operation<Boolean> original, @Share("mtd_bl") LocalBooleanRef ref) {
+	private boolean swapRenderValue1(HandRenderSelection instance, Operation<Boolean> original, @Share("mtd_bl") LocalBooleanRef ref) {
 		if (ref.get()) {
 			return true;
 		}
@@ -93,7 +93,7 @@ public class ItemInHandRendererMixin {
 			),
 			method = "renderHandsWithItems(FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/player/LocalPlayer;I)V"
 	)
-	private boolean swapRenderValue2(Object instance, Operation<Boolean> original, @Share("mtd_bl") LocalBooleanRef ref) {
+	private boolean swapRenderValue2(HandRenderSelection instance, Operation<Boolean> original, @Share("mtd_bl") LocalBooleanRef ref) {
 		if (ref.get()) {
 			return true;
 		}
