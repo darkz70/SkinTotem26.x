@@ -1,4 +1,4 @@
-package ru.kteam.skintotem.command;
+package com.darkz.skintotem.client.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
