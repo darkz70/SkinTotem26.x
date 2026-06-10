@@ -10,14 +10,11 @@ mossyDependencies {
 	fabricLoader = prop("build.fabric_loader")
 
 	additional {
-		//override("modCompileOnly", "yacl")
 		disable("cit-resewn")
-		add("fabric-command-api-v2")
 	}
 }
 
 repositories {
-	// Mixin^2
 	maven {
 		name = "Mixin Squared"
 		url = "https://maven.bawnorton.com/releases"
@@ -25,14 +22,18 @@ repositories {
 }
 
 dependencies {
-	// Mixin^2
 	include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:${prop("build.mixin_squared")}")))
 
-	// CIT Resewn
 	def cit = prop("dep.cit-resewn")
 	if (cit != "unknown") {
 		modImplementation "maven.modrinth:cit-resewn:${cit}"
 		modImplementation "maven.modrinth:cit-resewn-defaults:${cit}"
+	}
+}
+
+afterEvaluate {
+	dependencies {
+		modImplementation(fabricApi.module("fabric-command-api-v2", prop("build.fabric_api")))
 	}
 }
 
