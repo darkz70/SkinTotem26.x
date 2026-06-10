@@ -21,7 +21,7 @@ public class SkinTotemCommand {
 
                 // /skintotem info
                 .then(ClientCommandManager.literal("info").executes(ctx -> {
-                    ctx.getSource().sendFeedback(Text.literal(
+                    ctx.getSource().sendFeedback(Component.literal(
                         P + "§bv1.0.0 §8| §bAuthor: §fDarkz §8| §fLopyMine §8| KlashRaick §8| §fK-TEAM"
                     ));
                     return 1;
@@ -31,14 +31,14 @@ public class SkinTotemCommand {
                 .then(ClientCommandManager.literal("refresh")
                     .executes(ctx -> {
                         ctx.getSource().sendFeedback(
-                            Text.literal(P + "§aRefresh not implemented in this version")
+                            Component.literal(P + "§aRefresh not implemented in this version")
                         );
                         return 1;
                     }))
 
                 // /skintotem credits
                 .then(ClientCommandManager.literal("credits").executes(ctx -> {
-                    ctx.getSource().sendFeedback(Text.literal(
+                    ctx.getSource().sendFeedback(Component.literal(
                         "\n§6╔══════════════════════════════════════════════════╗\n" +
                         "§6║  §bSkinTotem §fv1.0.0                                     §6║\n" +
                         "§6║  §7Author:       §fDarkz      §fKlashRaisk   §fLopyMine    §6║\n" +
