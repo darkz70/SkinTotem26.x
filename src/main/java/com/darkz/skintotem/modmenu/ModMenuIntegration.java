@@ -1,6 +1,6 @@
 package com.darkz.skintotem.modmenu;
 
-/*? if dep.modmenu != "unknown" {*/
+/*? if dep.modmenu {*/
 import com.terraformersmc.modmenu.api.*;
 import net.fabricmc.loader.api.*;
 import com.darkz.skintotem.MyTotemDoll;
