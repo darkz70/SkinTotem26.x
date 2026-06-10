@@ -22,9 +22,9 @@ public class ModMenuIntegration {
 			} catch (VersionParsingException e) {
 				MyTotemDollClient.LOGGER.error("Failed to compare YACL version, tell mod author about this error: ", e);
 			}
-			return (com.terraformersmc.modmenu.api.ConfigScreenFactory<?>) (Object) (parent -> NoConfigLibraryScreen.createScreenAboutOldVersion(parent, version.getFriendlyString()));
+			return (com.terraformersmc.modmenu.api.ConfigScreenFactory<?>) (parent -> NoConfigLibraryScreen.createScreenAboutOldVersion(parent, version.getFriendlyString()));
 		}
-		return (com.terraformersmc.modmenu.api.ConfigScreenFactory<?>) (Object) (NoConfigLibraryScreen::createScreen);
+		return (com.terraformersmc.modmenu.api.ConfigScreenFactory<?>) NoConfigLibraryScreen::createScreen;
 	}
 }
 /*?} else {*/
