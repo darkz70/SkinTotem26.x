@@ -4,32 +4,21 @@
     "refmap": "${mod_id}.refmap.json",
     "compatibilityLevel": "JAVA_${java}",
 	"plugin": "com.darkz.skintotem.compat.yacl.YACLCompatPlugin",
-    "mixins": [
+        "mixins": [
     ],
 	"client": [
-		//? =1.20.1 {
-		/*"category.TabButtonWidgetMixin",
-		"category.TabNavigationWidgetMixin",
-		*///?}
-
-		//? >=1.21.4 {
-		"category.ScrollableWidgetMixin",
-		//?}
-
 		"ScreenMixin",
 		"YACLScreenMixin",
 		"YetAnotherConfigLibImplBuilderMixin",
 		"YetAnotherConfigLibImplMixin",
-
-		"category.HeldItemRendererMixin",
-		"category.EntryListWidgetMixin",
 		"category.ConfigCategoryImplBuilderImplMixin",
 
-		"widget.ListEntryWidgetMixin",
-	    "widget.PressableWidgetMixin",
 	    "widget.AbstractWidgetMixin",
-	    "widget.TextFieldWidgetMixin",
-	    "widget.OptionDescriptionWidgetMixin"
+	    "widget.OptionDescriptionWidgetMixin",
+		"widget.EditBoxMixin",
+		"widget.AbstractScrollAreaMixin",
+		"category.ItemInHandRendererMixin",
+		"widget.AbstractButtonMixin"
 	],
     "injectors": {
         "defaultRequire": 1
