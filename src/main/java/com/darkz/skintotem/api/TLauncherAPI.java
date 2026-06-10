@@ -1,7 +1,7 @@
 package com.darkz.skintotem.api;
 
 import com.google.gson.*;
-import com.darkz.skintotem.client.MyTotemDollClient;
+import com.darkz.skintotem.client.SkinTotemModClient;
 import com.darkz.skintotem.skin.data.ParsedSkinData;
 import org.jetbrains.annotations.Nullable;
 
@@ -11,13 +11,31 @@ import java.net.http.HttpResponse.BodyHandlers;
 import java.util.Base64;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * API для загрузки скинов с серверов TLauncher / TL Skin Cape
+ *
+ * TLauncher использует собственный скин-сервер:
+ *   https://auth.tlauncher.org/skin/profile/texture/login/{nickname}
+ *
+ * Ответ в формате base64-encoded JSON (как у Mojang sessionserver)
+ *
+ * Автор: Darkz | K-TEAM
+ */
 public class TLauncherAPI {
 
     private static final Gson GSON = new GsonBuilder().setLenient().create();
 
+    // Основной TLauncher skin endpoint
     private static final String TL_SKIN_URL =
             "https://auth.tlauncher.org/skin/profile/texture/login/";
 
+    // Fallback: TL Cape server
+    private static final String TL_CAPE_URL =
+            "https://cape.tlauncher.org/get.php?user=";
+
+    /**
+     * Загрузить данные скина по нику с TLauncher
+     */
     public static Response<ParsedSkinData> getSkinData(String nickname) {
         int statusCode = -1;
         String responseBody = "Not reached";
@@ -33,7 +51,7 @@ public class TLauncherAPI {
             responseBody = response.body();
 
             if (statusCode == 404 || statusCode == 204) {
-                return Response.empty(statusCode);
+                return Response.empty(statusCode); // Нет скина
             }
             if (statusCode == 429) {
                 return Response.empty(statusCode);
@@ -50,7 +68,8 @@ public class TLauncherAPI {
             return new Response<>(statusCode, data);
         } catch (InterruptedException ignored) {
         } catch (Exception e) {
-            MyTotemDollClient.LOGGER.error("[TLauncherAPI] Ошибка загрузки скина {}: ", nickname, e);
+            SkinTotemModClient.LOGGER.error("[TLauncherAPI] Ошибка загрузки скина {}: ", nickname, e);
+            SkinTotemModClient.LOGGER.error("[TLauncherAPI] Response: {}", responseBody);
         }
         return Response.empty(statusCode);
     }
@@ -65,6 +84,7 @@ public class TLauncherAPI {
             String capeUrl  = null;
             boolean slim    = false;
 
+            // Формат 1: прямой JSON { "skinURL": "...", "cloakURL": "...", "slim": true }
             if (root.has("skinURL")) {
                 skinUrl = root.get("skinURL").getAsString();
                 if (root.has("slim")) slim = root.get("slim").getAsBoolean();
@@ -72,6 +92,7 @@ public class TLauncherAPI {
                 return new ParsedSkinData(skinUrl, capeUrl, null, slim);
             }
 
+            // Формат 2: base64 (как Mojang) { "properties": [{ "name": "textures", "value": "base64..." }] }
             if (root.has("properties")) {
                 for (JsonElement el : root.getAsJsonArray("properties")) {
                     JsonObject prop = el.getAsJsonObject();
@@ -96,11 +117,14 @@ public class TLauncherAPI {
                 return new ParsedSkinData(skinUrl, capeUrl, null, slim);
             }
 
+            // Формат 3: прямой URL строкой
             if (root.has("url")) {
                 skinUrl = root.get("url").getAsString();
                 return new ParsedSkinData(skinUrl, null, null, false);
             }
 
+            // Формат 4: { "SKIN": { "url": "..." }, "CAPE": { "url": "..." } }
+            // Именно этот формат возвращает auth.tlauncher.org
             if (root.has("SKIN")) {
                 JsonObject skinObj = root.getAsJsonObject("SKIN");
                 skinUrl = skinObj.has("url") ? skinObj.get("url").getAsString() : null;
@@ -121,7 +145,7 @@ public class TLauncherAPI {
 
             return null;
         } catch (Exception e) {
-            MyTotemDollClient.LOGGER.error("[TLauncherAPI] Ошибка парсинга ответа для {}: ", nickname, e);
+            SkinTotemModClient.LOGGER.error("[TLauncherAPI] Ошибка парсинга ответа для {}: ", nickname, e);
             return null;
         }
     }
