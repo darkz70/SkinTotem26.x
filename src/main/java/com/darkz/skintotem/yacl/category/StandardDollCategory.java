@@ -100,7 +100,7 @@ public class StandardDollCategory {
 					config.setStandardSkinTotemArmsType(value);
 					renderer.updateDollState(false);
 				}, true)
-				.withController(TotemDollArmsType.class)
+				.withController(SkinTotemArmsType.class)
 				.build();
 
 		standardDollModelPathOption.setAvailable(!config.isUseVanillaTotemModel());
