@@ -7,7 +7,6 @@ import com.darkz.skintotem.MyTotemDoll;
 import com.darkz.skintotem.client.MyTotemDollClient;
 import com.darkz.skintotem.yacl.YACLConfigurationScreen;
 
-@Pseudo
 public class ModMenuIntegration {
 
 	public Object getModConfigScreenFactory() {
