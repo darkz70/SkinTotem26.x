@@ -14,12 +14,12 @@
         "homepage": "https://github.com/darkz70/SkinTotem",
         "issues": "https://github.com/darkz70/SkinTotem/issues"
     },
-    "license": "MIT",
+    "license": "CC BY-ND 4.0",
     "icon": "icon/icon.png",
     "environment": "*",
     "entrypoints": {
         "main": [
-            "com.darkz.skintotem.SkinTotemMod"
+            "com.darkz.skintotem.SkinTotem"
         ],
         "client": [
             "com.darkz.skintotem.client.SkinTotemClient"
