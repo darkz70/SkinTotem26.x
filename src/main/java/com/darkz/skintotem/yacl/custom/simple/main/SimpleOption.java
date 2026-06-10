@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.experimental.ExtensionMethod;
 import com.darkz.skintotem.extension.YACLAPIExtension;
 import com.darkz.skintotem.utils.ModMenuUtils;
-import com.darkz.skintotem.yacl.custom.simple.utils.SimpleContent
+import com.darkz.skintotem.yacl.custom.simple.utils.SimpleContent;
 	
 @ExtensionMethod(YACLAPIExtension.class)
 public class SimpleOption {
