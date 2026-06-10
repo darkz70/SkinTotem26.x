@@ -13,7 +13,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.player.*;
 import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.ItemInHandRenderer.HandRenderSelection;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.*;
@@ -55,9 +54,7 @@ public class ItemInHandRendererMixin {
 		}
 		if (original.isEmpty() || !SkinTotemClient.canProcess(original)) {
 			ItemStack totem = Items.TOTEM_OF_UNDYING.getDefaultInstance();
-
 			totem.set(DataComponents.CUSTOM_NAME, player.getName());
-
 			draw.accept(totem);
 			return;
 		}
@@ -79,7 +76,7 @@ public class ItemInHandRendererMixin {
 			),
 			method = "renderHandsWithItems(FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/player/LocalPlayer;I)V"
 	)
-	private boolean swapRenderValue1(HandRenderSelection instance, Operation<Boolean> original, @Share("mtd_bl") LocalBooleanRef ref) {
+	private boolean swapRenderValue1(@Coerce Object instance, Operation<Boolean> original, @Share("mtd_bl") LocalBooleanRef ref) {
 		if (ref.get()) {
 			return true;
 		}
@@ -93,7 +90,7 @@ public class ItemInHandRendererMixin {
 			),
 			method = "renderHandsWithItems(FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/player/LocalPlayer;I)V"
 	)
-	private boolean swapRenderValue2(HandRenderSelection instance, Operation<Boolean> original, @Share("mtd_bl") LocalBooleanRef ref) {
+	private boolean swapRenderValue2(@Coerce Object instance, Operation<Boolean> original, @Share("mtd_bl") LocalBooleanRef ref) {
 		if (ref.get()) {
 			return true;
 		}
