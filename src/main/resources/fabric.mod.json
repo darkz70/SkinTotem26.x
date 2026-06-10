@@ -34,7 +34,7 @@
         "java": ">=${java}",
         "${fabric_api_id}": "*"
     },
-    "accessWidener": "aws/${minecraft}.accesswidener",
+    "accessWidener": "${fabric_trick_accesswidener_id}",
     "mixins": [
         "${mod_id}.mixins.json",
 	    "${mod_id}-yacl.mixins.json",
