@@ -40,12 +40,6 @@ dependencies {
 	}
 }
 
-afterEvaluate {
-	dependencies {
-		modImplementation(fabricApi.module("fabric-command-api-v2", prop("build.fabric_api")))
-	}
-}
-
 stonecutter {
 	replacements.string(current.parsed >= "26.1") {
 		replace("atlas.location()", "atlas.location()")
