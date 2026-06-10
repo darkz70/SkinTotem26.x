@@ -1,6 +1,6 @@
 {
     "required": true,
-    "package": "net.lopymine.mtd.mixin",
+    "package": "com.darkz.skintotem.mixin",
     "refmap": "${mod_id}.refmap.json",
     "compatibilityLevel": "JAVA_${java}",
     "mixins": [
