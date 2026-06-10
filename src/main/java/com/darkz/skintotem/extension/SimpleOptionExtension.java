@@ -15,7 +15,7 @@ public class SimpleOptionExtension {
 	//
 
 	public static Builder<String> withController(Builder<String> builder, Object... ignored) {
-		builder.optionBuilder.controller(StringControllerBuilder::create);
+		builder.getOptionBuilder().controller(StringControllerBuilder::create);
 		return builder;
 	}
 
