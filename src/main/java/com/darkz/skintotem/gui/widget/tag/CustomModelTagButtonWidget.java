@@ -2,11 +2,11 @@ package com.darkz.skintotem.gui.widget.tag;
 
 import java.util.Optional;
 import lombok.*;
-import com.darkz.skintotem.config.MyTotemDollConfig;
-import com.darkz.skintotem.doll.data.TotemDollData;
-import com.darkz.skintotem.doll.manager.StandardTotemDollManager;
-import com.darkz.skintotem.doll.renderer.TotemDollRenderer;
-import com.darkz.skintotem.gui.tooltip.preview.TotemDollPreviewTooltipData;
+import com.darkz.skintotem.config.SkinTotemConfig;
+import com.darkz.skintotem.doll.data.SkinTotemData;
+import com.darkz.skintotem.doll.manager.StandardSkinTotemManager;
+import com.darkz.skintotem.doll.renderer.SkinTotemRenderer;
+import com.darkz.skintotem.gui.tooltip.preview.SkinTotemPreviewTooltipData;
 import com.darkz.skintotem.tag.*;
 import com.darkz.skintotem.tag.manager.TagsManager;
 import com.darkz.skintotem.utils.ScreenUtils;
@@ -22,18 +22,18 @@ public class CustomModelTagButtonWidget extends TagButtonWidget {
 
 	@Nullable
 	private final Identifier model;
-	private TotemDollData data;
+	private SkinTotemData data;
 	@Nullable
-	private TotemDollData tooltipData;
+	private SkinTotemData tooltipData;
 	private boolean tooltipDataActive = false;
 
 	public CustomModelTagButtonWidget(Tag tag, int x, int y, TagPressAction pressAction) {
 		super(tag, x, y, pressAction);
 		this.model = Optional.ofNullable(TagsManager.getCustomModelIdsTags().get(tag.getTag())).map(CustomModelTag::getModelId).orElse(null);
-		this.data  = StandardTotemDollManager.getStandardDoll().copy();
+		this.data  = StandardSkinTotemManager.getStandardDoll().copy();
 	}
 
-	public void updateData(TotemDollData data) {
+	public void updateData(SkinTotemData data) {
 		if (data == null) {
 			return;
 		}
@@ -55,7 +55,7 @@ public class CustomModelTagButtonWidget extends TagButtonWidget {
 	@Override
 	protected void renderIcon(GuiGraphicsExtractor context, int x, int y) {
 		context.enableScissor(this.getX() + 1, this.getY() + 1, this.getX() + this.getWidth() - 1, this.getY() + this.getHeight() - 1);
-		TotemDollRenderer.renderPreview(context, x, y, this.getWidth(), this.getHeight(), Math.min(this.getWidth(), this.getHeight()), this.getData());
+		SkinTotemRenderer.renderPreview(context, x, y, this.getWidth(), this.getHeight(), Math.min(this.getWidth(), this.getHeight()), this.getData());
 		context.disableScissor();
 	}
 
@@ -69,7 +69,7 @@ public class CustomModelTagButtonWidget extends TagButtonWidget {
 			this.tooltipData.setStandardMModel(this.data.getRenderProperties().getStandardMModel());
 		}
 		this.tooltipDataActive = true;
-		return ClientTooltipComponent.create(new TotemDollPreviewTooltipData(this.tooltipData, this.model));
+		return ClientTooltipComponent.create(new SkinTotemPreviewTooltipData(this.tooltipData, this.model));
 	}
 
 	@Override
@@ -78,7 +78,7 @@ public class CustomModelTagButtonWidget extends TagButtonWidget {
 			return false;
 		}
 		int amount = ((int) verticalAmount) > 0 ? 1 : -1;
-		MyTotemDollConfig config = MyTotemDollConfig.getInstance();
+		SkinTotemConfig config = SkinTotemConfig.getInstance();
 		if (ScreenUtils.hasShiftDown()) {
 			config.setBetterTagMenuTooltipSize(Mth.clamp(config.getBetterTagMenuTooltipSize() + (amount * 2), 60, 500));
 			return true;

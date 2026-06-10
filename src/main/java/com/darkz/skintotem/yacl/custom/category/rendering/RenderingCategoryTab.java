@@ -9,7 +9,7 @@ import lombok.experimental.ExtensionMethod;
 import com.darkz.skintotem.extension.DrawContextExtension;
 import com.darkz.skintotem.utils.DrawUtils;
 import com.darkz.skintotem.yacl.custom.TransparencySprites;
-import com.darkz.skintotem.yacl.custom.screen.MyTotemDollYACLScreen;
+import com.darkz.skintotem.yacl.custom.screen.SkinTotemYACLScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.*;
@@ -31,7 +31,7 @@ public class RenderingCategoryTab implements TabExt {
 	private WidgetAndType<OptionListWidget> optionList;
 
 	public RenderingCategoryTab(YACLScreen screen, ConfigCategory category, ScreenRectangle tabArea) {
-		if (!(screen instanceof MyTotemDollYACLScreen yaclScreen)) {
+		if (!(screen instanceof SkinTotemYACLScreen yaclScreen)) {
 			throw new IllegalArgumentException("This category is only for me! [My Totem Doll]");
 		}
 

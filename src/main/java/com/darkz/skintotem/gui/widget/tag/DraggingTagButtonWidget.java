@@ -1,7 +1,7 @@
 package com.darkz.skintotem.gui.widget.tag;
 
 import lombok.*;
-import com.darkz.skintotem.config.MyTotemDollConfig;
+import com.darkz.skintotem.config.SkinTotemConfig;
 import com.darkz.skintotem.config.other.vector.Vec2i;
 import com.darkz.skintotem.tag.Tag;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -78,7 +78,7 @@ public class DraggingTagButtonWidget extends TagButtonWidget {
 	}
 
 	private void setDraggingPosition(int draggingX, int draggingY) {
-		MyTotemDollConfig config = MyTotemDollConfig.getInstance();
+		SkinTotemConfig config = SkinTotemConfig.getInstance();
 		Vec2i pos = config.getTagButtonPos();
 
 		pos.setX((draggingX - (this.getWidth() / 2)) - this.originX);

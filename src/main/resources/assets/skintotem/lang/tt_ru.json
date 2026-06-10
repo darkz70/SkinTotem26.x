@@ -1,5 +1,5 @@
 {
-  "modmenu.descriptionTranslation.my_totem_doll": "Барлык тотемнар уенчы курчаклары белән алыштырыла торган гади Fabric моды.",
+  "modmenu.descriptionTranslation.skin_totem": "Барлык тотемнар уенчы курчаклары белән алыштырыла торган гади Fabric моды.",
   "skintotem.modmenu.title": "§lSkinTotem",
   "skintotem.modmenu.no_config_library_screen.message": "SkinTotem көйләүләре экранын ачу өчен Сезгә §6§lYet Another Config Lib [YACL]§f утыртырга кирәк\n\n§6§lYACL §a§lModrinth битен ачаргамы?",
   "skintotem.modmenu.old_config_library_screen.message": "SkinTotem көйләнү өчен Сезнең %s версиясендәге §6§lYet Another Config Lib [YACL]§f искергән. §6§lYACL§f %s версиясенә яки югарырак яңартыгызчы.\n\n§6§lYACL §a§lModrinth битен ачаргамы?",

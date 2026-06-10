@@ -2,7 +2,7 @@ package com.darkz.skintotem.gui.widget.tag;
 
 import java.util.List;
 import lombok.*;
-import com.darkz.skintotem.MyTotemDoll;
+import com.darkz.skintotem.SkinTotem;
 import com.darkz.skintotem.tag.Tag;
 import com.darkz.skintotem.tag.manager.TagsManager;
 import com.darkz.skintotem.utils.DrawUtils;
@@ -21,13 +21,13 @@ import org.jetbrains.annotations.Nullable;
 @Setter
 public class TagButtonWidget extends Button {
 
-	public static final Identifier INACTIVE_TEXTURE = MyTotemDoll.id("textures/gui/tag_menu/button_inactive.png");
+	public static final Identifier INACTIVE_TEXTURE = SkinTotem.id("textures/gui/tag_menu/button_inactive.png");
 
 	public static final WidgetSprites TEXTURES = new WidgetSprites(
-			MyTotemDoll.id("textures/gui/tag_menu/button_pressed.png"),
-			MyTotemDoll.id("textures/gui/tag_menu/button_unpressed.png"),
-			MyTotemDoll.id("textures/gui/tag_menu/button_pressed_hovered.png"),
-			MyTotemDoll.id("textures/gui/tag_menu/button_unpressed_hovered.png")
+			SkinTotem.id("textures/gui/tag_menu/button_pressed.png"),
+			SkinTotem.id("textures/gui/tag_menu/button_unpressed.png"),
+			SkinTotem.id("textures/gui/tag_menu/button_pressed_hovered.png"),
+			SkinTotem.id("textures/gui/tag_menu/button_unpressed_hovered.png")
 	);
 
 	private Tag tag;
@@ -108,7 +108,7 @@ public class TagButtonWidget extends Button {
 			return;
 		}
 
-		tooltipScreen.myTotemDoll$requestTooltip(((c, x, y, d) -> {
+		tooltipScreen.mySkinTotem$requestTooltip(((c, x, y, d) -> {
 			DrawUtils.drawTooltip(c, List.of(component), x, y);
 		}));
 	}

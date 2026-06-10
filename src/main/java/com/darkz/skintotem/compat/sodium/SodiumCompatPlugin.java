@@ -45,7 +45,7 @@ public class SodiumCompatPlugin extends CompatPlugin {
 		// CubeMixin
 
 		boolean bl = currentVersion.compareTo(hotVersion) < 0;
-		MixinService.getService().getLogger("[MyTotemDoll: SodiumCompatPlugin]").info("[{}] Detected Sodium, current version older than hot: {}", mixinName, bl);
+		MixinService.getService().getLogger("[SkinTotem: SodiumCompatPlugin]").info("[{}] Detected Sodium, current version older than hot: {}", mixinName, bl);
 		return bl;
 	}
 

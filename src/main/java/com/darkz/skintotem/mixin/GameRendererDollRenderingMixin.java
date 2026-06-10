@@ -1,6 +1,6 @@
 package com.darkz.skintotem.mixin;
 
-import com.darkz.skintotem.optimization.TotemDollRenderRequestsCollector;
+import com.darkz.skintotem.optimization.SkinTotemRenderRequestsCollector;
 import com.darkz.skintotem.thing.ThingMarks;
 import net.minecraft.client.renderer.LevelRenderer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,7 +17,7 @@ public class GameRendererDollRenderingMixin {
 
 	@Inject(at = @At("TAIL"), method = "extractVisibleEntities")
 	private void afterDollRendering(CallbackInfo ci) {
-		TotemDollRenderRequestsCollector.getInstance().renderStates();
+		SkinTotemRenderRequestsCollector.getInstance().renderStates();
 		ThingMarks.WORLD_RENDERING.get().setMarked(false);
 	}
 

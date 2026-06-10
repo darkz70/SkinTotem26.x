@@ -2,7 +2,7 @@ package com.darkz.skintotem.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.*;
 import lombok.experimental.ExtensionMethod;
-import com.darkz.skintotem.client.MyTotemDollClient;
+import com.darkz.skintotem.client.SkinTotemClient;
 import com.darkz.skintotem.extension.ItemStackExtension;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.inventory.AnvilMenu;
@@ -19,7 +19,7 @@ public class AnvilMenuMixin {
 			method = "createResult"
 	)
 	private Component swapItemName(ItemStack stack, Operation<Component> original) {
-		if (!MyTotemDollClient.canProcess(stack)) {
+		if (!SkinTotemClient.canProcess(stack)) {
 			return original.call(stack);
 		}
 		Component customName = stack.getRealCustomName();

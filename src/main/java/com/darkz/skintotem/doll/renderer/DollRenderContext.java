@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.PoseStack.Pose;
 import lombok.Getter;
 import lombok.experimental.ExtensionMethod;
-import com.darkz.skintotem.client.MyTotemDollClient;
+import com.darkz.skintotem.client.SkinTotemClient;
 import com.darkz.skintotem.extension.ModelTransformationExtension;
 import com.darkz.skintotem.model.base.MModel;
 import net.minecraft.client.resources.model.cuboid.*;
@@ -50,7 +50,7 @@ public enum DollRenderContext {
 				default -> D_NONE;
 			};
 		}
-		MyTotemDollClient.LOGGER.error("Failed to get DollRenderContext from object: {}", object.getClass().getName());
+		SkinTotemClient.LOGGER.error("Failed to get DollRenderContext from object: {}", object.getClass().getName());
 		return D_NONE;
 	}
 

@@ -1,6 +1,6 @@
 package com.darkz.skintotem.cache;
 
-import com.darkz.skintotem.client.MyTotemDollClient;
+import com.darkz.skintotem.client.SkinTotemClient;
 import com.darkz.skintotem.config.cache.KnownPlayerUUIDsConfig;
 
 public class KnownPlayerUUIDsConfigManager {
@@ -22,7 +22,7 @@ public class KnownPlayerUUIDsConfigManager {
 					config.setDirty(false);
 					requestedSave = false;
 				} catch (Exception e) {
-					MyTotemDollClient.LOGGER.error("Failed to save config:", e);
+					SkinTotemClient.LOGGER.error("Failed to save config:", e);
 				}
 			}
 		});

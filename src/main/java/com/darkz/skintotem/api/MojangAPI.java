@@ -8,8 +8,8 @@ import java.net.http.HttpResponse.BodyHandlers;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import com.darkz.skintotem.cache.KnownPlayerUUIDsConfigManager;
-import com.darkz.skintotem.client.MyTotemDollClient;
-import com.darkz.skintotem.config.MyTotemDollConfig;
+import com.darkz.skintotem.client.SkinTotemClient;
+import com.darkz.skintotem.config.SkinTotemConfig;
 import com.darkz.skintotem.config.cache.KnownPlayerUUIDsConfig;
 import com.darkz.skintotem.exception.HttpResponseException;
 import com.darkz.skintotem.skin.data.ParsedSkinData;
@@ -29,7 +29,7 @@ public class MojangAPI {
 	}
 
 	public static Response<UUID> getUUID(String nickname, boolean canRetry) {
-		boolean debugLogEnabled = MyTotemDollConfig.getInstance().isDebugLogEnabled();
+		boolean debugLogEnabled = SkinTotemConfig.getInstance().isDebugLogEnabled();
 		int statusCode = -1;
 		String responseBody = "Not reached";
 
@@ -44,13 +44,13 @@ public class MojangAPI {
 
 			if (statusCode == 429) {
 				if (debugLogEnabled) {
-					MyTotemDollClient.LOGGER.warn("Received Too Many Requests on {}", nickname);
+					SkinTotemClient.LOGGER.warn("Received Too Many Requests on {}", nickname);
 				}
 				return Response.empty(statusCode);
 			}
 			if (statusCode == 404) {
 				if (debugLogEnabled) {
-					MyTotemDollClient.LOGGER.warn("Failed to find player profile with nickname {}", nickname);
+					SkinTotemClient.LOGGER.warn("Failed to find player profile with nickname {}", nickname);
 				}
 				return Response.empty(statusCode);
 			}
@@ -74,13 +74,13 @@ public class MojangAPI {
 			return new Response<>(statusCode, uuid);
 		} catch (InterruptedException ignored) {
 		} catch (Exception e) {
-			MyTotemDollClient.LOGGER.error("Failed to get UUID: ", e);
-			MyTotemDollClient.LOGGER.error("Response Body: ");
-			MyTotemDollClient.LOGGER.error(responseBody);
+			SkinTotemClient.LOGGER.error("Failed to get UUID: ", e);
+			SkinTotemClient.LOGGER.error("Response Body: ");
+			SkinTotemClient.LOGGER.error(responseBody);
 		}
 
 		if (statusCode == 403) {
-			MyTotemDollClient.LOGGER.error("Received 403 status code, using fallback API for UUIDs!");
+			SkinTotemClient.LOGGER.error("Received 403 status code, using fallback API for UUIDs!");
 			MojangAPI.useFallbackAPI = true;
 			if (canRetry) {
 				return getUUID(nickname, false);
@@ -140,7 +140,7 @@ public class MojangAPI {
 
 			return new Response<>(response.statusCode(), parsedSkinData);
 		} catch (Exception e) {
-			MyTotemDollClient.LOGGER.error("Failed to load skin textures for {}: ", nickname, e);
+			SkinTotemClient.LOGGER.error("Failed to load skin textures for {}: ", nickname, e);
 		}
 		return null;
 	}

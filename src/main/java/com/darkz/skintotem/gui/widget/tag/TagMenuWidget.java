@@ -3,8 +3,8 @@ package com.darkz.skintotem.gui.widget.tag;
 import java.util.*;
 import java.util.stream.*;
 import lombok.experimental.ExtensionMethod;
-import com.darkz.skintotem.MyTotemDoll;
-import com.darkz.skintotem.doll.data.TotemDollData;
+import com.darkz.skintotem.SkinTotem;
+import com.darkz.skintotem.doll.data.SkinTotemData;
 import com.darkz.skintotem.extension.ItemStackExtension;
 import com.darkz.skintotem.gui.widget.list.AbstractVersionedEntryListWidget;
 import com.darkz.skintotem.gui.widget.tag.TagMenuWidget.TagRow;
@@ -24,7 +24,7 @@ import org.jetbrains.annotations.*;
 @ExtensionMethod(ItemStackExtension.class)
 public class TagMenuWidget extends AbstractVersionedEntryListWidget<TagRow> {
 
-	public static final Identifier BACKGROUND = MyTotemDoll.id("textures/gui/tag_menu/background_new.png");
+	public static final Identifier BACKGROUND = SkinTotem.id("textures/gui/tag_menu/background_new.png");
 
 	public TagMenuWidget(int x, int y, Renamer renamer) {
 		super(x, y, 30, 125, 16);
@@ -42,7 +42,7 @@ public class TagMenuWidget extends AbstractVersionedEntryListWidget<TagRow> {
 
 		List<CustomModelTag> customModelIds = TagsManager.getCustomModelIdsTags().values().stream().toList();
 		if (!customModelIds.isEmpty()) {
-			this.addEntry(new SeparatorRow(MyTotemDoll.text("tag_menu.custom_models.title")));
+			this.addEntry(new SeparatorRow(SkinTotem.text("tag_menu.custom_models.title")));
 		}
 
 		List<TagButtonWidget> allCustomModelWidgets = new ArrayList<>();
@@ -145,9 +145,9 @@ public class TagMenuWidget extends AbstractVersionedEntryListWidget<TagRow> {
 	}
 
 	private void updateCustomModelTagButtonsData(ItemStack stack) {
-		TotemDollData totemDollData = stack.getTotemDollData();
+		SkinTotemData skinTotemData = stack.getSkinTotemData();
 		for (CustomModelTagButtonWidget widget : this.getCustomModelTagButtons()) {
-			widget.updateData(totemDollData);
+			widget.updateData(skinTotemData);
 		}
 	}
 
@@ -235,7 +235,7 @@ public class TagMenuWidget extends AbstractVersionedEntryListWidget<TagRow> {
 
 	public static class SeparatorRow extends TagRow {
 
-		public static final Identifier SEPARATOR = MyTotemDoll.id("textures/gui/tag_menu/separator.png");
+		public static final Identifier SEPARATOR = SkinTotem.id("textures/gui/tag_menu/separator.png");
 
 		private final Component text;
 
@@ -260,7 +260,7 @@ public class TagMenuWidget extends AbstractVersionedEntryListWidget<TagRow> {
 					return;
 				}
 
-				tooltipScreen.myTotemDoll$requestTooltip(((c, mx, my, d) -> {
+				tooltipScreen.mySkinTotem$requestTooltip(((c, mx, my, d) -> {
 					DrawUtils.drawTooltip(context, textRenderer.split(this.text, 10000).stream().map(ClientTooltipComponent::create).collect(Collectors.toList()), mx, my);
 				}));
 			}

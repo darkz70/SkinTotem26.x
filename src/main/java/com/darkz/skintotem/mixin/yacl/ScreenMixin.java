@@ -6,7 +6,7 @@ import dev.isxander.yacl3.gui.YACLScreen;
 import com.darkz.skintotem.yacl.YACLConfigurationScreen;
 import com.darkz.skintotem.yacl.custom.TransparencySprites;
 import com.darkz.skintotem.yacl.custom.category.rendering.RenderingCategoryTab;
-import com.darkz.skintotem.yacl.custom.screen.MyTotemDollYACLScreen;
+import com.darkz.skintotem.yacl.custom.screen.SkinTotemYACLScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;

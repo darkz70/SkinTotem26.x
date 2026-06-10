@@ -2,9 +2,9 @@ package com.darkz.skintotem.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.*;
 import lombok.experimental.ExtensionMethod;
-import com.darkz.skintotem.MyTotemDoll;
-import com.darkz.skintotem.client.MyTotemDollClient;
-import com.darkz.skintotem.config.MyTotemDollConfig;
+import com.darkz.skintotem.SkinTotem;
+import com.darkz.skintotem.client.SkinTotemClient;
+import com.darkz.skintotem.config.SkinTotemConfig;
 import com.darkz.skintotem.config.other.vector.Vec2i;
 import com.darkz.skintotem.extension.ItemStackExtension;
 import com.darkz.skintotem.gui.widget.info.*;
@@ -12,7 +12,7 @@ import com.darkz.skintotem.gui.widget.tag.*;
 import com.darkz.skintotem.gui.widget.tag.TagMenuWidget.Renamer;
 import com.darkz.skintotem.tag.Tag;
 import com.darkz.skintotem.utils.DrawUtils;
-import com.darkz.skintotem.utils.mixin.MTDAnvilScreen;
+import com.darkz.skintotem.utils.mixin.STAnvilScreen;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.inventory.*;
@@ -28,7 +28,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(AnvilScreen.class)
 @ExtensionMethod(ItemStackExtension.class)
-public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> implements MTDAnvilScreen {
+public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> implements STAnvilScreen {
 
 	@Shadow
 	private EditBox name;
@@ -59,13 +59,13 @@ public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> imp
 
 	@Inject(at = @At("HEAD"), method = "subInit")
 	private void setupTagMenu(CallbackInfo ci) {
-		if (!MyTotemDollConfig.getInstance().isModEnabled()) {
+		if (!SkinTotemConfig.getInstance().isModEnabled()) {
 			return;
 		}
 
 		ItemStack stackOne = this.menu.getSlot(0).getItem();
 		ItemStack stackTwo = this.menu.getSlot(2).getItem();
-		boolean bl = MyTotemDollClient.canProcess(stackOne) && !stackOne.isEmpty();
+		boolean bl = SkinTotemClient.canProcess(stackOne) && !stackOne.isEmpty();
 
 		//
 
@@ -97,7 +97,7 @@ public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> imp
 
 		//
 
-		Vec2i originalPos = MyTotemDollConfig.getNewInstance().getTagButtonPos();
+		Vec2i originalPos = SkinTotemConfig.getNewInstance().getTagButtonPos();
 		this.tagButtonWidget         = new DraggingTagButtonWidget(
 				Tag.simple('4'),
 				this.leftPos,
@@ -136,7 +136,7 @@ public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> imp
 
 	@Unique
 	private void updateWidgets() {
-		MyTotemDollConfig config = MyTotemDollConfig.getInstance();
+		SkinTotemConfig config = SkinTotemConfig.getInstance();
 		if (!config.isModEnabled() || this.tagButtonWidget == null || this.tagMenuWidget == null || this.infoWidget == null || this.tipsWidget == null) {
 			return;
 		}
@@ -175,7 +175,7 @@ public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> imp
 			method = "extractLabels"
 	)
 	private void swapBackgroundValue(GuiGraphicsExtractor instance, int x1, int y1, int x2, int y2, int color, Operation<Void> original) {
-		if (!MyTotemDollConfig.getInstance().isModEnabled()) {
+		if (!SkinTotemConfig.getInstance().isModEnabled()) {
 			original.call(instance, x1, y1, x2, y2, color);
 			return;
 		}
@@ -187,7 +187,7 @@ public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> imp
 			method = "extractBackground"
 	)
 	private void updateWidgetPositions(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-		if (!MyTotemDollConfig.getInstance().isModEnabled()) {
+		if (!SkinTotemConfig.getInstance().isModEnabled()) {
 			return;
 		}
 		this.updateWidgets();
@@ -195,7 +195,7 @@ public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> imp
 			int x = this.leftPos + 176 + 1;
 			int y = this.topPos;
 			DrawUtils.drawTexture(graphics, TagMenuWidget.BACKGROUND, x, y, 0, 0, 50, 166, 50, 166);
-			DrawUtils.drawCenteredText(graphics, MyTotemDoll.text("tag_menu.title"), x + 9, y + 9 + 6 + 3, 32);
+			DrawUtils.drawCenteredText(graphics, SkinTotem.text("tag_menu.title"), x + 9, y + 9 + 6 + 3, 32);
 		}
 	}
 
@@ -205,7 +205,7 @@ public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> imp
 			method = "extractLabels"
 	)
 	private void swapBackgroundValue(GuiGraphicsExtractor instance, Font textRenderer, Component text, int x, int y, int color, Operation<Integer> original) {
-		if (!MyTotemDollConfig.getInstance().isModEnabled()) {
+		if (!SkinTotemConfig.getInstance().isModEnabled()) {
 			original.call(instance, textRenderer, text, x, y, color);
 			return;
 		}
@@ -214,11 +214,11 @@ public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> imp
 
 	@Inject(at = @At("HEAD"), method = "slotChanged")
 	private void checkTotem(AbstractContainerMenu handler, int slotId, ItemStack stack, CallbackInfo ci) {
-		if (!MyTotemDollConfig.getInstance().isModEnabled() || this.tagButtonWidget == null || this.tagMenuWidget == null) {
+		if (!SkinTotemConfig.getInstance().isModEnabled() || this.tagButtonWidget == null || this.tagMenuWidget == null) {
 			return;
 		}
 		if (slotId == 0) {
-			this.tagButtonWidget.visible = MyTotemDollClient.canProcess(stack);
+			this.tagButtonWidget.visible = SkinTotemClient.canProcess(stack);
 			if (!this.tagButtonWidget.visible && this.tagMenuWidget.visible) {
 				this.tagButtonWidget.setPressed(false, true);
 			}
@@ -227,7 +227,7 @@ public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> imp
 
 	@WrapOperation(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getHoverName()Lnet/minecraft/network/chat/Component;"), method = "slotChanged")
 	private Component swapItemName(ItemStack stack, Operation<Component> original) {
-		if (!MyTotemDollClient.canProcess(stack)) {
+		if (!SkinTotemClient.canProcess(stack)) {
 			return original.call(stack);
 		}
 		Component customName = stack.getRealCustomName();
@@ -238,12 +238,12 @@ public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> imp
 	}
 
 	@Override
-	public @Nullable TagButtonWidget myTotemDoll$getTagButtonWidget() {
+	public @Nullable TagButtonWidget mySkinTotem$getTagButtonWidget() {
 		return this.tagButtonWidget;
 	}
 
 	@Override
-	public @Nullable TagMenuWidget myTotemDoll$getTagMenuWidget() {
+	public @Nullable TagMenuWidget mySkinTotem$getTagMenuWidget() {
 		return this.tagMenuWidget;
 	}
 }

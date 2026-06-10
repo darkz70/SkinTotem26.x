@@ -3,7 +3,7 @@ package com.darkz.skintotem.modmenu;
 import com.google.common.collect.Sets;
 import java.net.*;
 import java.util.*;
-import com.darkz.skintotem.client.MyTotemDollClient;
+import com.darkz.skintotem.client.SkinTotemClient;
 import com.darkz.skintotem.utils.ModMenuUtils;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.Minecraft;
@@ -40,7 +40,7 @@ public class NoConfigLibraryScreen {
 				}
 				Util.getPlatform().openUri(link);
 			} catch (URISyntaxException e) {
-				MyTotemDollClient.LOGGER.error("Can't open YACL Modrinth page:", e);
+				SkinTotemClient.LOGGER.error("Can't open YACL Modrinth page:", e);
 			}
 		} else {
 			Minecraft.getInstance().setScreen(parent);

@@ -2,7 +2,7 @@ package com.darkz.skintotem.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.*;
 import com.llamalad7.mixinextras.sugar.Local;
-import com.darkz.skintotem.MyTotemDoll;
+import com.darkz.skintotem.SkinTotem;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.resources.Identifier;
 import org.slf4j.Logger;
@@ -20,11 +20,11 @@ public class TextureManagerMixin {
 			),
 			method = "loadContentsSafe(Lnet/minecraft/resources/Identifier;Lnet/minecraft/client/renderer/texture/ReloadableTexture;)Lnet/minecraft/client/renderer/texture/TextureContents;"
 	)
-	private void suppressMTDWarning(Logger instance, String s, Object[] objects, Operation<Void> original, @Local(argsOnly = true) Identifier id) {
+	private void suppressSTWarning(Logger instance, String s, Object[] objects, Operation<Void> original, @Local(argsOnly = true) Identifier id) {
 		if (id == null) {
 			return;
 		}
-		if (MyTotemDoll.MOD_ID.equals(id.getNamespace()) && id.getPath().startsWith("remapped_textures")) {
+		if (SkinTotem.MOD_ID.equals(id.getNamespace()) && id.getPath().startsWith("remapped_textures")) {
 			return;
 		}
 		original.call(instance, s, objects);

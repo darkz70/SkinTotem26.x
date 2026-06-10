@@ -1,8 +1,8 @@
 package com.darkz.skintotem.skin.provider.extended;
 
-import com.darkz.skintotem.MyTotemDoll;
+import com.darkz.skintotem.SkinTotem;
 import com.darkz.skintotem.api.*;
-import com.darkz.skintotem.doll.data.TotemDollData;
+import com.darkz.skintotem.doll.data.SkinTotemData;
 import com.darkz.skintotem.skin.data.ParsedSkinData;
 import com.darkz.skintotem.skin.provider.StandardSkinProvider;
 import net.minecraft.resources.Identifier;
@@ -25,13 +25,13 @@ public class NameMCSkinProvider extends StandardSkinProvider {
 	}
 
 	@Override
-	public TotemDollData createNewDoll(String value) {
-		return TotemDollData.create("NameMC");
+	public SkinTotemData createNewDoll(String value) {
+		return SkinTotemData.create("NameMC");
 	}
 
 	@Override
 	protected Identifier getId(String value, String type) {
-		return MyTotemDoll.getDollTextureId("name_mc/%s/%s".formatted(type, value.toLowerCase()));
+		return SkinTotem.getDollTextureId("name_mc/%s/%s".formatted(type, value.toLowerCase()));
 	}
 
 	@Override

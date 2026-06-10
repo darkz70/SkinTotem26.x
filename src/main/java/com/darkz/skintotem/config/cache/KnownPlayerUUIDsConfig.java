@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import lombok.*;
 import net.fabricmc.loader.api.FabricLoader;
-import com.darkz.skintotem.MyTotemDoll;
+import com.darkz.skintotem.SkinTotem;
 import com.darkz.skintotem.utils.*;
 import net.minecraft.core.UUIDUtil;
 import org.slf4j.*;
@@ -22,8 +22,8 @@ public class KnownPlayerUUIDsConfig {
 	).apply(instance, (map) -> {
 		return new KnownPlayerUUIDsConfig(new ConcurrentHashMap<>(map));
 	}));
-	private static final File CONFIG_FILE = FabricLoader.getInstance().getConfigDir().resolve(MyTotemDoll.MOD_ID + "-known-player-uuids" + ".json5").toFile();
-	private static final Logger LOGGER = LoggerFactory.getLogger(MyTotemDoll.MOD_NAME + "/KnownPlayerUUIDsConfig");
+	private static final File CONFIG_FILE = FabricLoader.getInstance().getConfigDir().resolve(SkinTotem.MOD_ID + "-known-player-uuids" + ".json5").toFile();
+	private static final Logger LOGGER = LoggerFactory.getLogger(SkinTotem.MOD_NAME + "/KnownPlayerUUIDsConfig");
 	private static KnownPlayerUUIDsConfig INSTANCE;
 	private final Map<String, UUID> cache;
 	private transient boolean dirty;

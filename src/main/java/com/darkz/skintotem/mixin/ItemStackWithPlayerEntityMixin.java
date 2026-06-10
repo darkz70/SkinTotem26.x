@@ -13,12 +13,12 @@ public class ItemStackWithPlayerEntityMixin implements ItemStackWithPlayerEntity
 	private AbstractClientPlayer player;
 
 	@Override
-	public void myTotemDoll$setPlayerEntity(AbstractClientPlayer player) {
+	public void mySkinTotem$setPlayerEntity(AbstractClientPlayer player) {
 		this.player = player;
 	}
 
 	@Override
-	public AbstractClientPlayer myTotemDoll$getPlayerEntity() {
+	public AbstractClientPlayer mySkinTotem$getPlayerEntity() {
 		return this.player;
 	}
 }

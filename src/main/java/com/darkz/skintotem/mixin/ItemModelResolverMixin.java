@@ -3,10 +3,10 @@ package com.darkz.skintotem.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.*;
 import java.util.function.Supplier;
 import lombok.experimental.ExtensionMethod;
-import com.darkz.skintotem.client.MyTotemDollClient;
+import com.darkz.skintotem.client.SkinTotemClient;
 import com.darkz.skintotem.extension.ItemStackExtension;
 import com.darkz.skintotem.utils.mixin.ItemRenderStateWithStack;
-import com.darkz.skintotem.utils.plugin.TotemDollPlugin;
+import com.darkz.skintotem.utils.plugin.SkinTotemPlugin;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.item.*;
 import net.minecraft.core.component.DataComponentType;
@@ -39,13 +39,13 @@ public class ItemModelResolverMixin {
 
 	@Unique
 	private Object changeModel(ItemStack stack, Supplier<Object> supplier) {
-		if (!MyTotemDollClient.canProcess(stack)) {
+		if (!SkinTotemClient.canProcess(stack)) {
 			return supplier.get();
 		}
 
-		if (TotemDollPlugin.work(stack)) {
+		if (SkinTotemPlugin.work(stack)) {
 			stack.setModdedModel(true);
-			return TotemDollPlugin.ID;
+			return SkinTotemPlugin.ID;
 		}
 
 		stack.setModdedModel(false);
@@ -59,7 +59,7 @@ public class ItemModelResolverMixin {
 			stack.setPlayerEntity(player);
 		}
 		if (renderState instanceof ItemRenderStateWithStack itemRenderStateWithStack) {
-			itemRenderStateWithStack.myTotemDoll$setStack(stack);
+			itemRenderStateWithStack.mySkinTotem$setStack(stack);
 		}
 	}
 

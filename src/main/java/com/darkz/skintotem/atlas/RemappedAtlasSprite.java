@@ -3,7 +3,7 @@ package com.darkz.skintotem.atlas;
 import com.mojang.blaze3d.platform.NativeImage;
 import java.util.Objects;
 import lombok.*;
-import com.darkz.skintotem.MyTotemDoll;
+import com.darkz.skintotem.SkinTotem;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
@@ -20,7 +20,7 @@ public class RemappedAtlasSprite extends AtlasSprite {
 	}
 
 	public static RemappedAtlasSprite ofResource(@NotNull Identifier resourceId) {
-		Identifier spriteId = MyTotemDoll.id("remapped_sprites/%s.png".formatted(Mth.abs(resourceId.toString().hashCode())));
+		Identifier spriteId = SkinTotem.id("remapped_sprites/%s.png".formatted(Mth.abs(resourceId.toString().hashCode())));
 		return new RemappedAtlasSprite(resourceId, spriteId);
 	}
 

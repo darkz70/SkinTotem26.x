@@ -30,13 +30,13 @@ public class ConfigCategoryImplBuilderImplMixin implements BetterYACLCategoryBui
 	}
 
 	@Override
-	public Builder myTotemDoll$enableBetter() {
+	public Builder mySkinTotem$enableBetter() {
 		this.custom = 0;
 		return ((Builder) this);
 	}
 
 	@Override
-	public Builder myTotemDoll$enableRendering() {
+	public Builder mySkinTotem$enableRendering() {
 		this.custom = 1;
 		return ((Builder) this);
 	}

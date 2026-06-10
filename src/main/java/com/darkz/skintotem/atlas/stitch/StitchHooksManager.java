@@ -2,7 +2,7 @@ package com.darkz.skintotem.atlas.stitch;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import com.darkz.skintotem.client.MyTotemDollClient;
+import com.darkz.skintotem.client.SkinTotemClient;
 import org.jetbrains.annotations.Nullable;
 
 public class StitchHooksManager {
@@ -21,7 +21,7 @@ public class StitchHooksManager {
 			try {
 				currentHook.onStitch();
 			} catch (Exception e) {
-				MyTotemDollClient.LOGGER.warn("Unexpected error on stitch hooking:", e);
+				SkinTotemClient.LOGGER.warn("Unexpected error on stitch hooking:", e);
 			}
 		}
 	}

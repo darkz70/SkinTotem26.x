@@ -6,6 +6,6 @@ import com.darkz.skintotem.utils.mixin.yacl.BetterYACLCategoryBuilder;
 public interface BetterConfigCategory extends ConfigCategory {
 
 	static Builder createBuilder() {
-		return ((BetterYACLCategoryBuilder) ConfigCategory.createBuilder()).myTotemDoll$enableBetter();
+		return ((BetterYACLCategoryBuilder) ConfigCategory.createBuilder()).mySkinTotem$enableBetter();
 	}
 }

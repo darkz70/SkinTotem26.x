@@ -1,8 +1,8 @@
 package com.darkz.skintotem.tag;
 
-import com.darkz.skintotem.doll.data.TotemDollData;
+import com.darkz.skintotem.doll.data.SkinTotemData;
 
 public interface TagAction {
 
-	void process(TotemDollData data);
+	void process(SkinTotemData data);
 }

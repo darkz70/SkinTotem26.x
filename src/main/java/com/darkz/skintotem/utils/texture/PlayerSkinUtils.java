@@ -3,8 +3,8 @@ package com.darkz.skintotem.utils.texture;
 import com.mojang.blaze3d.platform.NativeImage;
 import java.io.IOException;
 import java.net.*;
-import com.darkz.skintotem.atlas.manager.MyTotemDollAtlasSpriteManager;
-import com.darkz.skintotem.client.MyTotemDollClient;
+import com.darkz.skintotem.atlas.manager.SkinTotemAtlasSpriteManager;
+import com.darkz.skintotem.client.SkinTotemClient;
 import com.darkz.skintotem.doll.data.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.Identifier;
@@ -18,13 +18,13 @@ public class PlayerSkinUtils {
 		try {
 			NativeImage nativeImage = download(textureUrl);
 			NativeImage image = skin ? remapSkinTexture(nativeImage) : remapTextureToStandardSize(nativeImage, true);
-			MyTotemDollAtlasSpriteManager.registerSpecialSkinSprite(textureId, image, true, (sprite) -> {
+			SkinTotemAtlasSpriteManager.registerSpecialSkinSprite(textureId, image, true, (sprite) -> {
 				if (onSuccessRegistration != null) {
 					onSuccessRegistration.onSuccess(sprite);
 				}
 			});
 		} catch (Exception e) {
-			MyTotemDollClient.LOGGER.error("Failed to download skin texture with id \"{}\": ", textureId, e);
+			SkinTotemClient.LOGGER.error("Failed to download skin texture with id \"{}\": ", textureId, e);
 			if (onFailedRegistration != null) {
 				onFailedRegistration.onFailed(e);
 			}
@@ -33,7 +33,7 @@ public class PlayerSkinUtils {
 
 	public static NativeImage download(String uri) throws IOException {
 		HttpURLConnection connection = null;
-		MyTotemDollClient.LOGGER.debug("Downloading HTTP texture from {}", uri);
+		SkinTotemClient.LOGGER.debug("Downloading HTTP texture from {}", uri);
 		URI currentUri = URI.create(uri);
 
 		NativeImage image;
@@ -131,13 +131,13 @@ public class PlayerSkinUtils {
 	}
 
 
-	public static void setupClientTextures(TotemDollData data) {
+	public static void setupClientTextures(SkinTotemData data) {
 		Minecraft.getInstance().getSkinManager().get(Minecraft.getInstance().getGameProfile()).thenAccept((optional) -> {
 			if (optional.isEmpty()) {
 				return;
 			}
 			PlayerSkin skinTextures = optional.get();
-			data.setSprites(TotemDollSprites.of(skinTextures));
+			data.setSprites(SkinTotemSprites.of(skinTextures));
 		});
 	}
 }

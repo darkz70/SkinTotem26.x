@@ -6,7 +6,7 @@ import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.isxander.yacl3.gui.YACLScreen;
 import java.util.function.Consumer;
-import com.darkz.skintotem.client.MyTotemDollClient;
+import com.darkz.skintotem.client.SkinTotemClient;
 import com.darkz.skintotem.yacl.YACLConfigurationScreen;
 import com.darkz.skintotem.yacl.custom.category.rendering.RenderingCategoryTab;
 import net.minecraft.client.Minecraft;
@@ -53,7 +53,7 @@ public class ItemInHandRendererMixin {
 			draw.accept(original);
 			return;
 		}
-		if (original.isEmpty() || !MyTotemDollClient.canProcess(original)) {
+		if (original.isEmpty() || !SkinTotemClient.canProcess(original)) {
 			ItemStack totem = Items.TOTEM_OF_UNDYING.getDefaultInstance();
 
 			totem.set(DataComponents.CUSTOM_NAME, player.getName());

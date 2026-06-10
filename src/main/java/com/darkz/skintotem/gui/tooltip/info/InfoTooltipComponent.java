@@ -1,6 +1,6 @@
 package com.darkz.skintotem.gui.tooltip.info;
 
-import com.darkz.skintotem.MyTotemDoll;
+import com.darkz.skintotem.SkinTotem;
 import com.darkz.skintotem.utils.DrawUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
@@ -11,15 +11,15 @@ import net.minecraft.resources.Identifier;
 
 public class InfoTooltipComponent implements ClientTooltipComponent {
 
-	public static final Identifier SEPARATOR = MyTotemDoll.id("textures/gui/info/separator.png");
+	public static final Identifier SEPARATOR = SkinTotem.id("textures/gui/info/separator.png");
 
 	private final MutableComponent title;
 	private final MultiLineLabel text;
 
 	public InfoTooltipComponent(String key, int color) {
-		this.title = MyTotemDoll.text("%s.title".formatted(key));
+		this.title = SkinTotem.text("%s.title".formatted(key));
 		this.title.setStyle(this.title.getStyle().withColor(color));
-		this.text = MultiLineLabel.create(Minecraft.getInstance().font, MyTotemDoll.text("%s.text".formatted(key)), 140);
+		this.text = MultiLineLabel.create(Minecraft.getInstance().font, SkinTotem.text("%s.text".formatted(key)), 140);
 	}
 
 	@Override

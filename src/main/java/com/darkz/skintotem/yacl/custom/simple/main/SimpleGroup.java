@@ -2,7 +2,7 @@ package com.darkz.skintotem.yacl.custom.simple.main;
 
 import dev.isxander.yacl3.api.*;
 import com.darkz.skintotem.utils.ModMenuUtils;
-import com.darkz.skintotem.yacl.custom.renderer.TotemDollPreviewRenderer;
+import com.darkz.skintotem.yacl.custom.renderer.SkinTotemPreviewRenderer;
 import net.minecraft.network.chat.Component;
 
 public class SimpleGroup {
@@ -33,7 +33,7 @@ public class SimpleGroup {
 		return this;
 	}
 
-	public SimpleGroup withCustomDescription(TotemDollPreviewRenderer renderer) {
+	public SimpleGroup withCustomDescription(SkinTotemPreviewRenderer renderer) {
 		this.description.customImage(renderer);
 		return this;
 	}

@@ -11,12 +11,12 @@ public class ItemStackWithModdedBakedModelMixin implements ItemStackWithModdedBa
 	private boolean modded = false;
 
 	@Override
-	public void myTotemDoll$setModdedModel(boolean modded) {
+	public void mySkinTotem$setModdedModel(boolean modded) {
 		this.modded = modded;
 	}
 
 	@Override
-	public boolean myTotemDoll$isModdedModel() {
+	public boolean mySkinTotem$isModdedModel() {
 		return modded;
 	}
 

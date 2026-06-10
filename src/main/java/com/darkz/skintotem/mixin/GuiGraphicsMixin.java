@@ -1,8 +1,8 @@
 package com.darkz.skintotem.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import com.darkz.skintotem.doll.renderer.TotemDollRenderer;
-import com.darkz.skintotem.doll.renderer.special.TotemDollRenderState;
+import com.darkz.skintotem.doll.renderer.SkinTotemRenderer;
+import com.darkz.skintotem.doll.renderer.special.SkinTotemRenderState;
 import com.darkz.skintotem.utils.mixin.ItemRenderStateWithStack;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.GuiGraphicsExtractor.ScissorStack;
@@ -44,16 +44,16 @@ public class GuiGraphicsMixin {
 	)
 	private void swapTotemRendering(LivingEntity entity, Level world, ItemStack stack, int x, int y, int seed, CallbackInfo ci, @Local TrackingItemStackRenderState state) {
 		if (!this.renderDoll(stack, x, y, ci) && state instanceof ItemRenderStateWithStack stateWithStack) {
-			stateWithStack.myTotemDoll$reset();
+			stateWithStack.mySkinTotem$reset();
 		}
 	}
 
 	@Unique
 	private boolean renderDoll(ItemStack stack, int x, int y, CallbackInfo ci) {
-		if (!TotemDollRenderer.canRender(stack)) {
+		if (!SkinTotemRenderer.canRender(stack)) {
 			return false;
 		}
-		this.guiRenderState.addPicturesInPictureState(TotemDollRenderState.getGui(stack, x, y, new Matrix3x2f(this.pose), this.scissorStack.peek()));
+		this.guiRenderState.addPicturesInPictureState(SkinTotemRenderState.getGui(stack, x, y, new Matrix3x2f(this.pose), this.scissorStack.peek()));
 		ci.cancel();
 		return true;
 	}

@@ -5,7 +5,7 @@ import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import java.util.*;
 import java.util.function.*;
-import com.darkz.skintotem.MyTotemDoll;
+import com.darkz.skintotem.SkinTotem;
 
 @SuppressWarnings("unused")
 public final class CodecUtils {
@@ -18,7 +18,7 @@ public final class CodecUtils {
 		try {
 			return codec.decode(JsonOps.INSTANCE, JsonParser.parseString("{}")).getOrThrow().getFirst();
 		} catch (Exception e) {
-			throw new IllegalArgumentException("Failed to create new instance of config in the %s mod".formatted(MyTotemDoll.MOD_NAME), e);
+			throw new IllegalArgumentException("Failed to create new instance of config in the %s mod".formatted(SkinTotem.MOD_NAME), e);
 		}
 	}
 
@@ -48,7 +48,7 @@ public final class CodecUtils {
 			T value = codec.decode(JsonOps.INSTANCE, o).getOrThrow().getFirst();
 			consumer.accept(value);
 		} catch (Exception e) {
-			MyTotemDoll.LOGGER.warn("Failed to decode JsonElement:", e);
+			SkinTotem.LOGGER.warn("Failed to decode JsonElement:", e);
 		}
 	}
 
@@ -57,7 +57,7 @@ public final class CodecUtils {
 			try {
 				return codec.decode(JsonOps.INSTANCE, o.get(id)).getOrThrow().getFirst();
 			} catch (Exception e) {
-				MyTotemDoll.LOGGER.warn("Failed to decode \"%s\" from JsonObject:".formatted(id), e);
+				SkinTotem.LOGGER.warn("Failed to decode \"%s\" from JsonObject:".formatted(id), e);
 			}
 		}
 		return null;
@@ -68,7 +68,7 @@ public final class CodecUtils {
 			try {
 				return codec.decode(JsonOps.INSTANCE, o.get(id)).getOrThrow().getFirst();
 			} catch (Exception e) {
-				MyTotemDoll.LOGGER.warn("Failed to decode \"%s\" from JsonObject:".formatted(id), e);
+				SkinTotem.LOGGER.warn("Failed to decode \"%s\" from JsonObject:".formatted(id), e);
 			}
 		}
 		return fallback;

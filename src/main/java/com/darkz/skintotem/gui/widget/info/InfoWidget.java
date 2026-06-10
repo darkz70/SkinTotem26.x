@@ -68,7 +68,7 @@ public class InfoWidget implements Renderable {
 		}
 
 		ClientTooltipComponent component = ClientTooltipComponent.create(this.tooltipData);
-		tooltipScreen.myTotemDoll$requestTooltip(((c, x, y, d) -> {
+		tooltipScreen.mySkinTotem$requestTooltip(((c, x, y, d) -> {
 			DrawUtils.drawTooltip(c, List.of(component), x, y);
 		}));
 	}

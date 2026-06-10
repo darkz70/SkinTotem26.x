@@ -10,13 +10,13 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.Consumer;
 import net.fabricmc.loader.api.*;
-import com.darkz.skintotem.MyTotemDoll;
+import com.darkz.skintotem.SkinTotem;
 import com.darkz.skintotem.api.Response;
 import com.darkz.skintotem.atlas.manager.*;
 import com.darkz.skintotem.config.other.vector.Vec3f;
-import com.darkz.skintotem.doll.data.TotemDollData;
+import com.darkz.skintotem.doll.data.SkinTotemData;
 import com.darkz.skintotem.doll.manager.*;
-import com.darkz.skintotem.doll.model.TotemDollModel;
+import com.darkz.skintotem.doll.model.SkinTotemModel;
 import com.darkz.skintotem.model.base.*;
 import com.darkz.skintotem.model.bb.*;
 import com.darkz.skintotem.model.bb.BBCube.*;
@@ -37,7 +37,7 @@ import org.slf4j.*;
 // 99 - loading
 public class BlockBenchModelManager {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger("%s/BlockBenchModelManager".formatted(MyTotemDoll.MOD_NAME));
+	private static final Logger LOGGER = LoggerFactory.getLogger("%s/BlockBenchModelManager".formatted(SkinTotem.MOD_NAME));
 
 	private static final Map<Identifier, CompletableFuture<Response<MModelFactory>>> LOADED_MODELS = new ConcurrentHashMap<>();
 
@@ -305,10 +305,10 @@ public class BlockBenchModelManager {
 		BBModelResolution resolution = model.getResolution();
 
 		builder.collectAllBuiltinTextures().forEach((id, updateConsumer) -> {
-			MyTotemDollAtlasSpriteManager.registerDynamicSprite(id, false, updateConsumer::accept);
+			SkinTotemAtlasSpriteManager.registerDynamicSprite(id, false, updateConsumer::accept);
 		});
 
-		MyTotemDollAtlasManager.stitchAndUpdate(MyTotemDollAtlasSpriteManager.getSprites(), null);
+		SkinTotemAtlasManager.stitchAndUpdate(SkinTotemAtlasSpriteManager.getSprites(), null);
 
 		return () -> builder
 				.withTransform(PartPose.offset(-16.0F, -8.0F, 0.0F))
@@ -377,12 +377,12 @@ public class BlockBenchModelManager {
 
 	public static void reload() {
 		LOADED_MODELS.clear();
-		for (TotemDollData data : TotemDollManager.getAllLoadedDolls()) {
+		for (SkinTotemData data : SkinTotemManager.getAllLoadedDolls()) {
 			data.clearAllFrameModelsCompletely();
 			data.setShouldRecreateStandardModel(true);
 		}
-		TotemDollModel.createDollModel(); // Reloading doll at resource reloading while we can
-		StandardTotemDollManager.initializeStandardDollData();
+		SkinTotemModel.createDollModel(); // Reloading doll at resource reloading while we can
+		StandardSkinTotemManager.initializeStandardDollData();
 	}
 
 	private record BBModelGroupsAndRootCubes(List<UUID> rootCubes, List<BBGroup> groups) {

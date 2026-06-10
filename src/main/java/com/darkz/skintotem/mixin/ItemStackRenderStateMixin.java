@@ -37,7 +37,7 @@ public class ItemStackRenderStateMixin implements ItemRenderStateWithStack {
 		DollRenderContext context = DollRenderContext.of(this.displayContext);
 
 		if (this.stack != null) {
-			if (TotemDollRenderer.sentRenderRequest(matrices, this.stack, context, light, overlay, outlineColor, provider)) {
+			if (SkinTotemRenderer.sentRenderRequest(matrices, this.stack, context, light, overlay, outlineColor, provider)) {
 				ci.cancel();
 			}
 		}
@@ -51,17 +51,17 @@ public class ItemStackRenderStateMixin implements ItemRenderStateWithStack {
 	}
 
 	@Override
-	public void myTotemDoll$setStack(ItemStack stack) {
+	public void mySkinTotem$setStack(ItemStack stack) {
 		this.stack = stack;
 	}
 
 	@Override
-	public void myTotemDoll$shouldClear(boolean bl) {
+	public void mySkinTotem$shouldClear(boolean bl) {
 		this.shouldClear = bl;
 	}
 
 	@Override
-	public void myTotemDoll$reset() {
+	public void mySkinTotem$reset() {
 		this.stack = null;
 		this.shouldClear = false;
 	}

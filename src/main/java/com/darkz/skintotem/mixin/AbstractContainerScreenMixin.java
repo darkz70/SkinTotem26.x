@@ -1,7 +1,7 @@
 package com.darkz.skintotem.mixin;
 
 import com.darkz.skintotem.gui.widget.tag.*;
-import com.darkz.skintotem.utils.mixin.MTDAnvilScreen;
+import com.darkz.skintotem.utils.mixin.STAnvilScreen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.input.MouseButtonEvent;
 import org.jetbrains.annotations.Nullable;
@@ -47,17 +47,17 @@ public class AbstractContainerScreenMixin {
 
 	@Unique
 	private @Nullable TagMenuWidget getTagMenuWidget() {
-		if (!(this instanceof MTDAnvilScreen anvilScreen)) {
+		if (!(this instanceof STAnvilScreen anvilScreen)) {
 			return null;
 		}
-		return anvilScreen.myTotemDoll$getTagMenuWidget();
+		return anvilScreen.mySkinTotem$getTagMenuWidget();
 	}
 
 	@Unique
 	private @Nullable TagButtonWidget getTagButtonWidget() {
-		if (!(this instanceof MTDAnvilScreen anvilScreen)) {
+		if (!(this instanceof STAnvilScreen anvilScreen)) {
 			return null;
 		}
-		return anvilScreen.myTotemDoll$getTagButtonWidget();
+		return anvilScreen.mySkinTotem$getTagButtonWidget();
 	}
 }

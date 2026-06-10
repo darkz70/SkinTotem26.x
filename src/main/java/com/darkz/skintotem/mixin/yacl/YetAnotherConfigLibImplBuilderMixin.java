@@ -19,11 +19,11 @@ public class YetAnotherConfigLibImplBuilderMixin implements BetterYACLScreenBuil
 		if (!enabled) {
 			return original;
 		}
-		return ((BetterYACLScreenConfig) original).myTotemDoll$enable();
+		return ((BetterYACLScreenConfig) original).mySkinTotem$enable();
 	}
 
 	@Override
-	public Builder myTotemDoll$enable() {
+	public Builder mySkinTotem$enable() {
 		this.enabled = true;
 		return ((Builder) this);
 	}

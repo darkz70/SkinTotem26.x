@@ -28,12 +28,12 @@ public abstract class ScreenMixin extends AbstractContainerEventHandler implemen
 	}
 
 	@Override
-	public void myTotemDoll$requestTooltip(TooltipRequest tooltipRequest) {
+	public void mySkinTotem$requestTooltip(TooltipRequest tooltipRequest) {
 		this.tooltipRequest = tooltipRequest;
 	}
 
 	@Override
-	public TooltipRequest myTotemDoll$getCurrentRequest() {
+	public TooltipRequest mySkinTotem$getCurrentRequest() {
 		return this.tooltipRequest;
 	}
 }

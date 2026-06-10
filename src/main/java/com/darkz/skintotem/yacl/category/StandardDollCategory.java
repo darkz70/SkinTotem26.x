@@ -3,21 +3,21 @@ package com.darkz.skintotem.yacl.category;
 import dev.isxander.yacl3.api.*;
 import java.util.*;
 import lombok.experimental.ExtensionMethod;
-import com.darkz.skintotem.config.MyTotemDollConfig;
+import com.darkz.skintotem.config.SkinTotemConfig;
 import com.darkz.skintotem.config.totem.*;
-import com.darkz.skintotem.doll.data.TotemDollData;
-import com.darkz.skintotem.doll.manager.TotemDollManager;
+import com.darkz.skintotem.doll.data.SkinTotemData;
+import com.darkz.skintotem.doll.manager.SkinTotemManager;
 import com.darkz.skintotem.extension.SimpleOptionExtension;
-import com.darkz.skintotem.yacl.custom.controller.totem.TotemDollModelControllerBuilder;
-import com.darkz.skintotem.yacl.custom.renderer.TotemDollPreviewRenderer;
+import com.darkz.skintotem.yacl.custom.controller.totem.SkinTotemModelControllerBuilder;
+import com.darkz.skintotem.yacl.custom.renderer.SkinTotemPreviewRenderer;
 import com.darkz.skintotem.yacl.custom.simple.main.*;
 import net.minecraft.resources.Identifier;
 
 @ExtensionMethod(SimpleOptionExtension.class)
 public class StandardDollCategory {
 
-	public static ConfigCategory get(MyTotemDollConfig defConfig, MyTotemDollConfig config) {
-		TotemDollPreviewRenderer renderer = new TotemDollPreviewRenderer();
+	public static ConfigCategory get(SkinTotemConfig defConfig, SkinTotemConfig config) {
+		SkinTotemPreviewRenderer renderer = new SkinTotemPreviewRenderer();
 
 		List<Option<?>> options = new ArrayList<>();
 
@@ -51,26 +51,26 @@ public class StandardDollCategory {
 		return standardDollCategory;
 	}
 
-	private static OptionGroup getStandardDollSkinGroup(MyTotemDollConfig defConfig, MyTotemDollConfig config, TotemDollPreviewRenderer renderer) {
+	private static OptionGroup getStandardDollSkinGroup(SkinTotemConfig defConfig, SkinTotemConfig config, SkinTotemPreviewRenderer renderer) {
 		Option<String> standardDollSkinDataOption = SimpleOption.<String>startBuilder("standard_doll_skin_data")
 				.withCustomDescription(renderer)
-				.withBinding(defConfig.getStandardTotemDollSkinValue(), config::getStandardTotemDollSkinValue, (value) -> {
-					config.setStandardTotemDollSkinValue(value);
+				.withBinding(defConfig.getStandardSkinTotemSkinValue(), config::getStandardSkinTotemSkinValue, (value) -> {
+					config.setStandardSkinTotemSkinValue(value);
 					renderer.updateDoll();
 				}, true)
 				.withController()
 				.build();
 
-		standardDollSkinDataOption.setAvailable(config.getStandardTotemDollSkinType().isNeedData());
+		standardDollSkinDataOption.setAvailable(config.getStandardSkinTotemSkinType().isNeedData());
 
-		Option<TotemDollSkinType> standardDollSkinTypeOption = SimpleOption.<TotemDollSkinType>startBuilder("standard_doll_skin_type")
+		Option<SkinTotemSkinType> standardDollSkinTypeOption = SimpleOption.<SkinTotemSkinType>startBuilder("standard_doll_skin_type")
 				.withCustomDescription(renderer)
-				.withBinding(defConfig.getStandardTotemDollSkinType(), config::getStandardTotemDollSkinType, (value) -> {
-					config.setStandardTotemDollSkinType(value);
+				.withBinding(defConfig.getStandardSkinTotemSkinType(), config::getStandardSkinTotemSkinType, (value) -> {
+					config.setStandardSkinTotemSkinType(value);
 					renderer.updateDoll();
 					standardDollSkinDataOption.setAvailable(value.isNeedData());
 				}, true)
-				.withController(TotemDollSkinType.class)
+				.withController(SkinTotemSkinType.class)
 				.build();
 
 		return SimpleGroup.startBuilder("standard_doll_skin")
@@ -81,26 +81,26 @@ public class StandardDollCategory {
 				).build();
 	}
 
-	private static OptionGroup getStandardDollModelGroup(MyTotemDollConfig defConfig, MyTotemDollConfig config, TotemDollPreviewRenderer renderer) {
+	private static OptionGroup getStandardDollModelGroup(SkinTotemConfig defConfig, SkinTotemConfig config, SkinTotemPreviewRenderer renderer) {
 		Option<Identifier> standardDollModelPathOption = SimpleOption.<Identifier>startBuilder("standard_doll_model_path")
 				.withCustomDescription(renderer)
-				.withBinding(config.getSelectedStandardTotemDollModelValue(), config::getStandardTotemDollModelValue, (value) -> {
-					config.setStandardTotemDollModelValue(value);
+				.withBinding(config.getSelectedStandardSkinTotemModelValue(), config::getStandardSkinTotemModelValue, (value) -> {
+					config.setStandardSkinTotemModelValue(value);
 					renderer.updateDollState(true);
-					for (TotemDollData data : TotemDollManager.getAllLoadedDolls()) {
+					for (SkinTotemData data : SkinTotemManager.getAllLoadedDolls()) {
 						data.setShouldRecreateStandardModel(true);
 					}
 				}, true)
 				.getOptionBuilder()
-				.controller(TotemDollModelControllerBuilder::create)
+				.controller(SkinTotemModelControllerBuilder::create)
 				.build();
-		Option<TotemDollArmsType> standardDollModelArmsTypeOption = SimpleOption.<TotemDollArmsType>startBuilder("standard_doll_model_arms_type")
+		Option<SkinTotemArmsType> standardDollModelArmsTypeOption = SimpleOption.<SkinTotemArmsType>startBuilder("standard_doll_model_arms_type")
 				.withCustomDescription(renderer)
-				.withBinding(defConfig.getStandardTotemDollArmsType(), config::getStandardTotemDollArmsType, (value) -> {
-					config.setStandardTotemDollArmsType(value);
+				.withBinding(defConfig.getStandardSkinTotemArmsType(), config::getStandardSkinTotemArmsType, (value) -> {
+					config.setStandardSkinTotemArmsType(value);
 					renderer.updateDollState(false);
 				}, true)
-				.withController(TotemDollArmsType.class)
+				.withController(SkinTotemArmsType.class)
 				.build();
 
 		standardDollModelPathOption.setAvailable(!config.isUseVanillaTotemModel());

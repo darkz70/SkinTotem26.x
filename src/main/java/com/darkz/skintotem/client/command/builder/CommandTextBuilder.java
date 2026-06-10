@@ -1,11 +1,11 @@
 package com.darkz.skintotem.client.command.builder;
 
-import com.darkz.skintotem.MyTotemDoll;
+import com.darkz.skintotem.SkinTotem;
 import net.minecraft.network.chat.*;
 
 public class CommandTextBuilder {
 
-	private static final MutableComponent MOD_ID_TEXT = MyTotemDoll.text("command.id");
+	private static final MutableComponent MOD_ID_TEXT = SkinTotem.text("command.id");
 
 	private final MutableComponent text;
 
@@ -21,7 +21,7 @@ public class CommandTextBuilder {
 			}
 		}
 
-		return MyTotemDoll.text(key, args);
+		return SkinTotem.text(key, args);
 	}
 
 	private static boolean isPrimitive(Object object) {

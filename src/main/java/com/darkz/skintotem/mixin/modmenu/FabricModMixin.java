@@ -3,7 +3,7 @@ package com.darkz.skintotem.mixin.modmenu;
 // import com.terraformersmc.modmenu.util.mod.fabric.FabricMod;
 import java.util.*;
 import net.fabricmc.loader.api.metadata.ModMetadata;
-import com.darkz.skintotem.MyTotemDoll;
+import com.darkz.skintotem.SkinTotem;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -23,7 +23,7 @@ public class FabricModMixin {
 	@Dynamic
 	@Inject(at = @At("RETURN"), method = "getContributors", remap = false)
 	private void addMoreContributors(CallbackInfoReturnable<Map<String, Collection<String>>> cir) {
-		if (!MyTotemDoll.MOD_ID.equals(this.metadata.getId())) {
+		if (!SkinTotem.MOD_ID.equals(this.metadata.getId())) {
 			return;
 		}
 		Map<String, Collection<String>> map = cir.getReturnValue();

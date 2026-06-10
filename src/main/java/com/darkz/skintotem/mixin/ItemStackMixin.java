@@ -5,11 +5,11 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 import lombok.experimental.ExtensionMethod;
-import com.darkz.skintotem.MyTotemDoll;
-import com.darkz.skintotem.config.MyTotemDollConfig;
-import com.darkz.skintotem.doll.data.TotemDollData;
-import com.darkz.skintotem.doll.manager.TotemDollManager;
-import com.darkz.skintotem.doll.renderer.TotemDollRenderer;
+import com.darkz.skintotem.SkinTotem;
+import com.darkz.skintotem.config.SkinTotemConfig;
+import com.darkz.skintotem.doll.data.SkinTotemData;
+import com.darkz.skintotem.doll.manager.SkinTotemManager;
+import com.darkz.skintotem.doll.renderer.SkinTotemRenderer;
 import com.darkz.skintotem.extension.ItemStackExtension;
 import com.darkz.skintotem.gui.tooltip.combined.CombinedTooltipData;
 import com.darkz.skintotem.gui.tooltip.state.LoadingStateTooltipData;
@@ -37,7 +37,7 @@ public abstract class ItemStackMixin {
 
 	@ModifyReturnValue(at = @At("RETURN"), method = "getHoverName")
 	private Component getName(Component original) {
-		if (!MyTotemDollConfig.getInstance().isModEnabled() || !this.is((holder) -> holder.is(Items.TOTEM_OF_UNDYING.builtInRegistryHolder().key()))) {
+		if (!SkinTotemConfig.getInstance().isModEnabled() || !this.is((holder) -> holder.is(Items.TOTEM_OF_UNDYING.builtInRegistryHolder().key()))) {
 			return original;
 		}
 		String string = original.getString();
@@ -57,7 +57,7 @@ public abstract class ItemStackMixin {
 	private Optional<TooltipComponent> getTooltipData(Optional<TooltipComponent> original) {
 		ItemStack itemStack = (ItemStack) (Object) this;
 
-		if (!TotemDollRenderer.canRender(itemStack)) {
+		if (!SkinTotemRenderer.canRender(itemStack)) {
 			return original;
 		}
 
@@ -89,8 +89,8 @@ public abstract class ItemStackMixin {
 			return Optional.empty();
 		}
 		String o = data[0];
-		TotemDollData totemDollData = TotemDollManager.getDoll(o);
-		return Optional.of(new LoadingStateTooltipData(totemDollData.getStandardSprites().getState()));
+		SkinTotemData skinTotemData = SkinTotemManager.getDoll(o);
+		return Optional.of(new LoadingStateTooltipData(skinTotemData.getStandardSprites().getState()));
 	}
 
 	@Unique
@@ -103,7 +103,7 @@ public abstract class ItemStackMixin {
 			return Optional.empty();
 		}
 		return Optional.of(new CombinedTooltipData(
-						new WrappedTextTooltipData(MyTotemDoll.text("tags.title").withStyle(ChatFormatting.GRAY)),
+						new WrappedTextTooltipData(SkinTotem.text("tags.title").withStyle(ChatFormatting.GRAY)),
 						new TagsTooltipData(tags)
 				)
 		);

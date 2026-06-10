@@ -1,6 +1,6 @@
 package com.darkz.skintotem.extension;
 
-import com.darkz.skintotem.doll.data.TotemDollData;
+import com.darkz.skintotem.doll.data.SkinTotemData;
 import com.darkz.skintotem.doll.manager.*;
 import com.darkz.skintotem.tag.manager.TagsManager;
 import com.darkz.skintotem.utils.mixin.*;
@@ -17,16 +17,16 @@ public class ItemStackExtension {
 		return itemStack.components.get(net.minecraft.core.component.DataComponents.CUSTOM_NAME);
 	}
 
-	public static TotemDollData getTotemDollData(ItemStack stack) {
-		return getTotemDollData(stack, true);
+	public static SkinTotemData getSkinTotemData(ItemStack stack) {
+		return getSkinTotemData(stack, true);
 	}
 
-	public static TotemDollData getTotemDollData(ItemStack stack, boolean applyRenderProperties) {
+	public static SkinTotemData getSkinTotemData(ItemStack stack, boolean applyRenderProperties) {
 		Component name = getRealCustomName(stack);
 
 		if (name != null) {
 			String o = TagsManager.getNicknameOrSkinProviderFromName(name.getString());
-			TotemDollData data = TotemDollManager.getDoll(o);
+			SkinTotemData data = SkinTotemManager.getDoll(o);
 
 			// refresh render properties
 			data.refreshRenderProperties();
@@ -40,24 +40,24 @@ public class ItemStackExtension {
 			return applyRenderProperties ? data.applyRenderProperties() : data; // apply render properties
 		}
 
-		TotemDollData data = StandardTotemDollManager.getStandardDoll().refreshRenderProperties();
+		SkinTotemData data = StandardSkinTotemManager.getStandardDoll().refreshRenderProperties();
 		return applyRenderProperties ? data.applyRenderProperties() : data;
 	}
 
 	public static void setModdedModel(ItemStack itemStack, boolean modded) {
-		((ItemStackWithModdedBakedModel) (Object) itemStack).myTotemDoll$setModdedModel(modded);
+		((ItemStackWithModdedBakedModel) (Object) itemStack).mySkinTotem$setModdedModel(modded);
 	}
 
 	public static boolean hasModdedModel(ItemStack itemStack) {
-		return ((ItemStackWithModdedBakedModel) (Object) itemStack).myTotemDoll$isModdedModel();
+		return ((ItemStackWithModdedBakedModel) (Object) itemStack).mySkinTotem$isModdedModel();
 	}
 
 	public static void setPlayerEntity(ItemStack itemStack, AbstractClientPlayer playerEntity) {
-		((ItemStackWithPlayerEntity) (Object) itemStack).myTotemDoll$setPlayerEntity(playerEntity);
+		((ItemStackWithPlayerEntity) (Object) itemStack).mySkinTotem$setPlayerEntity(playerEntity);
 	}
 
 	public static AbstractClientPlayer getPlayerEntity(ItemStack itemStack) {
-		return ((ItemStackWithPlayerEntity) (Object) itemStack).myTotemDoll$getPlayerEntity();
+		return ((ItemStackWithPlayerEntity) (Object) itemStack).mySkinTotem$getPlayerEntity();
 	}
 
 }

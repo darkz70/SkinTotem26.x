@@ -1,11 +1,11 @@
 package com.darkz.skintotem.gui.screen;
 
-import com.darkz.skintotem.MyTotemDoll;
-import com.darkz.skintotem.config.MyTotemDollConfig;
-import com.darkz.skintotem.doll.model.TotemDollModel;
+import com.darkz.skintotem.SkinTotem;
+import com.darkz.skintotem.config.SkinTotemConfig;
+import com.darkz.skintotem.doll.model.SkinTotemModel;
 import com.darkz.skintotem.gui.*;
-import com.darkz.skintotem.gui.widget.TotemDollModelPreviewWidget;
-import com.darkz.skintotem.gui.widget.preview.WelcomeTotemDollModelPreviewWidget;
+import com.darkz.skintotem.gui.widget.SkinTotemModelPreviewWidget;
+import com.darkz.skintotem.gui.widget.preview.WelcomeSkinTotemModelPreviewWidget;
 import com.darkz.skintotem.utils.DrawUtils;
 import com.darkz.skintotem.utils.texture.PlayerSkinUtils;
 import net.minecraft.client.Minecraft;
@@ -21,13 +21,13 @@ public class WelcomeScreen extends Screen {
 	private Area textArea;
 	private Area firstDollArea;
 	private Area secondDollArea;
-	private TotemDollModelPreviewWidget firstDollPreviewWidget;
-	private TotemDollModelPreviewWidget secondDollPreviewWidget;
+	private SkinTotemModelPreviewWidget firstDollPreviewWidget;
+	private SkinTotemModelPreviewWidget secondDollPreviewWidget;
 	private MultiLineLabel text;
 
 
 	public WelcomeScreen(Runnable onClose) {
-		super(MyTotemDoll.text("welcome_screen.title"));
+		super(SkinTotem.text("welcome_screen.title"));
 		this.onClose = onClose;
 	}
 
@@ -36,7 +36,7 @@ public class WelcomeScreen extends Screen {
 		int offset = 20;
 		int screenWidth = this.width;
 		int screenHeight = this.height;
-		this.text = MultiLineLabel.create(Minecraft.getInstance().font, MyTotemDoll.text("welcome_screen.text"), screenWidth - (offset * 2));
+		this.text = MultiLineLabel.create(Minecraft.getInstance().font, SkinTotem.text("welcome_screen.text"), screenWidth - (offset * 2));
 
 		int textHeight = (this.text.getLineCount() * 9) + 10;
 		int textWidth = this.text.getWidth() + 10;
@@ -51,24 +51,24 @@ public class WelcomeScreen extends Screen {
 		this.firstDollArea  = previewArea.copy();
 		this.secondDollArea = previewArea.copy().x(previewX + size + offset);
 
-		this.firstDollPreviewWidget  = this.addWidget(createWelcomeModelPreviewWidget(this.firstDollArea, TotemDollModel.THREE_D_MODEL_id));
-		this.secondDollPreviewWidget = this.addWidget(createWelcomeModelPreviewWidget(this.secondDollArea, TotemDollModel.TWO_D_MODEL_ID));
+		this.firstDollPreviewWidget  = this.addWidget(createWelcomeModelPreviewWidget(this.firstDollArea, SkinTotemModel.THREE_D_MODEL_id));
+		this.secondDollPreviewWidget = this.addWidget(createWelcomeModelPreviewWidget(this.secondDollArea, SkinTotemModel.TWO_D_MODEL_ID));
 
 		if (this.firstDollArea.getX() < this.textArea.getX()) {
 			this.textArea.x(this.firstDollArea.getX()).width((size * 2) + offset);
 		}
 	}
 
-	private @NotNull WelcomeTotemDollModelPreviewWidget createWelcomeModelPreviewWidget(Area area, Identifier modelId) {
+	private @NotNull WelcomeSkinTotemModelPreviewWidget createWelcomeModelPreviewWidget(Area area, Identifier modelId) {
 		Runnable runnable = () -> {
-			MyTotemDollConfig config = MyTotemDollConfig.getInstance();
-			config.setSelectedStandardTotemDollModelValue(modelId);
-			config.setStandardTotemDollModelValue(modelId);
+			SkinTotemConfig config = SkinTotemConfig.getInstance();
+			config.setSelectedStandardSkinTotemModelValue(modelId);
+			config.setStandardSkinTotemModelValue(modelId);
 			config.saveAsync();
 			this.onClose();
 		};
 
-		WelcomeTotemDollModelPreviewWidget widget = new WelcomeTotemDollModelPreviewWidget(area.getX(), area.getY(), area.getWidth(), runnable);
+		WelcomeSkinTotemModelPreviewWidget widget = new WelcomeSkinTotemModelPreviewWidget(area.getX(), area.getY(), area.getWidth(), runnable);
 		widget.updateModel(modelId);
 
 		PlayerSkinUtils.setupClientTextures(widget.getData());
@@ -87,13 +87,13 @@ public class WelcomeScreen extends Screen {
 		BackgroundRenderer.drawTransparencyWidgetBackground(graphics, this.firstDollArea.getX(), this.firstDollArea.getY(), this.firstDollArea.getWidth(), this.firstDollArea.getHeight(), true, firstOver);
 		this.firstDollPreviewWidget.extractRenderState(graphics, mouseX, mouseY, delta);
 
-		DrawUtils.drawCenteredText(graphics, MyTotemDoll.text("welcome_screen.option.3d"), this.firstDollArea.getX() + 10, this.firstDollArea.getY() + 10, this.firstDollArea.getWidth() - 20);
+		DrawUtils.drawCenteredText(graphics, SkinTotem.text("welcome_screen.option.3d"), this.firstDollArea.getX() + 10, this.firstDollArea.getY() + 10, this.firstDollArea.getWidth() - 20);
 
 		boolean secondOver = this.secondDollArea.over(mouseX, mouseY);
 		BackgroundRenderer.drawTransparencyWidgetBackground(graphics, this.secondDollArea.getX(), this.secondDollArea.getY(), this.secondDollArea.getWidth(), this.secondDollArea.getHeight(), true, secondOver);
 		this.secondDollPreviewWidget.extractRenderState(graphics, mouseX, mouseY, delta);
 
-		DrawUtils.drawCenteredText(graphics, MyTotemDoll.text("welcome_screen.option.2d"), this.secondDollArea.getX() + 10, this.secondDollArea.getY() + 10, this.secondDollArea.getWidth() - 20);
+		DrawUtils.drawCenteredText(graphics, SkinTotem.text("welcome_screen.option.2d"), this.secondDollArea.getX() + 10, this.secondDollArea.getY() + 10, this.secondDollArea.getWidth() - 20);
 	}
 
 	@Override

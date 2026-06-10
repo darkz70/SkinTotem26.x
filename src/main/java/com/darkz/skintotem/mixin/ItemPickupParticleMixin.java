@@ -16,7 +16,7 @@ public class ItemPickupParticleMixin {
 	@Inject(at = @At("TAIL"), method = "<init>")
 	private void markClear(ClientLevel world, EntityRenderState renderState, Entity collector, Vec3 velocity, CallbackInfo ci) {
 		if (renderState instanceof ItemClusterRenderState state) {
-			((ItemRenderStateWithStack) state.item).myTotemDoll$shouldClear(false);
+			((ItemRenderStateWithStack) state.item).mySkinTotem$shouldClear(false);
 		}
 	}
 

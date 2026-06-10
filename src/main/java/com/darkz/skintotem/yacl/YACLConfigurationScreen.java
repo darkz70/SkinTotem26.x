@@ -1,6 +1,6 @@
 package com.darkz.skintotem.yacl;
 
-import com.darkz.skintotem.config.MyTotemDollConfig;
+import com.darkz.skintotem.config.SkinTotemConfig;
 import com.darkz.skintotem.utils.ModMenuUtils;
 import com.darkz.skintotem.yacl.category.*;
 import com.darkz.skintotem.yacl.custom.screen.*;
@@ -11,8 +11,8 @@ import net.minecraft.network.chat.Component;
 public class YACLConfigurationScreen {
 
 	public static Screen createScreen(Screen parent) {
-		MyTotemDollConfig defConfig = MyTotemDollConfig.getNewInstance();
-		MyTotemDollConfig config = MyTotemDollConfig.getInstance();
+		SkinTotemConfig defConfig = SkinTotemConfig.getNewInstance();
+		SkinTotemConfig config = SkinTotemConfig.getInstance();
 
 		return SimpleYACLScreen.startBuilder(parent, config::save)
 				.categories(GeneralCategory.get(defConfig, config))
@@ -22,7 +22,7 @@ public class YACLConfigurationScreen {
 	}
 
 	public static boolean notOpen(Screen currentScreen) {
-		return !(currentScreen instanceof MyTotemDollYACLScreen || currentScreen instanceof TotemDollModelSelectionScreen);
+		return !(currentScreen instanceof SkinTotemYACLScreen || currentScreen instanceof SkinTotemModelSelectionScreen);
 	}
 
 	public static Component getRenderingCategoryTitle() {

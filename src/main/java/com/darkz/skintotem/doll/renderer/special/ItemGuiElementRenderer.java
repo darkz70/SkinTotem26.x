@@ -2,7 +2,7 @@ package com.darkz.skintotem.doll.renderer.special;
 
 import com.mojang.blaze3d.platform.Lighting.Entry;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.darkz.skintotem.MyTotemDoll;
+import com.darkz.skintotem.SkinTotem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.render.pip.PictureInPictureRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -55,7 +55,7 @@ public class ItemGuiElementRenderer extends PictureInPictureRenderer<ItemGuiRend
 
 	@Override
 	protected String getTextureLabel() {
-		return "%s-item-special-gui-renderer".formatted(MyTotemDoll.MOD_ID);
+		return "%s-item-special-gui-renderer".formatted(SkinTotem.MOD_ID);
 	}
 
 	public void renderItem(ItemStack stack, ItemDisplayContext displayContext, int light, int overlay, PoseStack matrices, MultiBufferSource vertexConsumers, @Nullable Level world, int seed) {

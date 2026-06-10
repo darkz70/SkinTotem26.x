@@ -2,8 +2,8 @@ package com.darkz.skintotem.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.*;
 import java.util.function.Consumer;
-import com.darkz.skintotem.config.MyTotemDollConfig;
-import com.darkz.skintotem.utils.mixin.MTDAnvilScreen;
+import com.darkz.skintotem.config.SkinTotemConfig;
+import com.darkz.skintotem.utils.mixin.STAnvilScreen;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.ItemCombinerScreen;
 import net.minecraft.resources.Identifier;
@@ -27,7 +27,7 @@ public class ItemCombinerScreenMixin {
 
 	@Unique
 	private void drawBackground(int width, Consumer<Integer> draw) {
-		if (this instanceof MTDAnvilScreen && MyTotemDollConfig.getInstance().isModEnabled()) {
+		if (this instanceof STAnvilScreen && SkinTotemConfig.getInstance().isModEnabled()) {
 			draw.accept(176);
 			return;
 		}
