@@ -38,7 +38,6 @@ public class SimpleOption {
 
 		private final String optionId;
 		private final String optionKey;
-		@Getter
 		private final Option.Builder<T> optionBuilder;
 
 		public Builder(String optionId) {
@@ -83,9 +82,8 @@ public class SimpleOption {
 
 	public static class ButtonBuilder {
 
-		private final String optionId;
+	    private final String optionId;
 		private final String optionKey;
-		@Getter
 		private final ButtonOption.Builder optionBuilder;
 
 		public ButtonBuilder(String optionId, BiConsumer<YACLScreen, ButtonOption> biConsumer) {
@@ -123,7 +121,6 @@ public class SimpleOption {
 
 		private final String optionId;
 		private final String optionKey;
-		@Getter
 		private final ListOption.Builder<T> optionBuilder;
 
 		public ListOptionBuilder(String optionId) {
