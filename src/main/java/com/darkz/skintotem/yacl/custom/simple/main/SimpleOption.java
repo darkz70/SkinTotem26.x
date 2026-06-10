@@ -1,17 +1,4 @@
-package com.darkz.skintotem.yacl.custom.simple.main;
-
-import dev.isxander.yacl3.api.*;
-import dev.isxander.yacl3.gui.YACLScreen;
-import dev.isxander.yacl3.gui.image.ImageRenderer;
-import java.util.List;
-import java.util.function.*;
-import lombok.Getter;
-import lombok.experimental.ExtensionMethod;
-import com.darkz.skintotem.extension.YACLAPIExtension;
-import com.darkz.skintotem.utils.ModMenuUtils;
-import com.darkz.skintotem.yacl.custom.simple.utils.SimpleContent;
-
-import com.darkz.skintotem.extension.YACLAPIExtension;
+@ExtensionMethod(YACLAPIExtension.class)
 public class SimpleOption {
 
 	// Builder
@@ -38,6 +25,7 @@ public class SimpleOption {
 
 		private final String optionId;
 		private final String optionKey;
+		@Getter
 		private final Option.Builder<T> optionBuilder;
 
 		public Builder(String optionId) {
@@ -66,7 +54,7 @@ public class SimpleOption {
 		}
 
 		public Builder<T> withBinding(Binding<T> binding, boolean instant) {
-			YACLAPIExtension.bindingE(this.optionBuilder, binding, instant);
+			this.optionBuilder.bindingE(binding, instant);
 			return this;
 		}
 
@@ -82,8 +70,9 @@ public class SimpleOption {
 
 	public static class ButtonBuilder {
 
-	    private final String optionId;
+		private final String optionId;
 		private final String optionKey;
+		@Getter
 		private final ButtonOption.Builder optionBuilder;
 
 		public ButtonBuilder(String optionId, BiConsumer<YACLScreen, ButtonOption> biConsumer) {
@@ -121,6 +110,7 @@ public class SimpleOption {
 
 		private final String optionId;
 		private final String optionKey;
+		@Getter
 		private final ListOption.Builder<T> optionBuilder;
 
 		public ListOptionBuilder(String optionId) {
