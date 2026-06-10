@@ -1,3 +1,16 @@
+package com.darkz.skintotem.yacl.custom.simple.main;
+
+import dev.isxander.yacl3.api.*;
+import dev.isxander.yacl3.gui.YACLScreen;
+import dev.isxander.yacl3.gui.image.ImageRenderer;
+import java.util.List;
+import java.util.function.*;
+import lombok.Getter;
+import lombok.experimental.ExtensionMethod;
+import com.darkz.skintotem.extension.YACLAPIExtension;
+import com.darkz.skintotem.utils.ModMenuUtils;
+import com.darkz.skintotem.yacl.custom.simple.utils.SimpleContent
+	
 @ExtensionMethod(YACLAPIExtension.class)
 public class SimpleOption {
 
