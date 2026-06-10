@@ -8,7 +8,7 @@ public class SkinTotemCommandManager {
 
 	public static void register() {
 		ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
-			dispatcher.register(literal("my-totem-doll")
+			dispatcher.register(literal("skintotem")
 					.then(RefreshCommand.getInstance()));
 		});
 	}
