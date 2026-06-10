@@ -11,7 +11,7 @@ import com.darkz.skintotem.extension.YACLAPIExtension;
 import com.darkz.skintotem.utils.ModMenuUtils;
 import com.darkz.skintotem.yacl.custom.simple.utils.SimpleContent;
 
-@ExtensionMethod(YACLAPIExtension.class)
+import com.darkz.skintotem.extension.YACLAPIExtension;
 public class SimpleOption {
 
 	// Builder
@@ -67,7 +67,7 @@ public class SimpleOption {
 		}
 
 		public Builder<T> withBinding(Binding<T> binding, boolean instant) {
-			this.optionBuilder.bindingE(binding, instant);
+			YACLAPIExtension.bindingE(this.optionBuilder, binding, instant);
 			return this;
 		}
 
