@@ -13,7 +13,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.player.*;
 import net.minecraft.client.renderer.*;
-// import net.minecraft.client.renderer.ItemInHandRenderer.HandRenderSelection;
+import net.minecraft.client.renderer.ItemInHandRenderer.HandRenderSelection;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.*;
