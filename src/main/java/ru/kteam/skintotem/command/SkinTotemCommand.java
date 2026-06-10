@@ -41,7 +41,7 @@ public class SkinTotemCommand {
                     ctx.getSource().sendFeedback(Text.literal(
                         "\n§6╔══════════════════════════════════════════════════╗\n" +
                         "§6║  §bSkinTotem §fv1.0.0                                     §6║\n" +
-                        "§6║  §7Author:       §fDarkz      §fKlashRaisk    LopyMine    §6║\n" +
+                        "§6║  §7Author:       §fDarkz      §fKlashRaisk   §fLopyMine    §6║\n" +
                         "§6║  §7Team:         §fK-TEAM                                 §6║\n" +
                         "§6╚════════════════════════════════════════════════════╝\n"
                     ));
