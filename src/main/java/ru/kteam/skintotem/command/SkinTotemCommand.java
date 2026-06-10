@@ -22,7 +22,7 @@ public class SkinTotemCommand {
                 // /skintotem info
                 .then(ClientCommandManager.literal("info").executes(ctx -> {
                     ctx.getSource().sendFeedback(Text.literal(
-                        P + "§bv1.0.0 §8| §bAuthor: §fDarkz §8| §fK-TEAM"
+                        P + "§bv1.0.0 §8| §bAuthor: §fDarkz §8| §fLopyMine §8| KlashRaick §8| §fK-TEAM"
                     ));
                     return 1;
                 }))
@@ -95,6 +95,6 @@ public class SkinTotemCommand {
                 })
         );
 
-        SkinTotemMod.LOGGER.info("[SkinTotem] Commands registered");
+        SkinTotem.LOGGER.info("[SkinTotem] Commands registered");
     }
 }
