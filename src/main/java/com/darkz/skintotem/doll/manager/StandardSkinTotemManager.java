@@ -59,10 +59,12 @@ public class StandardSkinTotemManager {
 		}
 
 		return switch (skinTotemSkin) {
-			case PLAYER -> loadPlayerSkin(data);
-			case URL_SKIN -> loadUrlSkin(data);
-			case FILE_SKIN -> loadFileSkin(data);
-			default -> getSteveDoll();
+			    case PLAYER -> loadPlayerSkin(data);
+                case URL_SKIN -> loadUrlSkin(data);
+                case FILE_SKIN -> loadFileSkin(data);
+                case TLAUNCHER -> TLauncherSkinProvider.getInstance().getOrLoadDoll(data);
+                case ELY_BY -> ElyBySkinProvider.getInstance().getOrLoadDoll(data);
+                default -> getSteveDoll();
 		};
 	}
 
