@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 @Getter
 @Setter
 @ExtensionMethod(ItemStackExtension.class)
-public class SkinTotemGuiElementRenderer extends PictureInPictureRenderer<SkinTotemRenderState> {
+public class TotemDollGuiElementRenderer extends PictureInPictureRenderer<SkinTotemRenderState> {
 
 	public static final Map<SkinTotemRenderProperties, SkinTotemGuiElementRenderer> PROPERTIES_RENDERERS = new HashMap<>();
 
@@ -58,14 +58,14 @@ public class SkinTotemGuiElementRenderer extends PictureInPictureRenderer<SkinTo
 		});
 		int cleared = all - PROPERTIES_RENDERERS.size();
 		if (SkinTotemConfig.getInstance().isDebugLogEnabled() && cleared != 0) {
-			SkinTotemClient.LOGGER.info("Removed Inactive Totem Doll Renderers: {}", cleared);
+			SkinTotemClient.LOGGER.info("Removed Inactive Skin Totem Renderers: {}", cleared);
 		}
 	}
 
 	@Override
 	protected void renderToTexture(SkinTotemRenderState state, PoseStack matrices) {
 		if (state.renderContext() == DollRenderContext.D_PREVIEW && state.data() != null) {
-			SkinTotemRenderer.renderDataPreview(matrices, this.bufferSource, this.bufferSource::endBatch, state.size() + 1, state.data());
+			TotemDollRenderer.renderDataPreview(matrices, this.bufferSource, this.bufferSource::endBatch, state.size() + 1, state.data());
 		} else if (state.stack() != null) {
 			LightningUtils.disable3dLighting();
 			matrices.pushPose();
