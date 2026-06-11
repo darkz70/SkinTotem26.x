@@ -83,10 +83,7 @@ public class SkinTotemGuiElementRenderer extends PictureInPictureRenderer<SkinTo
 			if (state.stack().hasModdedModel()) {
 				state.stack().setModdedModel(false);
 			}
-		}
-	}
-
-	@Override
+		Override
 	public Class<SkinTotemRenderState> getRenderStateClass() {
 		return SkinTotemRenderState.class;
 	}
@@ -99,5 +96,5 @@ public class SkinTotemGuiElementRenderer extends PictureInPictureRenderer<SkinTo
 	@Override
 	protected float getTranslateY(int height, int windowScaleFactor) {
 		return height / 2F;
+		}
 	}
-}
