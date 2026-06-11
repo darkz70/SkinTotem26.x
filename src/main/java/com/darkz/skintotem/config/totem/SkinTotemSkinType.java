@@ -1,20 +1,20 @@
 package com.darkz.skintotem.config.totem;
 
 import com.mojang.serialization.Codec;
-import lombok.Getter;
 import com.darkz.skintotem.SkinTotem;
 import com.darkz.skintotem.config.other.EnumWithText;
 import net.minecraft.network.chat.*;
 import net.minecraft.util.StringRepresentable;
 
-@Getter
 public enum SkinTotemSkinType implements StringRepresentable, EnumWithText {
 
 	STEVE(false),
 	PLAYER(true),
 	HOLDING_PLAYER(false),
 	URL_SKIN(true),
-	FILE_SKIN(true);
+	FILE_SKIN(true),
+	TLAUNCHER(true),
+	ELY_BY(true);
 
 	public static final Codec<SkinTotemSkinType> CODEC = StringRepresentable.fromEnum(SkinTotemSkinType::values);
 
@@ -22,6 +22,10 @@ public enum SkinTotemSkinType implements StringRepresentable, EnumWithText {
 
 	SkinTotemSkinType(boolean needData) {
 		this.needData = needData;
+	}
+
+	public boolean isNeedData() {
+		return needData;
 	}
 
 	public MutableComponent getText() {
