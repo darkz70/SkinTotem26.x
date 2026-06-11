@@ -32,7 +32,7 @@ public class SkinTotemPreviewRenderer implements ImageRenderer {
 	private int lastRenderWidth;
 
 	public SkinTotemPreviewRenderer() {
-		this.data = StandardSkinTotemManager.initializeStandardDoll();
+		this.data = StandardSkinTotemManager.initializeStandardDollData();
 	}
 
 	@Override
