@@ -8,15 +8,13 @@ import net.minecraft.network.chat.Component;
 public class SimpleGroup {
 
 	private final OptionGroup.Builder groupBuilder;
-	private final OptionDescription.Builder description;
+	private OptionDescription builtDescription = null;
 
 	public SimpleGroup(String groupId) {
 		String groupKey = ModMenuUtils.getGroupKey(groupId);
 		Component groupName = ModMenuUtils.getName(groupKey);
-		Component description = ModMenuUtils.getDescription(groupKey);
 
 		this.groupBuilder = OptionGroup.createBuilder().name(groupName);
-		this.description  = OptionDescription.createBuilder().text(description);
 	}
 
 	public static SimpleGroup startBuilder(String groupId) {
@@ -34,11 +32,14 @@ public class SimpleGroup {
 	}
 
 	public SimpleGroup withCustomDescription(SkinTotemPreviewRenderer renderer) {
-		this.description.customImage(renderer);
+		this.builtDescription = OptionDescription.createBuilder().customImage(renderer).build();
 		return this;
 	}
 
 	public OptionGroup build() {
-		return this.groupBuilder.description(this.description.build()).build();
+		if (this.builtDescription != null) {
+			this.groupBuilder.description(this.builtDescription);
+		}
+		return this.groupBuilder.build();
 	}
 }
