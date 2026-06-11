@@ -2,7 +2,6 @@ package com.darkz.skintotem.doll.renderer.special;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.*;
-import lombok.*;
 import lombok.experimental.ExtensionMethod;
 import com.darkz.skintotem.SkinTotem;
 import com.darkz.skintotem.client.SkinTotemClient;
@@ -16,14 +15,20 @@ import net.minecraft.client.renderer.MultiBufferSource.BufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import org.jetbrains.annotations.NotNull;
 
-@Getter
-@Setter
 @ExtensionMethod(ItemStackExtension.class)
-public class TotemDollGuiElementRenderer extends PictureInPictureRenderer<SkinTotemRenderState> {
+public class SkinTotemGuiElementRenderer extends PictureInPictureRenderer<SkinTotemRenderState> {
 
 	public static final Map<SkinTotemRenderProperties, SkinTotemGuiElementRenderer> PROPERTIES_RENDERERS = new HashMap<>();
 
 	private boolean active;
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 
 	public SkinTotemGuiElementRenderer(BufferSource vertexConsumers) {
 		super(vertexConsumers);
@@ -58,14 +63,14 @@ public class TotemDollGuiElementRenderer extends PictureInPictureRenderer<SkinTo
 		});
 		int cleared = all - PROPERTIES_RENDERERS.size();
 		if (SkinTotemConfig.getInstance().isDebugLogEnabled() && cleared != 0) {
-			SkinTotemClient.LOGGER.info("Removed Inactive Skin Totem Renderers: {}", cleared);
+			SkinTotemClient.LOGGER.info("Removed Inactive Totem Doll Renderers: {}", cleared);
 		}
 	}
 
 	@Override
 	protected void renderToTexture(SkinTotemRenderState state, PoseStack matrices) {
 		if (state.renderContext() == DollRenderContext.D_PREVIEW && state.data() != null) {
-			TotemDollRenderer.renderDataPreview(matrices, this.bufferSource, this.bufferSource::endBatch, state.size() + 1, state.data());
+			SkinTotemRenderer.renderDataPreview(matrices, this.bufferSource, this.bufferSource::endBatch, state.size() + 1, state.data());
 		} else if (state.stack() != null) {
 			LightningUtils.disable3dLighting();
 			matrices.pushPose();
