@@ -43,7 +43,7 @@ public abstract class AbstractSelectionListMixin {
 					"getNextY",
 					"contentHeight"
 			})
-	private int addOffset(Object instance, Operation<Integer> original) {
+	private int addOffset(@Coerce Object instance, Operation<Integer> original) {
 		Integer height = original.call(instance);
 		if (!(((AbstractSelectionList<?>) (Object) this) instanceof ButtonListWidget)) {
 			return height;
