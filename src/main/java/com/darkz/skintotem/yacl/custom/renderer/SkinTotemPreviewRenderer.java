@@ -5,6 +5,7 @@ import lombok.experimental.ExtensionMethod;
 import com.darkz.skintotem.SkinTotem;
 import com.darkz.skintotem.config.SkinTotemConfig;
 import com.darkz.skintotem.config.totem.SkinTotemSkinType;
+import com.darkz.skintotem.doll.data.LoadingState;
 import com.darkz.skintotem.doll.data.SkinTotemData;
 import com.darkz.skintotem.doll.manager.StandardSkinTotemManager;
 import com.darkz.skintotem.doll.renderer.SkinTotemRenderer;
@@ -103,6 +104,11 @@ public class SkinTotemPreviewRenderer implements ImageRenderer {
 		SkinTotemConfig config = SkinTotemConfig.getInstance();
 
 		BackgroundRenderer.drawTransparencyWidgetBackground(context, x, y, size, size, true, true);
+
+		// Автообновление когда скин загружен
+		if (this.data.getStandardSprites().getState() == LoadingState.DOWNLOADED) {
+			this.updateDollState(false);
+		}
 
 		SkinTotemRenderer.renderPreview(context, x, y, size, size, size / 1.5F, config.isUseVanillaTotemModel() || SkinTotemPlugin.isGoodStick(config.getStandardSkinTotemSkinValue()) ? null : this.data.refreshAndApplyRenderProperties());
 
