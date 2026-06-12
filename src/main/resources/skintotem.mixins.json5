@@ -26,7 +26,8 @@
 	    "ItemStackRenderStateMixin",
 	    "MinecraftMixin",
 	    "ScreenEffectRendererMixin",
-	    "accessor.CubeDeformationAccessor"
+	    "accessor.CubeDeformationAccessor",
+	    "accessor.CubePolygonsAccessor"
     ],
     "injectors": {
         "defaultRequire": 1
