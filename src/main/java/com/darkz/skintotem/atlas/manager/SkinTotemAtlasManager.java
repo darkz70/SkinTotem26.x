@@ -71,12 +71,16 @@ public class SkinTotemAtlasManager {
 
 		TextureAtlas atlasTexture = SkinTotemAtlasManager.createNotRegisteredInstance();
 
-		List<SpriteContents> contents = sprites.stream().map(AtlasSprite::getContents).filter(Objects::nonNull).toList();
-
-			CompletableFuture<Preparations> future = CompletableFuture.supplyAsync(
-					// stitch is accessible via AW in 26.1
-					() -> SpriteLoader.create(atlasTexture).stitch(contents, 0, prepareExecutor)
-			);
+		CompletableFuture<Preparations> future = CompletableFuture.supplyAsync(
+				// stitch is accessible via AW in 26.1
+				() -> SpriteLoader.create(atlasTexture).stitch(
+						SkinTotemAtlasSpriteManager.getSprites().stream()
+								.map(AtlasSprite::getContents)
+								.filter(Objects::nonNull)
+								.toList(),
+						0, prepareExecutor
+				)
+		);
 
 		if (synchronizer != null) {
 			future = future.thenCompose(synchronizer::wait);
