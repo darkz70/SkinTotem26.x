@@ -191,7 +191,10 @@ public class SkinTotemAtlasSpriteManager {
 		});
 
 		createAndRegisterSprite(MISSING_SPRITE.getSpriteId(), () -> MISSING_SPRITE, DYNAMIC_SPRITES, null);
-		registerDynamicSprite(STEVE_SKIN_SPRITE.getSpriteId(), false, null);
+		loadFromResource(STEVE_SKIN_SPRITE.getSpriteId(), (image) -> {
+			AtlasSprite.updateContents(STEVE_SKIN_SPRITE, image);
+			handleSprite(STEVE_SKIN_SPRITE, true);
+		});
 
 		registerSpecialRemappedSprite(ELYTRA_SPRITE, false);
 	}
@@ -201,4 +204,4 @@ public class SkinTotemAtlasSpriteManager {
 		AtlasSprite create();
 
 	}
-}
+				}
