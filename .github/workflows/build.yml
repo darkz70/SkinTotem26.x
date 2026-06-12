@@ -3,7 +3,7 @@ name: Debug Build
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [main, 26.1]
 
 jobs:
   debug_build:
