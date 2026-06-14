@@ -11,7 +11,7 @@ mossyDependencies {
 
 	neoForge = prop("build.neoforge")
 
-//	parchment = prop("build.parchment")
+	parchment = prop("build.parchment")
 
 	additional {
 		//override("modCompileOnly", "yacl")
