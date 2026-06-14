@@ -165,9 +165,61 @@ public class SkinTotemRenderer {
 			drawer.requestDrawingPartWithSprite("elytra", elytraSprite);
 		}
 
+		applyHeadLookAtCursor(skinTotemData, model);
 		drawer.draw(matrices, provider, skinSprite, light, overlay, -1);
+		restoreHeadRotation(skinTotemData, model);
 
 		matrices.popPose();
+	}
+
+	private static void applyHeadLookAtCursor(SkinTotemData skinTotemData, SkinTotemModel model) {
+		DollRenderContext ctx = skinTotemData.getRenderProperties().getRenderContext();
+		if (ctx != DollRenderContext.D_GUI && ctx != DollRenderContext.D_TOOLTIP) return;
+
+		net.minecraft.client.Minecraft mc = net.minecraft.client.Minecraft.getInstance();
+		if (mc.screen == null) return;
+
+		com.mojang.blaze3d.platform.Window window = mc.getWindow();
+		double scaleFactor = window.getGuiScale();
+		double mouseX = mc.mouseHandler.xpos() / scaleFactor;
+		double mouseY = mc.mouseHandler.ypos() / scaleFactor;
+		double centerX = window.getGuiScaledWidth() / 2.0;
+		double centerY = window.getGuiScaledHeight() / 2.0;
+
+		float maxYaw   = 30.0F;
+		float maxPitch = 20.0F;
+		float yaw   = (float) net.minecraft.util.Mth.clamp((mouseX - centerX) / centerX * maxYaw,   -maxYaw,   maxYaw);
+		float pitch = (float) net.minecraft.util.Mth.clamp((mouseY - centerY) / centerY * maxPitch, -maxPitch, maxPitch);
+
+		for (com.darkz.skintotem.model.base.MModel headModel : model.getHead().getModels()) {
+			headModel.yRot += (float) Math.toRadians(yaw);
+			headModel.xRot += (float) Math.toRadians(pitch);
+		}
+	}
+
+	private static void restoreHeadRotation(SkinTotemData skinTotemData, SkinTotemModel model) {
+		DollRenderContext ctx = skinTotemData.getRenderProperties().getRenderContext();
+		if (ctx != DollRenderContext.D_GUI && ctx != DollRenderContext.D_TOOLTIP) return;
+
+		net.minecraft.client.Minecraft mc = net.minecraft.client.Minecraft.getInstance();
+		if (mc.screen == null) return;
+
+		com.mojang.blaze3d.platform.Window window = mc.getWindow();
+		double scaleFactor = window.getGuiScale();
+		double mouseX = mc.mouseHandler.xpos() / scaleFactor;
+		double mouseY = mc.mouseHandler.ypos() / scaleFactor;
+		double centerX = window.getGuiScaledWidth() / 2.0;
+		double centerY = window.getGuiScaledHeight() / 2.0;
+
+		float maxYaw   = 30.0F;
+		float maxPitch = 20.0F;
+		float yaw   = (float) net.minecraft.util.Mth.clamp((mouseX - centerX) / centerX * maxYaw,   -maxYaw,   maxYaw);
+		float pitch = (float) net.minecraft.util.Mth.clamp((mouseY - centerY) / centerY * maxPitch, -maxPitch, maxPitch);
+
+		for (com.darkz.skintotem.model.base.MModel headModel : model.getHead().getModels()) {
+			headModel.yRot -= (float) Math.toRadians(yaw);
+			headModel.xRot -= (float) Math.toRadians(pitch);
+		}
 	}
 
 	private static void beforeDollRendered(@Nullable DollRenderContext context, AbstractClientPlayer playerEntity, SkinTotemData skinTotemData) {
