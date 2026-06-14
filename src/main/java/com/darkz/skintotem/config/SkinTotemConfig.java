@@ -1,6 +1,5 @@
 package com.darkz.skintotem.config;
 
-import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import java.io.File;
@@ -27,53 +26,30 @@ public class SkinTotemConfig {
     public boolean isDebugLogEnabled() { return debugLogEnabled; }
     public boolean isSupportOtherModsTotems() { return supportOtherModsTotems; }
 
-    private static final Codec<Pair<Pair<Boolean, Boolean>, Pair<RenderingConfig, String>>> GROUP_1 = RecordCodecBuilder.create(instance -> instance.group(
-            option("mod_enabled", true, Codec.BOOL, p -> p.getFirst().getFirst()),
-            option("debug_log_enabled", false, Codec.BOOL, p -> p.getFirst().getSecond()),
-            option("rendering_config", RenderingConfig.getNewInstance(), RenderingConfig.CODEC, p -> p.getSecond().getFirst()),
-            option("standard_doll_skin_data", "", Codec.STRING, p -> p.getSecond().getSecond())
-    ).apply(instance, (a, b, c, d) -> Pair.of(Pair.of(a, b), Pair.of(c, d))));
-
-    private static final Codec<Pair<Pair<SkinTotemSkinType, Identifier>, Pair<Identifier, SkinTotemArmsType>>> GROUP_2 = RecordCodecBuilder.create(instance -> instance.group(
-            option("standard_doll_skin_type", SkinTotemSkinType.STEVE, SkinTotemSkinType.CODEC, p -> p.getFirst().getFirst()),
-            option("selected_standard_doll_model_data", SkinTotemModel.NONE, Identifier.CODEC, p -> p.getFirst().getSecond()),
-            option("standard_doll_model_data", SkinTotemModel.TWO_D_MODEL_ID, Identifier.CODEC, p -> p.getSecond().getFirst()),
-            option("standard_doll_model_arms_type", SkinTotemArmsType.WIDE, SkinTotemArmsType.CODEC, p -> p.getSecond().getSecond())
-    ).apply(instance, (a, b, c, d) -> Pair.of(Pair.of(a, b), Pair.of(c, d))));
-
-    private static final Codec<Pair<Pair<Vec2i, Boolean>, Pair<Integer, Float>>> GROUP_3 = RecordCodecBuilder.create(instance -> instance.group(
-            option("tag_button_pos", new Vec2i(155, 48), Vec2i.CODEC, p -> p.getFirst().getFirst()),
-            option("use_vanilla_totem_model", false, Codec.BOOL, p -> p.getFirst().getSecond()),
+    public static final Codec<SkinTotemConfig> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            option("mod_enabled", true, Codec.BOOL, SkinTotemConfig::isModEnabled),
+            option("debug_log_enabled", false, Codec.BOOL, SkinTotemConfig::isDebugLogEnabled),
+            option("rendering_config", RenderingConfig.getNewInstance(), RenderingConfig.CODEC, SkinTotemConfig::getRenderingConfig),
+            option("standard_doll_skin_data", "", Codec.STRING, SkinTotemConfig::getStandardSkinTotemSkinValue),
+            option("standard_doll_skin_type", SkinTotemSkinType.STEVE, SkinTotemSkinType.CODEC, SkinTotemConfig::getStandardSkinTotemSkinType),
+            option("selected_standard_doll_model_data", SkinTotemModel.NONE, Identifier.CODEC, SkinTotemConfig::getSelectedStandardSkinTotemModelValue),
+            option("standard_doll_model_data", SkinTotemModel.TWO_D_MODEL_ID, Identifier.CODEC, SkinTotemConfig::getStandardSkinTotemModelValue),
+            option("standard_doll_model_arms_type", SkinTotemArmsType.WIDE, SkinTotemArmsType.CODEC, SkinTotemConfig::getStandardSkinTotemArmsType),
+            option("tag_button_pos", new Vec2i(155, 48), Vec2i.CODEC, SkinTotemConfig::getTagButtonPos),
+            option("use_vanilla_totem_model", false, Codec.BOOL, SkinTotemConfig::isUseVanillaTotemModel),
             Codec.INT.optionalFieldOf("better_tag_menu_tooltip_size")
                     .xmap(o -> o.orElse(60), Optional::of)
-                    .forGetter(p -> p.getSecond().getFirst()),
-            option("tag_menu_tooltip_model_scale", 1.0F, Codec.FLOAT, p -> p.getSecond().getSecond())
-    ).apply(instance, (a, b, c, d) -> Pair.of(Pair.of(a, b), Pair.of(c, d))));
-
-    private static final Codec<Pair<Pair<Integer, Boolean>, Pair<Boolean, Boolean>>> GROUP_4 = RecordCodecBuilder.create(instance -> instance.group(
-            option("executor_threads_count", 6, Codec.INT, p -> p.getFirst().getFirst()),
-            option("first_run", true, Codec.BOOL, p -> p.getFirst().getSecond()),
-            option("first_run_temp", true, Codec.BOOL, p -> p.getSecond().getFirst()),
-            option("support_other_mods_totems", true, Codec.BOOL, p -> p.getSecond().getSecond())
-    ).apply(instance, (a, b, c, d) -> Pair.of(Pair.of(a, b), Pair.of(c, d))));
-
-    private static final Codec<Pair<Boolean, Integer>> GROUP_5 = RecordCodecBuilder.create(instance -> instance.group(
-            option("auto_refresh_enabled", false, Codec.BOOL, Pair::getFirst),
-            option("auto_refresh_interval_minutes", 5, Codec.INT, Pair::getSecond)
-    ).apply(instance, Pair::of));
-
-    public static final Codec<SkinTotemConfig> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            GROUP_1.forGetter(c -> Pair.of(Pair.of(c.modEnabled, c.debugLogEnabled), Pair.of(c.renderingConfig, c.standardSkinTotemSkinValue))),
-            GROUP_2.forGetter(c -> Pair.of(Pair.of(c.standardSkinTotemSkinType, c.selectedStandardSkinTotemModelValue), Pair.of(c.standardSkinTotemModelValue, c.standardSkinTotemArmsType))),
-            GROUP_3.forGetter(c -> Pair.of(Pair.of(c.tagButtonPos, c.useVanillaTotemModel), Pair.of(c.betterTagMenuTooltipSize, c.tagMenuTooltipModelScale))),
-            GROUP_4.forGetter(c -> Pair.of(Pair.of(c.parallelTasksCount, c.firstRun), Pair.of(c.firstRunTemp, c.supportOtherModsTotems))),
-            GROUP_5.forGetter(c -> Pair.of(c.autoRefreshEnabled, c.autoRefreshIntervalMinutes))
-    ).apply(instance, (g1, g2, g3, g4, g5) -> new SkinTotemConfig(
-            g1.getFirst().getFirst(), g1.getFirst().getSecond(), g1.getSecond().getFirst(), g1.getSecond().getSecond(),
-            g2.getFirst().getFirst(), g2.getFirst().getSecond(), g2.getSecond().getFirst(), g2.getSecond().getSecond(),
-            g3.getFirst().getFirst(), g3.getFirst().getSecond(), g3.getSecond().getFirst(), g3.getSecond().getSecond(),
-            g4.getFirst().getFirst(), g4.getFirst().getSecond(), g4.getSecond().getFirst(), g4.getSecond().getSecond(),
-            g5.getFirst(), g5.getSecond()
+                    .forGetter(SkinTotemConfig::getBetterTagMenuTooltipSize),
+            option("tag_menu_tooltip_model_scale", 1.0F, Codec.FLOAT, SkinTotemConfig::getTagMenuTooltipModelScale),
+            option("executor_threads_count", 6, Codec.INT, SkinTotemConfig::getParallelTasksCount),
+            option("first_run", true, Codec.BOOL, SkinTotemConfig::isFirstRun),
+            option("first_run_temp", true, Codec.BOOL, SkinTotemConfig::isFirstRunTemp),
+            option("support_other_mods_totems", true, Codec.BOOL, SkinTotemConfig::isSupportOtherModsTotems)
+    ).and(instance.group(
+            option("auto_refresh_enabled", false, Codec.BOOL, SkinTotemConfig::isAutoRefreshEnabled),
+            option("auto_refresh_interval_minutes", 5, Codec.INT, SkinTotemConfig::getAutoRefreshIntervalMinutes)
+    )).apply(instance, (modEnabled, debugLogEnabled, renderingConfig, standardSkinTotemSkinValue, standardSkinTotemSkinType, selectedStandardSkinTotemModelValue, standardSkinTotemModelValue, standardSkinTotemArmsType, tagButtonPos, useVanillaTotemModel, betterTagMenuTooltipSize, tagMenuTooltipModelScale, parallelTasksCount, firstRun, firstRunTemp, supportOtherModsTotems, autoRefreshEnabled, autoRefreshIntervalMinutes) -> new SkinTotemConfig(
+            modEnabled, debugLogEnabled, renderingConfig, standardSkinTotemSkinValue, standardSkinTotemSkinType, selectedStandardSkinTotemModelValue, standardSkinTotemModelValue, standardSkinTotemArmsType, tagButtonPos, useVanillaTotemModel, betterTagMenuTooltipSize, tagMenuTooltipModelScale, parallelTasksCount, firstRun, firstRunTemp, supportOtherModsTotems, autoRefreshEnabled, autoRefreshIntervalMinutes
     )));
 
 	private static final File CONFIG_FILE = FabricLoader.getInstance().getConfigDir().resolve(SkinTotem.MOD_ID + ".json5").toFile();
