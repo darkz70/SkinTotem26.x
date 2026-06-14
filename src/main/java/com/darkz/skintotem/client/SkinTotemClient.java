@@ -11,6 +11,7 @@ import com.darkz.skintotem.doll.renderer.special.ItemGuiElementRenderer;
 import com.darkz.skintotem.doll.renderer.special.SkinTotemGuiElementRenderer;
 import com.darkz.skintotem.pack.SkinTotemReloadListener;
 import com.darkz.skintotem.tag.manager.*;
+import com.darkz.skintotem.refresh.SkinAutoRefresher;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.*;
 import org.jetbrains.annotations.Nullable;
@@ -39,6 +40,7 @@ public class SkinTotemClient implements ClientModInitializer {
 		SkinTotemEvents.register();
 		SkinTotemReloadListener.register();
 		KnownPlayerUUIDsConfigManager.start();
+		SkinAutoRefresher.start();
 		PictureInPictureRendererRegistry.register(context -> new ItemGuiElementRenderer(context.bufferSource()));
 		PictureInPictureRendererRegistry.register(context -> new SkinTotemGuiElementRenderer(context.bufferSource()));
 	}
