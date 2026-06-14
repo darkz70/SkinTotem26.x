@@ -1,6 +1,7 @@
 package com.darkz.skintotem.modmenu;
 
 import com.terraformersmc.modmenu.api.*;
+import com.darkz.skintotem.platform.PlatformHelper;
 import net.fabricmc.loader.api.*;
 import com.darkz.skintotem.SkinTotem;
 import com.darkz.skintotem.client.SkinTotemClient;

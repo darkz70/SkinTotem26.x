@@ -1,8 +1,16 @@
 package com.darkz.skintotem.client.event;
 
 import java.util.List;
+//? if fabric {
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.ClientTooltipComponentCallback;
+//?} else {
+/*import net.neoforged.neoforge.client.event.ClientTooltipColorEvent;
+import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+*///?}
 import com.darkz.skintotem.SkinTotem;
 import com.darkz.skintotem.atlas.manager.*;
 import com.darkz.skintotem.doll.data.*;
@@ -23,6 +31,7 @@ public class SkinTotemEvents {
 	}
 
 	private static void registerTooltipCallbacks() {
+		//? if fabric {
 		ClientTooltipComponentCallback.EVENT.register((data) -> {
 			if (data instanceof TagsTooltipData tooltipData) {
 				return new TagsTooltipComponent(tooltipData.tags());
@@ -44,13 +53,24 @@ public class SkinTotemEvents {
 			}
 			return null;
 		});
+		//?}
+		// NeoForge: tooltip components are registered via RegisterClientTooltipComponentFactoriesEvent
+		// in a separate @EventBusSubscriber class — see SkinTotemNeoForgeEvents
 	}
 
 	private static void registerLifecycleEvents() {
+		//? if fabric {
 		ClientLifecycleEvents.CLIENT_STOPPING.register((client) -> {
 			SkinTotemTaskExecutor.stop();
 			SkinTotemAtlasManager.close();
 			SkinTotemAtlasSpriteManager.close();
 		});
+		//?} else {
+		/*NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.GameShuttingDownEvent e) -> {
+			SkinTotemTaskExecutor.stop();
+			SkinTotemAtlasManager.close();
+			SkinTotemAtlasSpriteManager.close();
+		});
+		*///?}
 	}
 }

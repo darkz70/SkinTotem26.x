@@ -1,11 +1,22 @@
 package com.darkz.skintotem;
 
+//? if fabric {
 import net.fabricmc.api.ModInitializer;
+//?} else {
+/*import net.neoforged.fml.common.Mod;
+*///?}
 import net.minecraft.network.chat.*;
 import net.minecraft.resources.Identifier;
 import org.slf4j.*;
 
-public class SkinTotem implements ModInitializer {
+//? if neoforge {
+/*@Mod(SkinTotem.MOD_ID)
+*///?}
+public class SkinTotem
+//? if fabric {
+        implements ModInitializer
+//?}
+{
 
 	public static final String MOD_NAME = /*$ mod_name*/ "SkinTotem";
 	public static final String MOD_ID = /*$ mod_id*/ "skintotem";
@@ -32,8 +43,10 @@ public class SkinTotem implements ModInitializer {
 		return id(path);
 	}
 
+	//? if fabric {
 	@Override
 	public void onInitialize() {
 		LOGGER.info("{} Initialized", MOD_NAME);
 	}
+	//?}
 }

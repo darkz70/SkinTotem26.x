@@ -7,7 +7,7 @@ import java.io.File;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import lombok.*;
-import net.fabricmc.loader.api.FabricLoader;
+import com.darkz.skintotem.platform.PlatformHelper;
 import com.darkz.skintotem.SkinTotem;
 import com.darkz.skintotem.config.other.vector.Vec2i;
 import com.darkz.skintotem.config.rendering.RenderingConfig;
@@ -109,7 +109,7 @@ public class SkinTotemConfig {
             dg2.useVanillaTotemModel, dg2.betterTagMenuTooltipSize, dg2.tagMenuTooltipModelScale, dg2.parallelTasksCount, dg2.firstRun, dg2.firstRunTemp, dg2.supportOtherModsTotems, dg2.autoRefreshEnabled, dg2.autoRefreshIntervalMinutes
     )));
 
-	private static final File CONFIG_FILE = FabricLoader.getInstance().getConfigDir().resolve(SkinTotem.MOD_ID + ".json5").toFile();
+	private static final File CONFIG_FILE = PlatformHelper.getConfigDir().resolve(SkinTotem.MOD_ID + ".json5").toFile();
 	private static final Logger LOGGER = LoggerFactory.getLogger(SkinTotem.MOD_NAME + "/Config");
 	private static SkinTotemConfig INSTANCE;
 

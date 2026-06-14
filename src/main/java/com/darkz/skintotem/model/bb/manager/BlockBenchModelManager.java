@@ -9,7 +9,11 @@ import java.nio.file.NoSuchFileException;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.Consumer;
-import net.fabricmc.loader.api.*;
+//? if fabric {
+import net.fabricmc.loader.api.SemanticVersion;
+import net.fabricmc.loader.api.Version;
+import net.fabricmc.loader.api.VersionParsingException;
+//?}
 import com.darkz.skintotem.SkinTotem;
 import com.darkz.skintotem.api.Response;
 import com.darkz.skintotem.atlas.manager.*;
@@ -129,13 +133,24 @@ public class BlockBenchModelManager {
 				return Response.empty(102);
 			}
 
+			//? if fabric {
 			SemanticVersion modelVersion = SemanticVersion.parse(meta.getVersion());
-
 			if (modelVersion.compareTo((Version) SemanticVersion.parse("5.0")) >= 0) {
 				return processBBModel50(id, jsonObject, name, meta);
 			} else if (modelVersion.compareTo((Version) SemanticVersion.parse("4.10")) >= 0) {
 				return processBBModel410(id, jsonObject, name, meta);
 			}
+			//?} else {
+			/*// NeoForge: simple string-based version comparison for bbmodel format
+			String versionStr = meta.getVersion();
+			int[] parts = parseVersionParts(versionStr);
+			int major = parts[0], minor = parts[1];
+			if (major > 5 || (major == 5 && minor >= 0)) {
+				return processBBModel50(id, jsonObject, name, meta);
+			} else if (major > 4 || (major == 4 && minor >= 10)) {
+				return processBBModel410(id, jsonObject, name, meta);
+			}
+			*///?}
 		} catch (NoSuchFileException | FileNotFoundException e) {
 			LOGGER.warn("Failed to find bbmodel find with id \"{}\"", id.toString());
 		} catch (Exception e) {
@@ -388,4 +403,17 @@ public class BlockBenchModelManager {
 	private record BBModelGroupsAndRootCubes(List<UUID> rootCubes, List<BBGroup> groups) {
 
 	}
+
+	//? if neoforge {
+	/*private static int[] parseVersionParts(String version) {
+		String[] parts = version.split("\\.");
+		int major = parts.length > 0 ? parseIntSafe(parts[0]) : 0;
+		int minor = parts.length > 1 ? parseIntSafe(parts[1]) : 0;
+		return new int[]{major, minor};
+	}
+
+	private static int parseIntSafe(String s) {
+		try { return Integer.parseInt(s.replaceAll("[^0-9]", "")); } catch (NumberFormatException e) { return 0; }
+	}
+	*///?}
 }

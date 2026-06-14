@@ -9,9 +9,8 @@ mossyDependencies {
 	fabricApi = prop("build.fabric_api")
 	fabricLoader = prop("build.fabric_loader")
 
-//	forge = prop("build.forge")
-//
-//	neoForge = prop("build.neoforge")
+	neoForge = prop("build.neoforge")
+
 //	parchment = prop("build.parchment")
 
 	additional {
@@ -49,3 +48,14 @@ stonecutter {
 String prop(String key) {
 	return findProperty(key).toString()
 }
+
+// NeoForge access transformers
+//? if neoforge {
+/*
+neoForge {
+    accessTransformers {
+        file("src/main/resources/at/${stonecutter.current.project}.cfg")
+    }
+}
+*/
+//?}

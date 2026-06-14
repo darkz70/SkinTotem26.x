@@ -1,7 +1,11 @@
 package com.darkz.skintotem.pack;
 
 import java.util.concurrent.*;
+//? if fabric {
 import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
+//?} else {
+/*import net.neoforged.neoforge.resource.ResourceNotOwnedByModException;
+*///?}
 import com.darkz.skintotem.SkinTotem;
 import com.darkz.skintotem.atlas.manager.*;
 import com.darkz.skintotem.model.bb.manager.BlockBenchModelManager;
@@ -15,7 +19,11 @@ import net.minecraft.util.profiling.*;
 public class SkinTotemReloadListener implements PreparableReloadListener {
 
 	public static void register() {
+		//? if fabric {
 		ResourceLoader.get(PackType.CLIENT_RESOURCES).registerReloadListener(getFabricId(), new SkinTotemReloadListener());
+		//?} else {
+		/*// NeoForge: registered via AddClientReloadListenersEvent in SkinTotemNeoForgeEvents
+		*///?}
 	}
 
 	public static Identifier getFabricId() {
