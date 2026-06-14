@@ -3,7 +3,7 @@ name: Debug Build
 on:
   workflow_dispatch:
   push:
-    branches: [main, 26.1]
+    branches: [main, 26.1, neoforge]
 
 jobs:
   debug_build:
