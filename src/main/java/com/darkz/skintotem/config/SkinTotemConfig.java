@@ -1,6 +1,7 @@
 package com.darkz.skintotem.config;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import java.io.File;
 import java.util.Optional;
@@ -49,7 +50,7 @@ public class SkinTotemConfig {
             this.tagButtonPos = tagButtonPos;
         }
 
-        static final Codec<DataGroup1> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+        static final MapCodec<DataGroup1> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 option("mod_enabled", true, Codec.BOOL, d -> d.modEnabled),
                 option("debug_log_enabled", false, Codec.BOOL, d -> d.debugLogEnabled),
                 option("rendering_config", RenderingConfig.getNewInstance(), RenderingConfig.CODEC, d -> d.renderingConfig),
@@ -85,7 +86,7 @@ public class SkinTotemConfig {
             this.autoRefreshIntervalMinutes = autoRefreshIntervalMinutes;
         }
 
-        static final Codec<DataGroup2> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+        static final MapCodec<DataGroup2> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 option("use_vanilla_totem_model", false, Codec.BOOL, d -> d.useVanillaTotemModel),
                 Codec.INT.optionalFieldOf("better_tag_menu_tooltip_size")
                         .xmap(o -> o.orElse(60), Optional::of)
