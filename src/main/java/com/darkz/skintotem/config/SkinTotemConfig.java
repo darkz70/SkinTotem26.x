@@ -43,7 +43,9 @@ public class SkinTotemConfig {
 			option("executor_threads_count", 6, Codec.INT, SkinTotemConfig::getParallelTasksCount),
 			option("first_run", true, Codec.BOOL, SkinTotemConfig::isFirstRun),
 			option("first_run_temp", true, Codec.BOOL, SkinTotemConfig::isFirstRunTemp),
-			option("support_other_mods_totems", true, Codec.BOOL, SkinTotemConfig::isSupportOtherModsTotems)
+			option("support_other_mods_totems", true, Codec.BOOL, SkinTotemConfig::isSupportOtherModsTotems),
+			option("auto_refresh_enabled", false, Codec.BOOL, SkinTotemConfig::isAutoRefreshEnabled),
+			option("auto_refresh_interval_minutes", 5, Codec.INT, SkinTotemConfig::getAutoRefreshIntervalMinutes)
 	).apply(instance, SkinTotemConfig::new));
 
 	private static final File CONFIG_FILE = FabricLoader.getInstance().getConfigDir().resolve(SkinTotem.MOD_ID + ".json5").toFile();
@@ -66,6 +68,8 @@ public class SkinTotemConfig {
 	private boolean firstRun;
 	private boolean firstRunTemp;
 	private boolean supportOtherModsTotems;
+	private boolean autoRefreshEnabled;
+	private int autoRefreshIntervalMinutes;
 
 	public Identifier getSelectedStandardSkinTotemModelValue() {
 		return this.selectedStandardSkinTotemModelValue == SkinTotemModel.NONE ? this.selectedStandardSkinTotemModelValue = this.standardSkinTotemModelValue : this.selectedStandardSkinTotemModelValue;
