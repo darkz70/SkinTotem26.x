@@ -29,7 +29,11 @@ repositories {
 
 dependencies {
 	// Mixin^2
-	include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:${prop("build.mixin_squared")}")))
+	if (stonecutter.current.project.startsWith("fabric")) {
+		include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:${prop("build.mixin_squared")}")))
+	} else if (stonecutter.current.project.startsWith("neoforge")) {
+		implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-neoforge:${prop("build.mixin_squared")}"))
+	}
 
 	// CIT Resewn
 	def cit = prop("dep.cit-resewn")
