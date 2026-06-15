@@ -4,12 +4,11 @@ pluginManagement {
         maven { url "https://maven.kikugie.dev/snapshots" }
         maven { url "https://maven.kikugie.dev/releases" }
         maven { url "https://maven.neoforged.net/releases" }
-        // FeatherPlugin с GitHub Packages
         maven {
             url "https://maven.pkg.github.com/darkz70/FeatherPlugin"
             credentials {
-                username = System.getenv("GITHUB_ACTOR") ?: providers.gradleProperty("gpr.user").orNull ?: ""
-                password = System.getenv("GITHUB_TOKEN") ?: providers.gradleProperty("gpr.key").orNull ?: ""
+                username = System.getenv("GITHUB_ACTOR") ?: ""
+                password = System.getenv("GPR_KEY") ?: ""
             }
         }
         mavenLocal()
