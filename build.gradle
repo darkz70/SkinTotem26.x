@@ -1,5 +1,5 @@
 plugins {
-    id "net.darkz.feather.core" version "1.0.0"
+    id "net.darkz.feather.feather-core" version "1.0.0"
 }
 
 featherDependencies {
@@ -12,8 +12,6 @@ featherDependencies {
 
     neoForge = prop("build.neoforge")
 
-    // parchment отключён — не нужен для 26.x
-
     additional {
         //override("modCompileOnly", "yacl")
         disable("cit-resewn")
@@ -21,7 +19,6 @@ featherDependencies {
 }
 
 repositories {
-    // Mixin^2
     maven {
         name = "Mixin Squared"
         url = "https://maven.bawnorton.com/releases"
@@ -29,14 +26,12 @@ repositories {
 }
 
 dependencies {
-    // Mixin^2
     if (stonecutter.current.project.startsWith("fabric")) {
         include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:${prop("build.mixin_squared")}")))
     } else if (stonecutter.current.project.startsWith("neoforge")) {
         implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-neoforge:${prop("build.mixin_squared")}"))
     }
 
-    // CIT Resewn
     def cit = prop("dep.cit-resewn")
     if (cit != "unknown") {
         modImplementation "maven.modrinth:cit-resewn:${cit}"
@@ -50,7 +45,6 @@ stonecutter {
     }
 }
 
-// NeoForge access transformers
 //? if neoforge {
 /*
 neoForge {
