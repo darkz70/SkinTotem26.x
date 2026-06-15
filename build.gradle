@@ -2,17 +2,13 @@ plugins {
 	id "net.darkz.feather.feather-core" version "1.0.0"
 }
 
-def currentProject = stonecutter.current.project
-def loaderName = currentProject.substring(0, currentProject.indexOf("-"))
-def mcVersion = currentProject.substring(currentProject.indexOf("-") + 1)
-
 feather {
-	minecraft = mcVersion
-	loader = loaderName
+	minecraft = stonecutter.current.project.substring(stonecutter.current.project.indexOf("-") + 1)
+	loader = stonecutter.current.project.substring(0, stonecutter.current.project.indexOf("-"))
 	lombok = prop("base.lombok_version")
 
-	fabricLoader = prop("build.fabric_loader")
 	fabricApi = prop("build.fabric_api")
+	fabricLoader = prop("build.fabric_loader")
 
 	neoForge = prop("build.neoforge")
 
@@ -23,6 +19,7 @@ feather {
 }
 
 repositories {
+	// Mixin^2
 	maven {
 		name = "Mixin Squared"
 		url = "https://maven.bawnorton.com/releases"
@@ -30,8 +27,14 @@ repositories {
 }
 
 dependencies {
-	include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:${prop("build.mixin_squared")}")))
+	// Mixin^2
+	if (stonecutter.current.project.startsWith("fabric")) {
+		include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:${prop("build.mixin_squared")}")))
+	} else if (stonecutter.current.project.startsWith("neoforge")) {
+		implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-neoforge:${prop("build.mixin_squared")}"))
+	}
 
+	// CIT Resewn
 	def cit = prop("dep.cit-resewn")
 	if (cit != "unknown") {
 		modImplementation "maven.modrinth:cit-resewn:${cit}"
@@ -48,3 +51,14 @@ stonecutter {
 String prop(String key) {
 	return findProperty(key).toString()
 }
+
+// NeoForge access transformers
+//? if neoforge {
+/*
+neoForge {
+    accessTransformers {
+        file("src/main/resources/at/${stonecutter.current.project}.cfg")
+    }
+}
+*/
+//?}
