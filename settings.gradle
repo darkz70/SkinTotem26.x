@@ -1,9 +1,21 @@
 pluginManagement {
 	repositories {
-		maven { name "Fabric"; url "https://maven.fabricmc.net/" }
-		maven { name "Kiku Snapshots"; url "https://maven.kikugie.dev/snapshots" }
-		maven { name "Kiku Releases"; url "https://maven.kikugie.dev/releases" }
-		maven { name "NeoForged"; url "https://maven.neoforged.net/releases" }
+		maven {
+			name "Fabric"
+			url "https://maven.fabricmc.net/"
+		}
+		maven {
+			name "Kiku Snapshots"
+			url "https://maven.kikugie.dev/snapshots"
+		}
+		maven {
+			name "Kiku Releases"
+			url "https://maven.kikugie.dev/releases"
+		}
+		maven {
+			name "NeoForged"
+			url "https://maven.neoforged.net/releases"
+		}
 		maven {
 			name "FeatherPlugin"
 			url "https://maven.pkg.github.com/darkz70/FeatherPlugin"
@@ -21,13 +33,4 @@ pluginManagement {
 plugins {
 	id "dev.kikugie.stonecutter" version "0.9"
 	id "net.darkz.feather.feather-settings" version "1.0.0"
-}
-
-stonecutter {
-	shared {
-		vers("26.1",   "26.1")
-		vers("26.1.1", "26.1.1")
-		vers("26.1.2", "26.1.2")
-	}
-	vcsVersion = "26.1.2"
 }
