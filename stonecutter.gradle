@@ -1,6 +1,4 @@
-
 plugins {
     id "dev.kikugie.stonecutter"
     id "net.darkz.feather.feather-stonecutter" version "1.0.0"
 }
-
