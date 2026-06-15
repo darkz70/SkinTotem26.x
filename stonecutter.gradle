@@ -1,4 +1,5 @@
 plugins {
-	id "dev.kikugie.stonecutter"
-	id "net.lopymine.mossy-plugin-stonecutter" version "$mossy_plugin_version"
+    id "dev.kikugie.stonecutter"
+    id "net.darkz.feather.stonecutter" version "1.0.0"
 }
+
