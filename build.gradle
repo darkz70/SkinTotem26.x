@@ -1,60 +1,14 @@
 plugins {
-    id "net.darkz.feather.feather-core" version "1.0.0"
+    id "dev.kikugie.stonecutter"
+    id "net.darkz.feather.feather-core"       version "1.0.0" apply false
+    id "net.darkz.feather.feather-loader"     version "1.0.0" apply false
+    id "net.darkz.feather.feather-stonecutter" version "1.0.0" apply false
 }
 
-featherDependencies {
-    minecraft = stonecutter.current.project.substring(stonecutter.current.project.indexOf("-") + 1)
-    loader = stonecutter.current.project.substring(0, stonecutter.current.project.indexOf("-"))
-    lombok = prop("base.lombok_version")
-
-    fabricLoader = prop("build.fabric_loader")
-    fabricApi = prop("build.fabric_api")
-
-    neoForge = prop("build.neoforge")
-
-    additional {
-        //override("modCompileOnly", "yacl")
-        disable("cit-resewn")
+stonecutter.configureEach {
+    java {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+        withSourcesJar()
     }
-}
-
-repositories {
-    maven {
-        name = "Mixin Squared"
-        url = "https://maven.bawnorton.com/releases"
-    }
-}
-
-dependencies {
-    if (stonecutter.current.project.startsWith("fabric")) {
-        include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:${prop("build.mixin_squared")}")))
-    } else if (stonecutter.current.project.startsWith("neoforge")) {
-        implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-neoforge:${prop("build.mixin_squared")}"))
-    }
-
-    def cit = prop("dep.cit-resewn")
-    if (cit != "unknown") {
-        modImplementation "maven.modrinth:cit-resewn:${cit}"
-        modImplementation "maven.modrinth:cit-resewn-defaults:${cit}"
-    }
-}
-
-stonecutter {
-    replacements.string(current.parsed >= "26.1") {
-        replace("atlas.location()", "atlas.location()")
-    }
-}
-
-//? if neoforge {
-/*
-neoForge {
-    accessTransformers {
-        file("src/main/resources/at/${stonecutter.current.project}.cfg")
-    }
-}
-*/
-//?}
-
-String prop(String key) {
-    return findProperty(key).toString()
 }
