@@ -5,10 +5,11 @@ pluginManagement {
         maven { url "https://maven.kikugie.dev/releases" }
         maven { url "https://maven.neoforged.net/releases" }
         maven {
+            name "FeatherPlugin"
             url "https://maven.pkg.github.com/darkz70/FeatherPlugin"
             credentials {
-                username = System.getenv("GITHUB_ACTOR") ?: ""
-                password = System.getenv("GPR_KEY") ?: ""
+                username = System.getenv("GITHUB_ACTOR") ?: "darkz70"
+                password = System.getenv("GITHUB_TOKEN") ?: ""
             }
         }
         mavenLocal()
@@ -31,5 +32,5 @@ featherVersions {
 stonecutter {
     centralScript = "build.gradle"
     kotlinController = false
-    create (rootProject)
+    create rootProject
 }
