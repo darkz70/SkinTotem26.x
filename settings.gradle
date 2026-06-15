@@ -23,14 +23,11 @@ plugins {
 	id "net.darkz.feather.feather-settings" version "1.0.0"
 }
 
-featherVersions {
-	version("26.1",   "fabric", "neoforge")
-	version("26.1.1", "fabric", "neoforge")
-	version("26.1.2", "fabric", "neoforge")
-}
-
 stonecutter {
-	centralScript = "build.gradle"
-	kotlinController = false
-	create rootProject
+	shared {
+		vers("26.1",   "26.1")
+		vers("26.1.1", "26.1.1")
+		vers("26.1.2", "26.1.2")
+	}
+	vcsVersion = "26.1.2"
 }
