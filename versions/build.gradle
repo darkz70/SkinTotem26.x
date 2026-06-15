@@ -1,7 +1,7 @@
 plugins {
-    id "net.darkz.feather.feather-core"        version "1.0.0"
-    id "net.darkz.feather.feather-loader"      version "1.0.0"
-    id "net.darkz.feather.feather-stonecutter" version "1.0.0"
+	id "net.darkz.feather.feather-core"        version "1.0.0"
+	id "net.darkz.feather.feather-loader"      version "1.0.0"
+	id "net.darkz.feather.feather-stonecutter" version "1.0.0"
 }
 
 def currentProject = stonecutter.current.project
@@ -10,73 +10,72 @@ def mcVersion      = currentProject.substring(0, splitAt)
 def loaderName     = currentProject.substring(splitAt + 1)
 
 feather {
-    loader           = loaderName
-    minecraftVersion = mcVersion
-    loaderVersion    = switch (loaderName) {
-        case "fabric"   -> prop("build.fabric_loader")
-        case "neoforge" -> prop("build.neoforge")
-        default         -> throw new GradleException("Unknown loader: " + loaderName)
-    }
-    modId = prop("data.mod_id")
+	loader           = loaderName
+	minecraftVersion = mcVersion
+	loaderVersion    = switch (loaderName) {
+		case "fabric"   -> prop("build.fabric_loader")
+		case "neoforge" -> prop("build.neoforge")
+		default         -> throw new GradleException("Unknown loader: " + loaderName)
+	}
+	modId  = prop("data.mod_id")
+	lombok = prop("base.lombok_version")
+	fabricApi = prop("build.fabric_api")
+
+	additional {
+		//override("modCompileOnly", "yacl")
+		disable("cit-resewn")
+	}
 }
 
-group   = prop("data.mod_group")
-version = "${mcVersion}-${prop("data.mod_version")}"
-
 repositories {
-    maven { url "https://maven.bawnorton.com/releases" }
-    maven { url "https://api.modrinth.com/maven" }
-    maven { url "https://maven.terraformersmc.com/" }
-    maven { url "https://maven.isxander.dev/releases" }
+	maven { name = "Mixin Squared"; url = "https://maven.bawnorton.com/releases" }
+	maven { name = "Modrinth"; url = "https://api.modrinth.com/maven" }
+	maven { name = "TerraformersMC"; url = "https://maven.terraformersmc.com/" }
+	maven { name = "isxander"; url = "https://maven.isxander.dev/releases" }
 }
 
 dependencies {
-    // Mixin^2
-    if (loaderName == "fabric") {
-        include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:${prop("build.mixin_squared")}")))
-    } else if (loaderName == "neoforge") {
-        implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-neoforge:${prop("build.mixin_squared")}"))
-    }
+	if (loaderName == "fabric") {
+		include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:${prop("build.mixin_squared")}")))
+	} else if (loaderName == "neoforge") {
+		implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-neoforge:${prop("build.mixin_squared")}"))
+	}
 
-    // Fabric API
-    //? if fabric {
-    def fabricApi = prop("build.fabric_api")
-    if (fabricApi && fabricApi != "unknown") {
-        modImplementation "net.fabricmc.fabric-api:fabric-api:${fabricApi}"
-    }
-    //?}
+	def cit = prop("dep.cit-resewn")
+	if (cit != "unknown") {
+		modImplementation "maven.modrinth:cit-resewn:${cit}"
+		modImplementation "maven.modrinth:cit-resewn-defaults:${cit}"
+	}
 
-    // YACL
-    def yacl = prop("dep.yacl")
-    if (yacl && yacl != "unknown") {
-        modImplementation "maven.modrinth:yet-another-config-lib:${yacl}"
-    }
+	def yacl = prop("dep.yacl")
+	if (yacl && yacl != "unknown") {
+		modImplementation "maven.modrinth:yet-another-config-lib:${yacl}"
+	}
 
-    // ModMenu (только Fabric)
-    //? if fabric {
-    def modmenu = prop("dep.modmenu")
-    if (modmenu && modmenu != "unknown") {
-        modImplementation "maven.modrinth:modmenu:${modmenu}"
-    }
-    //?}
+	//? if fabric {
+	def modmenu = prop("dep.modmenu")
+	if (modmenu && modmenu != "unknown") {
+		modImplementation "maven.modrinth:modmenu:${modmenu}"
+	}
+	//?}
 }
 
 stonecutter {
-    replacements.string(current.parsed >= "26.1") {
-        replace("atlas.location()", "atlas.location()")
-    }
+	replacements.string(current.parsed >= "26.1") {
+		replace("atlas.location()", "atlas.location()")
+	}
 }
 
 //? if neoforge {
 /*
 neoForge {
-    accessTransformers {
-        file("src/main/resources/at/${stonecutter.current.project}.cfg")
-    }
+	accessTransformers {
+		file("src/main/resources/at/${stonecutter.current.project}.cfg")
+	}
 }
 */
 //?}
 
 String prop(String key) {
-    return findProperty(key)?.toString() ?: ""
+	return findProperty(key)?.toString() ?: ""
 }
