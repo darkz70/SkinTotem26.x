@@ -19,7 +19,6 @@ feather {
 	}
 	modId  = prop("data.mod_id")
 	lombok = prop("base.lombok_version")
-
 	fabricApi = prop("build.fabric_api")
 
 	additional {
@@ -29,22 +28,10 @@ feather {
 }
 
 repositories {
-	maven {
-		name = "Mixin Squared"
-		url = "https://maven.bawnorton.com/releases"
-	}
-	maven {
-		name = "Modrinth"
-		url = "https://api.modrinth.com/maven"
-	}
-	maven {
-		name = "TerraformersMC"
-		url = "https://maven.terraformersmc.com/"
-	}
-	maven {
-		name = "isxander"
-		url = "https://maven.isxander.dev/releases"
-	}
+	maven { name = "Mixin Squared"; url = "https://maven.bawnorton.com/releases" }
+	maven { name = "Modrinth"; url = "https://api.modrinth.com/maven" }
+	maven { name = "TerraformersMC"; url = "https://maven.terraformersmc.com/" }
+	maven { name = "isxander"; url = "https://maven.isxander.dev/releases" }
 }
 
 dependencies {
