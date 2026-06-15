@@ -31,5 +31,5 @@ featherVersions {
 stonecutter {
     centralScript = "build.gradle"
     kotlinController = false
-    create rootProject
+    create (rootProject)
 }
