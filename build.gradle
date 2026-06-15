@@ -2,9 +2,13 @@ plugins {
 	id "net.darkz.feather.feather-core" version "1.0.0"
 }
 
+def currentProject = stonecutter.current.project
+def loaderName = currentProject.substring(0, currentProject.indexOf("-"))
+def mcVersion = currentProject.substring(currentProject.indexOf("-") + 1)
+
 feather {
-	minecraft = stonecutter.current.project.substring(stonecutter.current.project.indexOf("-") + 1)
-	loader = stonecutter.current.project.substring(0, stonecutter.current.project.indexOf("-"))
+	minecraft = mcVersion
+	loader = loaderName
 	lombok = prop("base.lombok_version")
 
 	fabricLoader = prop("build.fabric_loader")
