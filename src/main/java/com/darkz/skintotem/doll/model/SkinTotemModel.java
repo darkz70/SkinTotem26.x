@@ -12,7 +12,7 @@ import com.darkz.skintotem.doll.data.SkinTotemSprites;
 import com.darkz.skintotem.model.base.*;
 import com.darkz.skintotem.model.bb.manager.BlockBenchModelManager;
 import net.minecraft.client.model.Model;
-import com.mojang.blaze3d.vertex.MultiBufferSource;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.rendertype.*;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.Nullable;

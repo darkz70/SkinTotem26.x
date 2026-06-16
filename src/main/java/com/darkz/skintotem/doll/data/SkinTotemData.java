@@ -171,7 +171,7 @@ public class SkinTotemData {
 
 
 	@NotNull
-	public SkinTotemGuiElementRenderer getGuiRenderer(com.mojang.blaze3d.vertex.MultiBufferSource.BufferSource immediate) {
+	public SkinTotemGuiElementRenderer getGuiRenderer(net.minecraft.client.renderer.MultiBufferSource.BufferSource immediate) {
 		return SkinTotemGuiElementRenderer.getRenderer(this.renderProperties, immediate);
 	}
 

@@ -7,7 +7,7 @@ import com.darkz.skintotem.extension.ItemStackExtension;
 import net.minecraft.client.gui.render.GuiRenderer;
 import net.minecraft.client.renderer.state.gui.GuiRenderState;
 import net.minecraft.client.renderer.state.gui.pip.PictureInPictureRenderState;
-import com.mojang.blaze3d.vertex.MultiBufferSource.BufferSource;
+import net.minecraft.client.renderer.MultiBufferSource.BufferSource;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;

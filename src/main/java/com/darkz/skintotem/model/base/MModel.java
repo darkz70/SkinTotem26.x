@@ -11,7 +11,7 @@ import com.darkz.skintotem.extension.*;
 import com.darkz.skintotem.model.bb.*;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
-import com.mojang.blaze3d.vertex.MultiBufferSource;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.resources.model.cuboid.ItemTransforms;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.texture.*;

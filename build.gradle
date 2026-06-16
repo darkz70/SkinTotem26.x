@@ -1,54 +1,40 @@
 plugins {
-	id "net.lopymine.mossy-plugin-core" version "$mossy_plugin_version"
+id "net.darkz.feather" version "1.1.0"
 }
-
-mossyDependencies {
-	minecraft = stonecutter.current.project.substring(stonecutter.current.project.indexOf("-") + 1)
-	lombok = prop("base.lombok_version")
-
-	fabricApi = prop("build.fabric_api")
-	fabricLoader = prop("build.fabric_loader")
-
-//	forge = prop("build.forge")
-//
-//	neoForge = prop("build.neoforge")
-//	parchment = prop("build.parchment")
-
-	additional {
-		//override("modCompileOnly", "yacl")
-		disable("cit-resewn")
-	}
+feather {
+minecraft = stonecutter.current.project.substring(stonecutter.current.project.indexOf("-") + 1)
+lombok = prop("base.lombok_version")
+fabricApi = prop("build.fabric_api")
+fabricLoader = prop("build.fabric_loader")
+additional {
+disable("cit-resewn")
 }
-
+}
 repositories {
-	// Mixin^2
-	maven {
-		name = "Mixin Squared"
-		url = "https://maven.bawnorton.com/releases"
-	}
+// Mixin^2
+maven {
+name = "Mixin Squared"
+url = "https://maven.bawnorton.com/releases"
 }
-
+}
 dependencies {
-	// Mixin^2
-	include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:${prop("build.mixin_squared")}")))
-
-	// CIT Resewn
-	def cit = prop("dep.cit-resewn")
-	if (cit != "unknown") {
-		modImplementation "maven.modrinth:cit-resewn:${cit}"
-		modImplementation "maven.modrinth:cit-resewn-defaults:${cit}"
-	}
+// Mixin^2
+include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:${prop(\"build.mixin_squared\")}")))
+// CIT Resewn
+def cit = prop("dep.cit-resewn")
+if (cit != "unknown") {
+modImplementation "maven.modrinth:cit-resewn:${cit}"
+modImplementation "maven.modrinth:cit-resewn-defaults:${cit}"
 }
-
+}
 stonecutter {
-	replacements.string(current.parsed >= "26.1") {
-		replace("atlas.location()", "atlas.location()")
-	}
-	replacements.string(current.parsed >= "26.2") {
-		replace("net.minecraft.client.renderer.MultiBufferSource", "com.mojang.blaze3d.vertex.MultiBufferSource")
-	}
+replacements.string(current.parsed >= "26.1") {
+replace("atlas.location()", "atlas.location()")
 }
-
+replacements.string(current.parsed >= "26.2") {
+replace("net.minecraft.client.renderer.MultiBufferSource", "com.mojang.blaze3d.vertex.MultiBufferSource")
+}
+}
 String prop(String key) {
-	return findProperty(key).toString()
+return findProperty(key).toString()
 }
