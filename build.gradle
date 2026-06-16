@@ -1,71 +1,25 @@
 plugins {
-	id "net.darkz.feather.feather-core"        version "1.0.0"
-	id "net.darkz.feather.feather-stonecutter" version "1.0.0"
+    id 'dev.kikugie.stonecutter'
+    id 'net.darkz.feather.feather-core'        version '1.1.0' apply false
+    id 'net.darkz.feather.feather-loader'      version '1.1.0' apply false
+    id 'net.darkz.feather.feather-stonecutter' version '1.1.0' apply false
 }
 
-// stonecutter доступен только в subprojects, не в root
-def scExt = project.extensions.findByName("stonecutter")
-if (scExt != null) {
-	def currentProject = scExt.current.project
-	def loaderName = currentProject.substring(0, currentProject.lastIndexOf("-"))
-	def mcVersion = currentProject.substring(currentProject.lastIndexOf("-") + 1)
-
-	feather {
-		loader           = loaderName
-		minecraftVersion = mcVersion
-		loaderVersion    = loaderName == "neoforge" ? prop("build.neoforge") : prop("build.fabric_loader")
-		modId            = prop("data.mod_id")
-	}
+stonecutter.configureEach {
+    java {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+        withSourcesJar()
+    }
 }
 
 repositories {
-	maven { name = "Mixin Squared"; url = "https://maven.bawnorton.com/releases" }
-	maven { name = "Modrinth"; url = "https://api.modrinth.com/maven" }
-	maven { name = "TerraformersMC"; url = "https://maven.terraformersmc.com/" }
-	maven { name = "isxander"; url = "https://maven.isxander.dev/releases" }
-}
-
-configurations.configureEach {
-	resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
-}
-
-dependencies {
-	if (scExt != null) {
-		def currentProject = scExt.current.project
-		def loaderName = currentProject.substring(0, currentProject.lastIndexOf("-"))
-
-		if (loaderName == "fabric") {
-			include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:${prop("build.mixin_squared")}")))
-		} else if (loaderName == "neoforge") {
-			implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-neoforge:${prop("build.mixin_squared")}"))
-		}
-
-		def yacl = prop("dep.yacl")
-		if (yacl && yacl != "unknown") {
-			modImplementation "maven.modrinth:yet-another-config-lib:${yacl}"
-		}
-
-		//? if fabric {
-		def modmenu = prop("dep.modmenu")
-		if (modmenu && modmenu != "unknown") {
-			modImplementation "maven.modrinth:modmenu:${modmenu}"
-		}
-		//?}
-
-		def cit = prop("dep.cit-resewn")
-		if (cit != "unknown") {
-			modImplementation "maven.modrinth:cit-resewn:${cit}"
-			modImplementation "maven.modrinth:cit-resewn-defaults:${cit}"
-		}
-	}
-}
-
-stonecutter {
-	replacements.string(current.parsed >= "26.1") {
-		replace("atlas.location()", "atlas.location()")
-	}
+    maven { name = "Mixin Squared"; url = "https://maven.bawnorton.com/releases" }
+    maven { name = "Modrinth"; url = "https://api.modrinth.com/maven" }
+    maven { name = "TerraformersMC"; url = "https://maven.terraformersmc.com/" }
+    maven { name = "isxander"; url = "https://maven.isxander.dev/releases" }
 }
 
 String prop(String key) {
-	return findProperty(key)?.toString() ?: ""
+    return findProperty(key)?.toString() ?: ""
 }
