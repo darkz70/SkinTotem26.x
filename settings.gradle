@@ -21,11 +21,7 @@ pluginManagement {
 		gradlePluginPortal()
 		maven {
 			name = "Feather"
-			url = "https://maven.pkg.github.com/darkz70/FeatherPlugin"
-			credentials {
-				username = System.getenv("GITHUB_ACTOR") ?: "token"
-				password = System.getenv("GITHUB_TOKEN") ?: ""
-			}
+			url = "https://maven.kikugie.dev/releases"
 		}
 	}
 }
@@ -33,4 +29,5 @@ pluginManagement {
 plugins {
 	id "dev.kikugie.stonecutter" version "0.9"
 	id "net.lopymine.mossy-plugin-settings" version "3.2.0"
+	id "net.darkz.feather.feather-settings" version "1.1.0"
 }

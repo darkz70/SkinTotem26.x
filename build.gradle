@@ -1,5 +1,7 @@
 plugins {
-id "net.darkz.feather" version "1.1.0"
+	id "net.darkz.feather.feather-core" version "1.1.0"
+	id "net.darkz.feather.feather-loader" version "1.1.0"
+	id "net.darkz.feather.feather-stonecutter" version "1.1.0"
 }
 feather {
 minecraft = stonecutter.current.project.substring(stonecutter.current.project.indexOf("-") + 1)
