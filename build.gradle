@@ -1,53 +1,43 @@
 plugins {
 	id "net.darkz.feather.feather-core"        version "1.0.0"
-	id "net.darkz.feather.feather-loader"      version "1.0.0"
 	id "net.darkz.feather.feather-stonecutter" version "1.0.0"
 }
 
-// Stonecutter применяет build.gradle к каждому subproject
-// stonecutter.current доступен только в subprojects
-if (stonecutter.current != null) {
-	def currentProject = stonecutter.current.project
-	def splitAt        = currentProject.lastIndexOf('-')
-	def mcVersion      = currentProject.substring(0, splitAt)
-	def loaderName     = currentProject.substring(splitAt + 1)
+// stonecutter доступен только в subprojects, не в root
+def scExt = project.extensions.findByName("stonecutter")
+if (scExt != null) {
+	def currentProject = scExt.current.project
+	def loaderName = currentProject.substring(0, currentProject.lastIndexOf("-"))
+	def mcVersion = currentProject.substring(currentProject.lastIndexOf("-") + 1)
 
 	feather {
 		loader           = loaderName
 		minecraftVersion = mcVersion
-		loaderVersion    = switch (loaderName) {
-			case "fabric"   -> prop("build.fabric_loader")
-			case "neoforge" -> prop("build.neoforge")
-			default         -> throw new GradleException("Unknown loader: " + loaderName)
-		}
-		modId  = prop("data.mod_id")
-		lombok = prop("base.lombok_version")
-		fabricApi = prop("build.fabric_api")
-
-		additional {
-			//override("modCompileOnly", "yacl")
-			disable("cit-resewn")
-		}
+		loaderVersion    = loaderName == "neoforge" ? prop("build.neoforge") : prop("build.fabric_loader")
+		modId            = prop("data.mod_id")
 	}
+}
 
-	repositories {
-		maven { name = "Mixin Squared"; url = "https://maven.bawnorton.com/releases" }
-		maven { name = "Modrinth"; url = "https://api.modrinth.com/maven" }
-		maven { name = "TerraformersMC"; url = "https://maven.terraformersmc.com/" }
-		maven { name = "isxander"; url = "https://maven.isxander.dev/releases" }
-	}
+repositories {
+	maven { name = "Mixin Squared"; url = "https://maven.bawnorton.com/releases" }
+	maven { name = "Modrinth"; url = "https://api.modrinth.com/maven" }
+	maven { name = "TerraformersMC"; url = "https://maven.terraformersmc.com/" }
+	maven { name = "isxander"; url = "https://maven.isxander.dev/releases" }
+}
 
-	dependencies {
+configurations.configureEach {
+	resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
+dependencies {
+	if (scExt != null) {
+		def currentProject = scExt.current.project
+		def loaderName = currentProject.substring(0, currentProject.lastIndexOf("-"))
+
 		if (loaderName == "fabric") {
 			include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:${prop("build.mixin_squared")}")))
 		} else if (loaderName == "neoforge") {
 			implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-neoforge:${prop("build.mixin_squared")}"))
-		}
-
-		def cit = prop("dep.cit-resewn")
-		if (cit != "unknown") {
-			modImplementation "maven.modrinth:cit-resewn:${cit}"
-			modImplementation "maven.modrinth:cit-resewn-defaults:${cit}"
 		}
 
 		def yacl = prop("dep.yacl")
@@ -61,23 +51,19 @@ if (stonecutter.current != null) {
 			modImplementation "maven.modrinth:modmenu:${modmenu}"
 		}
 		//?}
-	}
 
-	stonecutter {
-		replacements.string(current.parsed >= "26.1") {
-			replace("atlas.location()", "atlas.location()")
+		def cit = prop("dep.cit-resewn")
+		if (cit != "unknown") {
+			modImplementation "maven.modrinth:cit-resewn:${cit}"
+			modImplementation "maven.modrinth:cit-resewn-defaults:${cit}"
 		}
 	}
+}
 
-	//? if neoforge {
-	/*
-	neoForge {
-		accessTransformers {
-			file("src/main/resources/at/${stonecutter.current.project}.cfg")
-		}
+stonecutter {
+	replacements.string(current.parsed >= "26.1") {
+		replace("atlas.location()", "atlas.location()")
 	}
-	*/
-	//?}
 }
 
 String prop(String key) {
