@@ -19,6 +19,14 @@ pluginManagement {
 		mavenLocal()
 		mavenCentral()
 		gradlePluginPortal()
+		maven {
+			name = "Feather"
+			url = "https://maven.pkg.github.com/darkz70/FeatherPlugin"
+			credentials {
+				username = System.getenv("GITHUB_ACTOR") ?: "token"
+				password = System.getenv("GITHUB_TOKEN") ?: ""
+			}
+		}
 	}
 }
 
