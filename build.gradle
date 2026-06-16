@@ -19,7 +19,7 @@ url = "https://maven.bawnorton.com/releases"
 }
 dependencies {
 // Mixin^2
-include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:${prop(\"build.mixin_squared\")}")))
+include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:${prop('build.mixin_squared')}")))
 // CIT Resewn
 def cit = prop("dep.cit-resewn")
 if (cit != "unknown") {
