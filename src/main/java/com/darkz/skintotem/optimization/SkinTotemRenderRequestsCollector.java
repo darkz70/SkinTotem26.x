@@ -13,7 +13,8 @@ import com.darkz.skintotem.extension.MatrixStackEntryExtension;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.MultiBufferSource.BufferSource;
+import net.minecraft.client.renderer.OutlineBufferSource;
+import com.mojang.blaze3d.vertex.MultiBufferSource.BufferSource;
 import org.jetbrains.annotations.Nullable;
 
 @ExtensionMethod(MatrixStackEntryExtension.class)

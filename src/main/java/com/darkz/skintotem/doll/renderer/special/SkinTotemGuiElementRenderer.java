@@ -11,7 +11,7 @@ import com.darkz.skintotem.doll.renderer.*;
 import com.darkz.skintotem.extension.ItemStackExtension;
 import com.darkz.skintotem.utils.LightningUtils;
 import net.minecraft.client.gui.render.pip.PictureInPictureRenderer;
-import net.minecraft.client.renderer.MultiBufferSource.BufferSource;
+import com.mojang.blaze3d.vertex.MultiBufferSource.BufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import org.jetbrains.annotations.NotNull;
 
