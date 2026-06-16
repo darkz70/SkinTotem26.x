@@ -34,5 +34,8 @@
   "skintotem.modmenu.option.standard_doll_skin_type.ely_by": "Ely.by",
   "skintotem.modmenu.option.standard_doll_skin_type.ely_by.suggestion": "Ely.by никнамын «Скин кыйммәте» кырына кертегез.",
   "skintotem.modmenu.option.standard_doll_skin_type.tlauncher": "TLauncher",
-  "skintotem.modmenu.option.standard_doll_skin_type.tlauncher.suggestion": "TLauncher никнамын «Скин кыйммәте» кырына кертегез."
+  "skintotem.modmenu.option.standard_doll_skin_type.tlauncher.suggestion": "TLauncher никнамын «Скин кыйммәте» кырына кертегез.",
+  "skintotem.modmenu.group.auto_refresh.name": "§lАвтояңарту",
+  "skintotem.modmenu.option.auto_refresh_enabled.name": "Автояңарту кушылган",
+  "skintotem.modmenu.option.auto_refresh_interval_minutes.name": "Автояңарту интервалы (минутлар)"
 }

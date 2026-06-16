@@ -119,5 +119,8 @@
   "modmenu.option.standard_doll_skin_type.tlauncher": "TLauncher",
   "modmenu.option.standard_doll_skin_type.tlauncher.suggestion": "Enter TLauncher nickname",
   "modmenu.option.standard_doll_skin_type.ely_by": "Ely.by",
-  "modmenu.option.standard_doll_skin_type.ely_by.suggestion": "Enter Ely.by nickname"
+  "modmenu.option.standard_doll_skin_type.ely_by.suggestion": "Enter Ely.by nickname",
+  "skintotem.modmenu.group.auto_refresh.name": "&lAuto Refresh",
+  "skintotem.modmenu.option.auto_refresh_enabled.name": "Auto Refresh Enabled",
+  "skintotem.modmenu.option.auto_refresh_interval_minutes.name": "Auto Refresh Interval (Minutes)"
 }

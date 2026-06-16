@@ -119,5 +119,8 @@
   "modmenu.option.standard_doll_skin_type.tlauncher": "TLauncher",
   "modmenu.option.standard_doll_skin_type.tlauncher.suggestion": "Введите ник TLauncher",
   "modmenu.option.standard_doll_skin_type.ely_by": "Ely.by",
-  "modmenu.option.standard_doll_skin_type.ely_by.suggestion": "Введите ник Ely.by"
+  "modmenu.option.standard_doll_skin_type.ely_by.suggestion": "Введите ник Ely.by",
+  "skintotem.modmenu.group.auto_refresh.name": "&lАвтообновление",
+  "skintotem.modmenu.option.auto_refresh_enabled.name": "Автообновление включено",
+  "skintotem.modmenu.option.auto_refresh_interval_minutes.name": "Интервал автообновления (минуты)"
 }

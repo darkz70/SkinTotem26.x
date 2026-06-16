@@ -113,5 +113,8 @@
   "modmenu.option.standard_doll_skin_type.tlauncher": "TLauncher",
   "modmenu.option.standard_doll_skin_type.tlauncher.suggestion": "TLauncherのニックネームを入力",
   "modmenu.option.standard_doll_skin_type.ely_by": "Ely.by",
-  "modmenu.option.standard_doll_skin_type.ely_by.suggestion": "Ely.byのニックネームを入力"
+  "modmenu.option.standard_doll_skin_type.ely_by.suggestion": "Ely.byのニックネームを入力",
+  "skintotem.modmenu.group.auto_refresh.name": "&l自動更新",
+  "skintotem.modmenu.option.auto_refresh_enabled.name": "自動更新を有効にする",
+  "skintotem.modmenu.option.auto_refresh_interval_minutes.name": "自動更新間隔（分）"
 }
