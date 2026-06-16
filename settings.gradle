@@ -32,8 +32,14 @@ pluginManagement {
 			url = "https://maven.kikugie.dev/releases"
 		}
 	}
+	resolutionStrategy {
+		eachPlugin {
+			if (requested.id.id == "fabric-loom") {
+				useModule("net.fabricmc:fabric-loom:${requested.version ?: '1.7-SNAPSHOT'}")
+			}
+		}
+	}
 }
-
 plugins {
 	id "dev.kikugie.stonecutter" version "0.9"
 	id "net.lopymine.mossy-plugin-settings" version "3.2.0"
