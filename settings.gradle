@@ -24,6 +24,13 @@ pluginManagement {
 		}
 	}
 }
+
+plugins {
+	id "dev.kikugie.stonecutter" version "0.9"
+	id "net.darkz.feather.feather-settings" version "1.2.3-SNAPSHOT"
+	id "org.gradle.toolchains.foojay-resolver-convention" version "1.0.0"
+}
+
 dependencyResolutionManagement {
 	repositories {
 		mavenCentral()
@@ -48,11 +55,6 @@ dependencyResolutionManagement {
 			}
 		}
 	}
-}
-plugins {
-		id "dev.kikugie.stonecutter" version "0.9"
-		id "net.darkz.feather.feather-settings" version "1.2.3-SNAPSHOT"
-	id "org.gradle.toolchains.foojay-resolver-convention" version "1.0.0"
 }
 
 featherVersions {
