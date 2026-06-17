@@ -1,7 +1,7 @@
 plugins {
-	id "net.darkz.feather.feather-core" version "1.1.9"
-	id "net.darkz.feather.feather-loader" version "1.1.9"
-	id "net.darkz.feather.feather-stonecutter" version "1.1.9"
+	id "net.darkz.feather.feather-core" version "1.1.10"
+	id "net.darkz.feather.feather-loader" version "1.1.10"
+	id "net.darkz.feather.feather-stonecutter" version "1.1.10"
 	id "fabric-loom" version "1.17.11" apply false
 }
 feather {
@@ -46,4 +46,16 @@ stonecutter {
 }
 String prop(String key) {
 	return findProperty(key).toString()
+}
+
+// Workaround for missing publishModrinth task in some versions/loaders
+subprojects {
+    afterEvaluate {
+        if (tasks.findByName("publishModrinth") == null) {
+            tasks.register("publishModrinth") {
+                group = "publishing"
+                description = "Dummy task to satisfy MossySettings"
+            }
+        }
+    }
 }
