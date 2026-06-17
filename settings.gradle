@@ -1,56 +1,70 @@
 pluginManagement {
 	repositories {
+		mavenCentral()
+		gradlePluginPortal()
 		maven {
 			name "Fabric"
 			url "https://maven.fabricmc.net/"
 		}
 		maven {
-			name "Kiku Snapshots"
-			url "https://maven.kikugie.dev/snapshots"
+			name "Quilt"
+			url "https://maven.quiltmc.org/repository/release"
 		}
 		maven {
 			name "Kiku Releases"
 			url "https://maven.kikugie.dev/releases"
 		}
-
 		maven {
 			name = "FeatherPlugin GitHub Packages"
 			url = uri("https://maven.pkg.github.com/darkz70/FeatherPlugin")
 			credentials {
-					username = System.getenv("GITHUB_ACTOR") ?: (settings.hasProperty("gpr.user") ? settings.property("gpr.user") : "")
-					password = System.getenv("GITHUB_TOKEN") ?: (System.getenv("GPR_KEY") ?: (settings.hasProperty("gpr.key") ? settings.property("gpr.key") : ""))
-			}
-		}
-		mavenLocal()
-		mavenCentral()
-		gradlePluginPortal()
-		maven {
-			name = "Feather"
-			url = "https://maven.kikugie.dev/releases"
-		}
-	}
-	resolutionStrategy {
-		eachPlugin {
-			if (requested.id.id == "fabric-loom") {
-				useModule("net.fabricmc:fabric-loom:${requested.version ?: '1.7-SNAPSHOT'}")
+				username = System.getenv("GITHUB_ACTOR")
+				password = System.getenv("GITHUB_TOKEN")
 			}
 		}
 	}
 }
-	plugins {
-			id "dev.kikugie.stonecutter" version "0.9"
-			id "net.darkz.feather.feather-settings" version "1.2.3-SNAPSHOT"
-		id "org.gradle.toolchains.foojay-resolver-convention" version "1.0.0"
+dependencyResolutionManagement {
+	repositories {
+		mavenCentral()
+		maven {
+			name "Fabric"
+			url "https://maven.fabricmc.net/"
+		}
+		maven {
+			name "Quilt"
+			url "https://maven.quiltmc.org/repository/release"
+		}
+		maven {
+			name "Kiku Releases"
+			url "https://maven.kikugie.dev/releases"
+		}
+		maven {
+			name = "FeatherPlugin GitHub Packages"
+			url = uri("https://maven.pkg.github.com/darkz70/FeatherPlugin")
+			credentials {
+				username = System.getenv("GITHUB_ACTOR")
+				password = System.getenv("GITHUB_TOKEN")
+			}
+		}
 	}
-	
-		featherVersions {
-		    version "26.1", "fabric"
-		    version "26.1.1", "fabric"
-		    version "26.1.2", "fabric"
-		    version "26.2", "fabric"
-		}
-		
-		stonecutter {
-		    centralScript = "build.gradle"
-		    create rootProject
-		}
+}
+plugins {
+		id "dev.kikugie.stonecutter" version "0.9"
+		id "net.darkz.feather.feather-settings" version "1.2.3-SNAPSHOT"
+	id "org.gradle.toolchains.foojay-resolver-convention" version "1.0.0"
+}
+
+featherVersions {
+    version "26.1", "fabric"
+    version "26.1.1", "fabric"
+    version "26.1.2", "fabric"
+    version "26.2", "fabric"
+}
+
+featherVersions.register()
+
+stonecutter {
+    centralScript = "build.gradle"
+    create rootProject
+}
