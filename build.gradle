@@ -1,18 +1,9 @@
 plugins {
-	id "net.darkz.feather.feather-core" version "1.2.2"
-	id "net.darkz.feather.feather-loader" version "1.2.2"
-	id "net.darkz.feather.feather-stonecutter" version "1.2.2"
-	id "fabric-loom" version "1.17.11" apply false
-}
-
-// Workaround for missing publishModrinth task in some versions/loaders
-// Must be applied eagerly before MossySettings/Feather try to aggregate tasks
-subprojects {
-    tasks.register("publishModrinth") {
-        group = "publishing"
-        description = "Dummy task to satisfy MossySettings"
-    }
-}
+		id "net.darkz.feather.feather-core" version "1.2.3-SNAPSHOT"
+		id "net.darkz.feather.feather-loader" version "1.2.3-SNAPSHOT"
+		id "net.darkz.feather.feather-stonecutter" version "1.2.3-SNAPSHOT"
+		id "fabric-loom" version "1.17.11" apply false
+	}
 feather {
 	loader           = stonecutter.current.project.substring(0, stonecutter.current.project.indexOf("-"))
 	minecraftVersion = stonecutter.current.project.substring(stonecutter.current.project.indexOf("-") + 1)
