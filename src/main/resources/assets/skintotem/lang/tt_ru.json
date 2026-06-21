@@ -8,6 +8,15 @@
   "skintotem.modmenu.option.mod_enabled.description": "Кушылса, барлык тотемнар уенчы курчаклары белән алыштырылачак; сүндерелсә, алыштырылмаячак.",
   "skintotem.modmenu.option.debug_log_enabled.name": "§6Төзәтү журналын кушу",
   "skintotem.modmenu.option.debug_log_enabled.description": "Кушылса, төзәтү өчен өстәмә мәгълүмат консольгә язылачак; сүндерелсә, язылмаячак.",
+  "skintotem.modmenu.group.parallel_tasks.name": "§lПараллель бурычлар",
+  "skintotem.modmenu.group.parallel_tasks.description": "Модның эшчәнлегенә һәм Minecraft-ка йөкләнешкә тәэсир итәргә мөмкин булган параллель бурычлар көйләүләре!",
+  "skintotem.modmenu.group.auto_refresh.name": "Автоматик яңарту",
+  "skintotem.modmenu.group.auto_refresh.description": "Скиннарны автоматик яңарту көйләүләре.",
+  "skintotem.modmenu.option.auto_refresh_enabled.name": "Автоматик яңартуны кабызу",
+  "skintotem.modmenu.option.auto_refresh_enabled.description": "Кабызылган булса, скиннар билгеләнгән интервал аша автоматик рәвештә яңартылачак; сүндерелгән булса, яңартылмаячак.",
+  "skintotem.modmenu.option.auto_refresh_interval_minutes.name": "Автоматик яңарту интервалы (минут)",
+  "skintotem.modmenu.option.auto_refresh_interval_minutes.description": "Скиннарны автоматик яңарту өчен интервалны минутларда билгели."
+
   "skintotem.modmenu.category.rendering.name": "§lКүрсәтелү",
   "skintotem.modmenu.group.right_hand.name": "§lУң кул",
   "skintotem.modmenu.group.left_hand.name": "§lСул кул",

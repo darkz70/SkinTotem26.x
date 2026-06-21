@@ -14,6 +14,12 @@
   "skintotem.modmenu.option.debug_log_enabled.description": "有効時にデバッグ用に追加情報がコンソールに出力されます。無効時には出力されません",
   "skintotem.modmenu.group.parallel_tasks.name": "&l並列タスク",
   "skintotem.modmenu.group.parallel_tasks.description": "パフォーマンスに影響する可能性のある並列タスクの設定",
+  "skintotem.modmenu.group.auto_refresh.name": "自動更新",
+  "skintotem.modmenu.group.auto_refresh.description": "スキンの自動更新設定",
+  "skintotem.modmenu.option.auto_refresh_enabled.name": "自動更新を有効にする",
+  "skintotem.modmenu.option.auto_refresh_enabled.description": "有効にすると、スキンは指定された間隔で自動的に更新されます。無効にすると更新されません。",
+  "skintotem.modmenu.option.auto_refresh_interval_minutes.name": "自動更新間隔（分）",
+  "skintotem.modmenu.option.auto_refresh_interval_minutes.description": "スキンの自動更新間隔を分単位で設定します。"}]))र्व
   "skintotem.modmenu.option.parallel_tasks_count.name": "並列タスク数",
   "skintotem.modmenu.option.parallel_tasks_count.description": "スキンの並列ダウンロードなど、Modのタスクを同時に実行できる数を設定します",
   "skintotem.modmenu.category.rendering.name": "&l描画",
