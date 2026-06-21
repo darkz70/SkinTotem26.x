@@ -32,6 +32,10 @@ dependencies {
 	// Mixin^2
 	include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:${prop("build.mixin_squared")}")))
 
+	// Lombok (explicit fallback in case mossyDependencies' automatic wiring doesn't apply)
+	compileOnly "org.projectlombok:lombok:${prop("base.lombok_version")}"
+	annotationProcessor "org.projectlombok:lombok:${prop("base.lombok_version")}"
+
 	// CIT Resewn
 	def cit = prop("dep.cit-resewn")
 	if (cit != "unknown") {

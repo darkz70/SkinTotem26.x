@@ -81,7 +81,7 @@ public abstract class ItemStackMixin {
 
 	@Unique
 	private Optional<TooltipComponent> getLoadingStateTooltipData(String[] data) {
-		Screen currentScreen = Minecraft.getInstance().screen;
+		Screen currentScreen = Minecraft.getInstance().gui.screen();
 		if (!(currentScreen instanceof AnvilScreen || ScreenUtils.hasShiftDown())) {
 			return Optional.empty();
 		}

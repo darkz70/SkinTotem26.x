@@ -16,6 +16,12 @@
   "skintotem.modmenu.group.parallel_tasks.description": "Налаштування паралельних завдань, які можуть вплинути на продуктивність!",
   "skintotem.modmenu.option.parallel_tasks_count.name": "Кількість паралельних завдань",
   "skintotem.modmenu.option.parallel_tasks_count.description": "Визначає, скільки паралельних завдань можуть запускатися модом, таких як паралельне завантаження скінів.",
+  "skintotem.modmenu.group.auto_refresh.name": "&lАвтооновлення",
+  "skintotem.modmenu.group.auto_refresh.description": "Налаштування автоматичного оновлення кешованих скінів.",
+  "skintotem.modmenu.option.auto_refresh_enabled.name": "Автооновлення увімкнено",
+  "skintotem.modmenu.option.auto_refresh_enabled.description": "Якщо увімкнено, кешовані скіни автоматично оновлюватимуться через заданий інтервал; якщо вимкнено — не оновлюватимуться.",
+  "skintotem.modmenu.option.auto_refresh_interval_minutes.name": "Інтервал автооновлення (хвилин)",
+  "skintotem.modmenu.option.auto_refresh_interval_minutes.description": "Визначає, як часто (у хвилинах) кешовані скіни мають автоматично оновлюватися.",
   "skintotem.modmenu.category.rendering.name": "&lПромальовування",
   "skintotem.modmenu.group.right_hand.name": "&lПрава рука",
   "skintotem.modmenu.group.left_hand.name": "&lЛіва рука",
@@ -111,8 +117,5 @@
   "modmenu.option.standard_doll_skin_type.tlauncher": "TLauncher",
   "modmenu.option.standard_doll_skin_type.tlauncher.suggestion": "Введіть нік TLauncher",
   "modmenu.option.standard_doll_skin_type.ely_by": "Ely.by",
-  "modmenu.option.standard_doll_skin_type.ely_by.suggestion": "Введіть нік Ely.by",
-  "skintotem.modmenu.group.auto_refresh.name": "&lАвтооновлення",
-  "skintotem.modmenu.option.auto_refresh_enabled.name": "Автооновлення увімкнено",
-  "skintotem.modmenu.option.auto_refresh_interval_minutes.name": "Інтервал автооновлення (хвилини)"
+  "modmenu.option.standard_doll_skin_type.ely_by.suggestion": "Введіть нік Ely.by"
 }

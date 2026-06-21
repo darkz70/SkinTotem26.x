@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack.Pose;
 import com.darkz.skintotem.doll.data.*;
 import com.darkz.skintotem.doll.renderer.DollRenderContext;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import org.jetbrains.annotations.Nullable;
 
 public record SkinTotemRenderRequest(
@@ -16,6 +16,6 @@ public record SkinTotemRenderRequest(
 		int light,
 		int overlay,
 		int outlineColor,
-		@Nullable MultiBufferSource provider) {
+		@Nullable SubmitNodeCollector provider) {
 
 }

@@ -11,7 +11,7 @@ import com.darkz.skintotem.extension.*;
 import com.darkz.skintotem.model.bb.*;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.resources.model.cuboid.ItemTransforms;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.texture.*;
@@ -119,7 +119,7 @@ public class MModel {
 		return this.modelPart;
 	}
 
-	public void draw(PoseStack matrices, MultiBufferSource provider, TextureAtlas atlas, RenderType atlasRenderLayer, AtlasSprite mainSprite, Map<String, AtlasSprite> requestedParts, int light, int overlay, int color) {
+	public void draw(PoseStack matrices, SubmitNodeCollector collector, TextureAtlas atlas, RenderType atlasRenderLayer, AtlasSprite mainSprite, Map<String, AtlasSprite> requestedParts, int light, int overlay, int color) {
 		AtlasSprite providedSprite = requestedParts.get(this.getName());
 
 		if ((this.skipRendering && providedSprite == null) || (!this.visible) || (this.mCuboids.isEmpty() && this.mChildren.isEmpty())) {
@@ -135,12 +135,14 @@ public class MModel {
 		this.translateAndRotate(matrices);
 		if (!this.skipDraw && !this.mCuboids.isEmpty()) {
 			TextureAtlasSprite currentSprite = atlas.getSprite(currentSpriteId.getSpriteId());
-			VertexConsumer consumer = currentSprite.wrap(provider.getBuffer(atlasRenderLayer));
-			this.compile(matrices.last(), consumer, light, overlay, color);
+			collector.submitCustomGeometry(matrices, atlasRenderLayer, (pose, buffer) -> {
+				VertexConsumer consumer = currentSprite.wrap(buffer);
+				this.compile(pose, consumer, light, overlay, color);
+			});
 		}
 
 		for (MModel model : this.mChildrenModels) {
-			model.draw(matrices, provider, atlas, atlasRenderLayer, currentSpriteId, requestedParts, light, overlay, color);
+			model.draw(matrices, collector, atlas, atlasRenderLayer, currentSpriteId, requestedParts, light, overlay, color);
 		}
 
 		matrices.popPose();

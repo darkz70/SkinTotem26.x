@@ -5,9 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.darkz.skintotem.SkinTotem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.render.pip.PictureInPictureRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.MultiBufferSource.BufferSource;
-import net.minecraft.client.renderer.feature.FeatureRenderDispatcher;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.entity.LivingEntity;
@@ -19,8 +17,8 @@ public class ItemGuiElementRenderer extends PictureInPictureRenderer<ItemGuiRend
 
 	private final ItemStackRenderState itemRenderState = new ItemStackRenderState();
 
-	public ItemGuiElementRenderer(BufferSource vertexConsumers) {
-		super(vertexConsumers);
+	public ItemGuiElementRenderer() {
+		super();
 	}
 
 	@Override
@@ -29,10 +27,10 @@ public class ItemGuiElementRenderer extends PictureInPictureRenderer<ItemGuiRend
 	}
 
 	@Override
-	protected void renderToTexture(ItemGuiRenderState state, PoseStack matrices) {
+	protected void renderToTexture(ItemGuiRenderState state, PoseStack matrices, SubmitNodeCollector submitNodeCollector) {
 		Minecraft client = Minecraft.getInstance();
 
-		client.gameRenderer.getLighting().setupFor(Entry.ITEMS_FLAT);
+		client.gameRenderer.lighting().setupFor(Entry.ITEMS_FLAT);
 		matrices.mulPose(state.rotation());
 		float size = state.size();
 		matrices.scale(-size, -size, size);
@@ -42,7 +40,7 @@ public class ItemGuiElementRenderer extends PictureInPictureRenderer<ItemGuiRend
 				15728880,
 				OverlayTexture.NO_OVERLAY,
 				matrices,
-				this.bufferSource,
+				submitNodeCollector,
 				client.level,
 				0
 		);
@@ -58,14 +56,12 @@ public class ItemGuiElementRenderer extends PictureInPictureRenderer<ItemGuiRend
 		return "%s-item-special-gui-renderer".formatted(SkinTotem.MOD_ID);
 	}
 
-	public void renderItem(ItemStack stack, ItemDisplayContext displayContext, int light, int overlay, PoseStack matrices, MultiBufferSource vertexConsumers, @Nullable Level world, int seed) {
-		this.renderItem(null, stack, displayContext, matrices, vertexConsumers, world, light, overlay, seed);
+	public void renderItem(ItemStack stack, ItemDisplayContext displayContext, int light, int overlay, PoseStack matrices, SubmitNodeCollector submitNodeCollector, @Nullable Level world, int seed) {
+		this.renderItem(null, stack, displayContext, matrices, submitNodeCollector, world, light, overlay, seed);
 	}
 
-	public void renderItem(@Nullable LivingEntity entity, ItemStack stack, ItemDisplayContext displayContext, PoseStack matrices, MultiBufferSource vertexConsumers, @Nullable Level world, int light, int overlay, int seed) {
+	public void renderItem(@Nullable LivingEntity entity, ItemStack stack, ItemDisplayContext displayContext, PoseStack matrices, SubmitNodeCollector submitNodeCollector, @Nullable Level world, int light, int overlay, int seed) {
 		Minecraft.getInstance().getItemModelResolver().updateForTopItem(this.itemRenderState, stack, displayContext, world, entity, seed);
-		FeatureRenderDispatcher dispatcher = Minecraft.getInstance().gameRenderer.getFeatureRenderDispatcher();
-		this.itemRenderState.submit(matrices, dispatcher.getSubmitNodeStorage(), light, overlay, 0);
-		dispatcher.renderAllFeatures();
+		this.itemRenderState.submit(matrices, submitNodeCollector, light, overlay, 0);
 	}
 }

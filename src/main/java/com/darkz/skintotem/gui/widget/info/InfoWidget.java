@@ -54,7 +54,7 @@ public class InfoWidget implements Renderable {
 
 	public void requestTooltip() {
 		Minecraft client = Minecraft.getInstance();
-		Screen screen = client.screen;
+		Screen screen = client.gui.screen();
 		if (!(screen instanceof IRequestableTooltipScreen tooltipScreen)) {
 			return;
 		}

@@ -10,12 +10,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(LevelRenderer.class)
 public class GameRendererDollRenderingMixin {
 
-	@Inject(at = @At("HEAD"), method = "extractVisibleEntities")
+	@Inject(at = @At("HEAD"), method = "render")
 	private void beforeDollRendering(CallbackInfo ci) {
 		ThingMarks.WORLD_RENDERING.get().setMarked(true);
 	}
 
-	@Inject(at = @At("TAIL"), method = "extractVisibleEntities")
+	@Inject(at = @At("TAIL"), method = "render")
 	private void afterDollRendering(CallbackInfo ci) {
 		SkinTotemRenderRequestsCollector.getInstance().renderStates();
 		ThingMarks.WORLD_RENDERING.get().setMarked(false);

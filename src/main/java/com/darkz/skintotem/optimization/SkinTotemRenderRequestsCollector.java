@@ -10,10 +10,8 @@ import com.darkz.skintotem.doll.data.*;
 import com.darkz.skintotem.doll.model.SkinTotemModel;
 import com.darkz.skintotem.doll.renderer.*;
 import com.darkz.skintotem.extension.MatrixStackEntryExtension;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.MultiBufferSource.BufferSource;
 import org.jetbrains.annotations.Nullable;
 
 @ExtensionMethod(MatrixStackEntryExtension.class)
@@ -32,7 +30,7 @@ public class SkinTotemRenderRequestsCollector {
 		return INSTANCE;
 	}
 
-	public void requestRender(PoseStack matrices, SkinTotemData data, AbstractClientPlayer holdingPlayer, DollRenderContext context, int light, int overlay, int outlineColor, @Nullable MultiBufferSource provider) {
+	public void requestRender(PoseStack matrices, SkinTotemData data, AbstractClientPlayer holdingPlayer, DollRenderContext context, int light, int overlay, int outlineColor, @Nullable SubmitNodeCollector provider) {
 		PoseStack.Pose entry = matrices.last();
 		this.requests.add(new SkinTotemRenderRequest(entry.copy(), data, data.getRenderProperties().copy(), holdingPlayer, context, light, overlay, outlineColor, provider));
 	}
@@ -45,20 +43,18 @@ public class SkinTotemRenderRequestsCollector {
 		}
 		atlasTexture.setLocked(true);
 
-		BufferSource mainProvider = Minecraft.getInstance().renderBuffers().bufferSource();
-		OutlineBufferSource outlineProvider = Minecraft.getInstance().renderBuffers().outlineBufferSource();
-
 		for (SkinTotemRenderRequest request : this.requests) {
-			this.renderRequest(request, request.provider() == null ? mainProvider : request.provider(), outlineProvider);
+			if (request.provider() != null) {
+				this.renderRequest(request, request.provider());
+			}
 		}
 
 		this.requests.clear();
-		mainProvider.endLastBatch();
 		// We should draw this before unlocking, to make sure that atlas won't be changed earlier than the draw call
 		atlasTexture.setLocked(false);
 	}
 
-	private void renderRequest(SkinTotemRenderRequest request, MultiBufferSource mainProvider, @SuppressWarnings("unused") OutlineBufferSource outlineProvider) {
+	private void renderRequest(SkinTotemRenderRequest request, SubmitNodeCollector mainProvider) {
 		this.matrices.pushPose();
 		this.matrices.last().copyFrom(request.copyPeek());
 
@@ -73,11 +69,10 @@ public class SkinTotemRenderRequestsCollector {
 
 		SkinTotemRenderer.renderDoll(this.matrices, data, request.holdingPlayer(), request.context(), mainProvider, request.light(), request.overlay());
 
-		int argb = request.outlineColor();
-		if (argb != 0) {
-			outlineProvider.setColor(argb);
-			SkinTotemRenderer.renderDoll(this.matrices, data, request.holdingPlayer(), request.context(), outlineProvider, request.light(), request.overlay());
-		}
+		// NOTE: outline/glowing rendering was temporarily removed during 26.2 migration.
+		// OutlineBufferSource no longer exists in RenderBuffers; the new submit-based API
+		// likely exposes outlineColor directly on submit*() calls instead of a second pass.
+		// TODO: re-implement glow effect once the correct 26.2 outline mechanism is confirmed.
 
 		data.getRenderProperties().copyFrom(this.tempProperties);
 

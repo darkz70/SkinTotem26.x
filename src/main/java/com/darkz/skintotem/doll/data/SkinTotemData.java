@@ -171,8 +171,8 @@ public class SkinTotemData {
 
 
 	@NotNull
-	public SkinTotemGuiElementRenderer getGuiRenderer(net.minecraft.client.renderer.MultiBufferSource.BufferSource immediate) {
-		return SkinTotemGuiElementRenderer.getRenderer(this.renderProperties, immediate);
+	public SkinTotemGuiElementRenderer getGuiRenderer() {
+		return SkinTotemGuiElementRenderer.getRenderer(this.renderProperties);
 	}
 
 }

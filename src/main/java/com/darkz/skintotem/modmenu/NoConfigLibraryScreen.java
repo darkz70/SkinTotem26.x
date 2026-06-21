@@ -43,7 +43,7 @@ public class NoConfigLibraryScreen {
 				SkinTotemClient.LOGGER.error("Can't open YACL Modrinth page:", e);
 			}
 		} else {
-			Minecraft.getInstance().setScreen(parent);
+			Minecraft.getInstance().gui.setScreen(parent);
 		}
 	}
 

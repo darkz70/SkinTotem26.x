@@ -19,7 +19,7 @@ public abstract class ScreenMixin {
 
 	@WrapWithCondition(method = "extractBackground", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;extractBlurredBackground(Lnet/minecraft/client/gui/GuiGraphicsExtractor;)V"))
 	public boolean disableBlur(Screen instance, GuiGraphicsExtractor context) {
-		Screen screen = Minecraft.getInstance().screen;
+		Screen screen = Minecraft.getInstance().gui.screen();
 		if (YACLConfigurationScreen.notOpen(screen)) {
 			return true;
 		}

@@ -5,9 +5,9 @@ import com.darkz.skintotem.doll.data.SkinTotemData;
 import com.darkz.skintotem.doll.renderer.special.*;
 import com.darkz.skintotem.extension.ItemStackExtension;
 import net.minecraft.client.gui.render.GuiRenderer;
+import net.minecraft.client.renderer.feature.FeatureRenderDispatcher;
 import net.minecraft.client.renderer.state.gui.GuiRenderState;
 import net.minecraft.client.renderer.state.gui.pip.PictureInPictureRenderState;
-import net.minecraft.client.renderer.MultiBufferSource.BufferSource;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -19,7 +19,7 @@ public class GuiRendererMixin {
 
 	@Shadow
 	@Final
-	private BufferSource bufferSource;
+	private FeatureRenderDispatcher featureRenderDispatcher;
 
 	@Shadow @Final private GuiRenderState renderState;
 
@@ -41,9 +41,9 @@ public class GuiRendererMixin {
 			return;
 		}
 
-		SkinTotemGuiElementRenderer guiRenderer = data.getGuiRenderer(this.bufferSource);
+		SkinTotemGuiElementRenderer guiRenderer = data.getGuiRenderer();
 		guiRenderer.setActive(true);
-		guiRenderer.prepare(skinTotemRenderState, this.renderState, windowScaleFactor);
+		guiRenderer.prepare(skinTotemRenderState, this.renderState, this.featureRenderDispatcher, windowScaleFactor);
 		ci.cancel();
 	}
 

@@ -29,11 +29,11 @@ public class ItemStackRenderStateMixin implements ItemRenderStateWithStack {
 
 	@Inject(at = @At("HEAD"), method = "submit", cancellable = true)
 	private void renderRenderState(PoseStack matrices, SubmitNodeCollector queue, int light, int overlay, int outlineColor, CallbackInfo ci) {
-		this.renderDoll(matrices, light, overlay, outlineColor, null, ci);
+		this.renderDoll(matrices, light, overlay, outlineColor, queue, ci);
 	}
 
 	@Unique
-	private void renderDoll(PoseStack matrices, int light, int overlay, @SuppressWarnings("all") int outlineColor, @Nullable MultiBufferSource provider, CallbackInfo ci) {
+	private void renderDoll(PoseStack matrices, int light, int overlay, @SuppressWarnings("all") int outlineColor, @Nullable SubmitNodeCollector provider, CallbackInfo ci) {
 		DollRenderContext context = DollRenderContext.of(this.displayContext);
 
 		if (this.stack != null) {

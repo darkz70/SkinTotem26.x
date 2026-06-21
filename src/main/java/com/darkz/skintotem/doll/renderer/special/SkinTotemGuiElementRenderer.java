@@ -11,7 +11,7 @@ import com.darkz.skintotem.doll.renderer.*;
 import com.darkz.skintotem.extension.ItemStackExtension;
 import com.darkz.skintotem.utils.LightningUtils;
 import net.minecraft.client.gui.render.pip.PictureInPictureRenderer;
-import net.minecraft.client.renderer.MultiBufferSource.BufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import org.jetbrains.annotations.NotNull;
 
@@ -30,15 +30,15 @@ public class SkinTotemGuiElementRenderer extends PictureInPictureRenderer<SkinTo
 		this.active = active;
 	}
 
-	public SkinTotemGuiElementRenderer(BufferSource vertexConsumers) {
-		super(vertexConsumers);
+	public SkinTotemGuiElementRenderer() {
+		super();
 	}
 
 	@NotNull
-	public static SkinTotemGuiElementRenderer getRenderer(SkinTotemRenderProperties renderProperties, BufferSource immediate) {
+	public static SkinTotemGuiElementRenderer getRenderer(SkinTotemRenderProperties renderProperties) {
 		SkinTotemGuiElementRenderer renderer = PROPERTIES_RENDERERS.get(renderProperties.copy());
 		if (renderer == null) {
-			SkinTotemGuiElementRenderer createdRenderer = new SkinTotemGuiElementRenderer(immediate);
+			SkinTotemGuiElementRenderer createdRenderer = new SkinTotemGuiElementRenderer();
 			PROPERTIES_RENDERERS.put(renderProperties, createdRenderer);
 			return createdRenderer;
 		}
@@ -68,16 +68,15 @@ public class SkinTotemGuiElementRenderer extends PictureInPictureRenderer<SkinTo
 	}
 
 	@Override
-	protected void renderToTexture(SkinTotemRenderState state, PoseStack matrices) {
+	protected void renderToTexture(SkinTotemRenderState state, PoseStack matrices, SubmitNodeCollector submitNodeCollector) {
 		if (state.renderContext() == DollRenderContext.D_PREVIEW && state.data() != null) {
-			SkinTotemRenderer.renderDataPreview(matrices, this.bufferSource, this.bufferSource::endBatch, state.size() + 1, state.data());
+			SkinTotemRenderer.renderDataPreview(matrices, submitNodeCollector, () -> {}, state.size() + 1, state.data());
 		} else if (state.stack() != null) {
 			LightningUtils.disable3dLighting();
 			matrices.pushPose();
 			matrices.scale(16F, -16F, -16F);
-			SkinTotemRenderer.renderDoll(matrices, state.stack(), state.renderContext(), this.bufferSource, 15728880, OverlayTexture.NO_OVERLAY);
+			SkinTotemRenderer.renderDoll(matrices, state.stack(), state.renderContext(), submitNodeCollector, 15728880, OverlayTexture.NO_OVERLAY);
 			matrices.popPose();
-			this.bufferSource.endBatch();
 			LightningUtils.enable3dLighting();
 
 			if (state.stack().hasModdedModel()) {

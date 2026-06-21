@@ -41,7 +41,7 @@ public class SkinTotemClient implements ClientModInitializer {
 		SkinTotemReloadListener.register();
 		KnownPlayerUUIDsConfigManager.start();
 		SkinAutoRefresher.start();
-		PictureInPictureRendererRegistry.register(context -> new ItemGuiElementRenderer(context.bufferSource()));
-		PictureInPictureRendererRegistry.register(context -> new SkinTotemGuiElementRenderer(context.bufferSource()));
+		PictureInPictureRendererRegistry.register(context -> new ItemGuiElementRenderer());
+		PictureInPictureRendererRegistry.register(context -> new SkinTotemGuiElementRenderer());
 	}
 }

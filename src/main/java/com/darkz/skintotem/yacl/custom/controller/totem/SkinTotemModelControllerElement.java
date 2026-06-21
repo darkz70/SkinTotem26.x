@@ -52,7 +52,7 @@ public class SkinTotemModelControllerElement extends ControllerWidget<SkinTotemM
 	public boolean mouseClicked(MouseButtonEvent click, boolean doubled) {
 		if (this.isAvailable() && this.isMouseOver(click.x(), click.y()) && this.getDimension().isPointInside((int) click.x(), (int) click.y())) {
 			this.playDownSound();
-			Minecraft.getInstance().setScreen(new SkinTotemModelSelectionScreen(this.screen, this.controller.option()));
+			Minecraft.getInstance().gui.setScreen(new SkinTotemModelSelectionScreen(this.screen, this.controller.option()));
 			return true;
 		}
 		return false;

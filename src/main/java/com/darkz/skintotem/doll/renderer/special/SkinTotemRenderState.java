@@ -58,7 +58,7 @@ public record SkinTotemRenderState(
 	}
 
 	@Override
-	public Matrix3x2f pose() {
+	public org.joml.Matrix3x2fc pose() {
 		if (this.matrices == null) {
 			return PictureInPictureRenderState.super.pose();
 		}
