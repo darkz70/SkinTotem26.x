@@ -14,12 +14,6 @@
   "skintotem.modmenu.option.debug_log_enabled.description": "Якщо ввімкнено, додаткова інформація буде зареєстрована на консолі для налагодження.",
   "skintotem.modmenu.group.parallel_tasks.name": "&lПаралельні завдання",
   "skintotem.modmenu.group.parallel_tasks.description": "Налаштування паралельних завдань, які можуть вплинути на продуктивність!",
-  "skintotem.modmenu.group.auto_refresh.name": "Автоматичне оновлення",
-  "skintotem.modmenu.group.auto_refresh.description": "Налаштування автоматичного оновлення скінів.",
-  "skintotem.modmenu.option.auto_refresh_enabled.name": "Увімкнути автоматичне оновлення",
-  "skintotem.modmenu.option.auto_refresh_enabled.description": "Якщо увімкнено, скіни будуть автоматично оновлюватися через заданий інтервал; якщо вимкнено, не будуть.",
-  "skintotem.modmenu.option.auto_refresh_interval_minutes.name": "Інтервал автоматичного оновлення (хвилини)",
-  "skintotem.modmenu.option.auto_refresh_interval_minutes.description": "Встановлює інтервал в хвилинах для автоматичного оновлення скінів."
   "skintotem.modmenu.option.parallel_tasks_count.name": "Кількість паралельних завдань",
   "skintotem.modmenu.option.parallel_tasks_count.description": "Визначає, скільки паралельних завдань можуть запускатися модом, таких як паралельне завантаження скінів.",
   "skintotem.modmenu.category.rendering.name": "&lПромальовування",

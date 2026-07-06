@@ -14,11 +14,6 @@
   "skintotem.modmenu.option.debug_log_enabled.description": "Если включено, то в консоль игры будет выводиться допольнительная информация о функционировании мода; если не включён, не будет.",
   "skintotem.modmenu.group.parallel_tasks.name": "&lПараллельные задачи",
   "skintotem.modmenu.group.parallel_tasks.description": "Настройки параллельных задач, которые отвечают за производительность мода и нагрузку на ваш майнкрафт!",
-  "skintotem.modmenu.group.auto_refresh.name": "Автоматическое обновление",
-  "skintotem.modmenu.group.auto_refresh.description": "Настройки автоматического обновления скинов.",
-  "skintotem.modmenu.option.auto_refresh_enabled.name": "Включить автоматическое обновление",
-  "skintotem.modmenu.option.auto_refresh_enabled.description": "Если включено, скины будут автоматически обновляться через заданный интервал; если выключено, не будут.",
-  "skintotem.modmenu.option.auto_refresh_interval_minutes.name": "Интервал автоматического обновления (минуты)"
   "skintotem.modmenu.option.parallel_tasks_count.name": "Максимальное количество параллельных задач",
   "skintotem.modmenu.option.parallel_tasks_count.description": "Указывает то, как много параллельных задач может быть запущено модов, к примеру сколько максимум скинов может скачиваться параллельно.",
   "skintotem.modmenu.category.rendering.name": "&lОтображение",

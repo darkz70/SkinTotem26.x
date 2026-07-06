@@ -8,7 +8,6 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractSelectionList;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Coerce;
 
 @Mixin(AbstractSelectionList.class)
 public abstract class AbstractSelectionListMixin {
@@ -44,7 +43,7 @@ public abstract class AbstractSelectionListMixin {
 					"getNextY",
 					"contentHeight"
 			})
-	private int addOffset(@Coerce Object instance, Operation<Integer> original) {
+	private int addOffset(AbstractSelectionList.Entry<?> instance, Operation<Integer> original) {
 		Integer height = original.call(instance);
 		if (!(((AbstractSelectionList<?>) (Object) this) instanceof ButtonListWidget)) {
 			return height;

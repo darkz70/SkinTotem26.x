@@ -14,12 +14,6 @@
   "skintotem.modmenu.option.debug_log_enabled.description": "If enabled, additional info will be logged to console for debugging; if disabled, won't.",
   "skintotem.modmenu.group.parallel_tasks.name": "&lParallel Tasks",
   "skintotem.modmenu.group.parallel_tasks.description": "Parallel Tasks Settings which may affect performance!",
-  "skintotem.modmenu.group.auto_refresh.name": "Auto Refresh",
-  "skintotem.modmenu.group.auto_refresh.description": "Settings for automatic skin refreshing.",
-  "skintotem.modmenu.option.auto_refresh_enabled.name": "Auto Refresh Enabled",
-  "skintotem.modmenu.option.auto_refresh_enabled.description": "If enabled, skins will automatically refresh at the specified interval; if disabled, they won't.",
-  "skintotem.modmenu.option.auto_refresh_interval_minutes.name": "Auto Refresh Interval (Minutes)",
-  "skintotem.modmenu.option.auto_refresh_interval_minutes.description": "Sets the interval in minutes for automatic skin refreshing."
   "skintotem.modmenu.option.parallel_tasks_count.name": "Parallel Tasks Count",
   "skintotem.modmenu.option.parallel_tasks_count.description": "Sets how many parallel tasks can be run for mod tasks, such as parallel downloading skins.",
   "skintotem.modmenu.category.rendering.name": "&lRendering",
