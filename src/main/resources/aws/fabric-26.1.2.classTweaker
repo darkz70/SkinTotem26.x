@@ -21,6 +21,7 @@ accessible field com/mojang/blaze3d/vertex/PoseStack$Pose trustedNormals Z
 
 # AbstractSelectionList
 accessible field net/minecraft/client/gui/components/AbstractSelectionList children Ljava/util/List;
+accessible class net/minecraft/client/gui/components/AbstractSelectionList$Entry
 
 # NativeImage
 accessible field com/mojang/blaze3d/platform/NativeImage pixels J
