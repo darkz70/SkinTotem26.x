@@ -1,7 +1,7 @@
 {
     "schemaVersion": 1,
     "id": "skintotem",
-    "version": "1.0.0",
+    "version": "1.1.1",
     "name": "SkinTotem",
     "description": "Client-Side Fabric Mod which replaces all totems with player dolls. Rename your totem to player's nickname to use it's skin.",
     "authors": [
