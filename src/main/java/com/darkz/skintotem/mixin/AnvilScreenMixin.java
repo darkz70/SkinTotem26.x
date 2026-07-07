@@ -114,9 +114,9 @@ public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> imp
 		//
 
 		if (this.tagMenuWidget.visible) {
-			this.mySkinTotem$setImageWidth(176 + this.tagMenuWidget.getWidth() + 5 + this.infoWidget.getWidth());
+			this.mySkinTotem$applyImageWidth(176 + this.tagMenuWidget.getWidth() + 5 + this.infoWidget.getWidth());
 		} else {
-			this.mySkinTotem$setImageWidth(176);
+			this.mySkinTotem$applyImageWidth(176);
 		}
 
 		//
@@ -128,17 +128,17 @@ public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> imp
 
 		//
 
-		this.leftPos = (this.width - this.mySkinTotem$getImageWidth()) / 2;
+		this.leftPos = (this.width - this.mySkinTotem$readImageWidth()) / 2;
 		this.updateWidgets();
 	}
 
 	@Unique
-	private int mySkinTotem$getImageWidth() {
+	private int mySkinTotem$readImageWidth() {
 		return ((AbstractContainerScreenAccessor) (Object) this).getImageWidth();
 	}
 
 	@Unique
-	private void mySkinTotem$setImageWidth(int value) {
+	private void mySkinTotem$applyImageWidth(int value) {
 		((AbstractContainerScreenAccessor) (Object) this).setImageWidth(value);
 	}
 
@@ -187,7 +187,7 @@ public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> imp
 			original.call(instance, x1, y1, x2, y2, color);
 			return;
 		}
-		original.call(instance, x1 - this.mySkinTotem$getImageWidth() + 176, y1, x2 - this.mySkinTotem$getImageWidth() + 176, y2, color);
+		original.call(instance, x1 - this.mySkinTotem$readImageWidth() + 176, y1, x2 - this.mySkinTotem$readImageWidth() + 176, y2, color);
 	}
 
 	@Inject(
@@ -217,7 +217,7 @@ public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> imp
 			original.call(instance, textRenderer, text, x, y, color);
 			return;
 		}
-		original.call(instance, textRenderer, text, x - this.mySkinTotem$getImageWidth() + 176, y, color);
+		original.call(instance, textRenderer, text, x - this.mySkinTotem$readImageWidth() + 176, y, color);
 	}
 
 	@Inject(at = @At("HEAD"), method = "slotChanged")
