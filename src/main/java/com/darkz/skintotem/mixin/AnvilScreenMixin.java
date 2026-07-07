@@ -13,6 +13,7 @@ import com.darkz.skintotem.gui.widget.tag.TagMenuWidget.Renamer;
 import com.darkz.skintotem.tag.Tag;
 import com.darkz.skintotem.utils.DrawUtils;
 import com.darkz.skintotem.utils.mixin.STAnvilScreen;
+import com.darkz.skintotem.mixin.accessor.AbstractContainerScreenAccessor;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.inventory.*;
@@ -32,9 +33,6 @@ public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> imp
 
 	@Shadow
 	private EditBox name;
-	@Mutable
-    @Shadow
-    protected int imageWidth;
 	@Unique
 	@Nullable
 	private DraggingTagButtonWidget tagButtonWidget = null;
@@ -116,9 +114,9 @@ public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> imp
 		//
 
 		if (this.tagMenuWidget.visible) {
-			this.imageWidth = 176 + this.tagMenuWidget.getWidth() + 5 + this.infoWidget.getWidth();
+			this.mySkinTotem$setImageWidth(176 + this.tagMenuWidget.getWidth() + 5 + this.infoWidget.getWidth());
 		} else {
-			this.imageWidth = 176;
+			this.mySkinTotem$setImageWidth(176);
 		}
 
 		//
@@ -130,8 +128,18 @@ public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> imp
 
 		//
 
-		this.leftPos = (this.width - this.imageWidth) / 2;
+		this.leftPos = (this.width - this.mySkinTotem$getImageWidth()) / 2;
 		this.updateWidgets();
+	}
+
+	@Unique
+	private int mySkinTotem$getImageWidth() {
+		return ((AbstractContainerScreenAccessor) (Object) this).getImageWidth();
+	}
+
+	@Unique
+	private void mySkinTotem$setImageWidth(int value) {
+		((AbstractContainerScreenAccessor) (Object) this).setImageWidth(value);
 	}
 
 	@Unique
@@ -179,7 +187,7 @@ public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> imp
 			original.call(instance, x1, y1, x2, y2, color);
 			return;
 		}
-		original.call(instance, x1 - this.imageWidth + 176, y1, x2 - this.imageWidth + 176, y2, color);
+		original.call(instance, x1 - this.mySkinTotem$getImageWidth() + 176, y1, x2 - this.mySkinTotem$getImageWidth() + 176, y2, color);
 	}
 
 	@Inject(
@@ -209,7 +217,7 @@ public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> imp
 			original.call(instance, textRenderer, text, x, y, color);
 			return;
 		}
-		original.call(instance, textRenderer, text, x - this.imageWidth + 176, y, color);
+		original.call(instance, textRenderer, text, x - this.mySkinTotem$getImageWidth() + 176, y, color);
 	}
 
 	@Inject(at = @At("HEAD"), method = "slotChanged")
