@@ -80,7 +80,16 @@ public class SkinTotemRenderer {
 			long currentTime = Util.getMillis();
 			float rotationSpeed = 0.05f;
 			float rotation = (currentTime * rotationSpeed) % 360;
-			context.guiRenderState.addPicturesInPictureState(new com.darkz.skintotem.doll.renderer.special.ItemGuiRenderState(Items.TOTEM_OF_UNDYING.getDefaultInstance(), x, y, width, height, size, Axis.YP.rotationDegrees(rotation), context.scissorStack.peek()));
+			ItemStack previewStack;
+			try {
+				previewStack = Items.TOTEM_OF_UNDYING.getDefaultInstance();
+			} catch (NullPointerException e) {
+				// Item registry components aren't bound yet (e.g. this screen was opened
+				// before a world/server finished loading). Skip this frame instead of crashing;
+				// it will render fine once the registry is ready.
+				return;
+			}
+			context.guiRenderState.addPicturesInPictureState(new com.darkz.skintotem.doll.renderer.special.ItemGuiRenderState(previewStack, x, y, width, height, size, Axis.YP.rotationDegrees(rotation), context.scissorStack.peek()));
 		} else {
 			data.getRenderProperties().setRenderContext(renderContext);
 			context.guiRenderState.addPicturesInPictureState(com.darkz.skintotem.doll.renderer.special.SkinTotemRenderState.getPreview(data, x, y, width, height, size, context.scissorStack.peek()));
@@ -252,4 +261,4 @@ public class SkinTotemRenderer {
 		}
 		return !SkinTotemPlugin.work(realCustomName);
 	}
-}
+			}
