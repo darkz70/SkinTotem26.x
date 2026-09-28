@@ -15,10 +15,10 @@ public class SpriteContentsMixin {
 	@WrapOperation(
 			at = @At(
 					value = "INVOKE",
-					target = "Lcom/mojang/blaze3d/systems/CommandEncoder;writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Lcom/mojang/blaze3d/platform/NativeImage;IIII)V"),
+					target = "Lcom/mojang/renderpearl/api/commands/CommandEncoder;writeToTexture(Lcom/mojang/renderpearl/api/textures/GpuTexture;Lcom/mojang/blaze3d/platform/NativeImage;IIII)V"),
 			method = "uploadFirstFrame"
 	)
-	private void validateImageBeforeUpload(com.mojang.blaze3d.systems.CommandEncoder instance, com.mojang.blaze3d.textures.GpuTexture target, NativeImage source, int mipLevel, int x, int y, int z, Operation<Void> original) {
+	private void validateImageBeforeUpload(com.mojang.renderpearl.api.commands.CommandEncoder instance, com.mojang.renderpearl.api.textures.GpuTexture target, NativeImage source, int mipLevel, int x, int y, int z, Operation<Void> original) {
 		try {
 			// getPixelBytes() will fail if the underlying native image has already been closed/freed.
 			source.getPixelBytes();
