@@ -1,6 +1,7 @@
 package com.darkz.skintotem.modmenu;
 
 import com.google.common.collect.Sets;
+import com.mojang.blaze3d.Blaze3D;
 import java.net.*;
 import java.util.*;
 import com.darkz.skintotem.client.SkinTotemClient;
@@ -9,7 +10,6 @@ import net.minecraft.SharedConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.network.chat.CommonComponents;
-import net.minecraft.util.Util;
 import org.jetbrains.annotations.*;
 
 public class NoConfigLibraryScreen {
@@ -38,7 +38,7 @@ public class NoConfigLibraryScreen {
 				if (!NoConfigLibraryScreen.ALLOWED_PROTOCOLS.contains(string.toLowerCase(Locale.ROOT))) {
 					throw new URISyntaxException(url, "Unsupported protocol: " + string.toLowerCase(Locale.ROOT));
 				}
-				Util.getPlatform().openUri(link);
+				Blaze3D.openUri(link);
 			} catch (URISyntaxException e) {
 				SkinTotemClient.LOGGER.error("Can't open YACL Modrinth page:", e);
 			}

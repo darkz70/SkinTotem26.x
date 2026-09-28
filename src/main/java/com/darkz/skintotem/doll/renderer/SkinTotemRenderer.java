@@ -188,7 +188,7 @@ public class SkinTotemRenderer {
 		if (ctx != DollRenderContext.D_GUI && ctx != DollRenderContext.D_TOOLTIP) return;
 
 		net.minecraft.client.Minecraft mc = net.minecraft.client.Minecraft.getInstance();
-		if (mc.screen == null) return;
+		if (mc.gui == null || mc.gui.screen() == null) return;
 
 		com.mojang.blaze3d.platform.Window window = mc.getWindow();
 		double scaleFactor = window.getGuiScale();
