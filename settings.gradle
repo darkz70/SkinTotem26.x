@@ -16,6 +16,10 @@ pluginManagement {
 			name "Mossy Projects"
 			url "https://maven.lopymine.net/releases"
 		}
+		maven {
+			name "NeoForged"
+			url "https://maven.neoforged.net/releases"
+		}
 		mavenLocal()
 		mavenCentral()
 		gradlePluginPortal()
