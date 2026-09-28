@@ -22,7 +22,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build with Gradle
-        run: ./gradlew buildAndCollect+All --stacktrace || ./gradlew buildAndCollect --stacktrace || ./gradlew build --stacktrace
+        run: ./gradlew buildAndCollect+All || ./gradlew buildAndCollect || ./gradlew build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_ACTOR: ${{ github.actor }}
