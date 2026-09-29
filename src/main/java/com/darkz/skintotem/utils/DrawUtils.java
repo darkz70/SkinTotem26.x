@@ -32,7 +32,8 @@ public class DrawUtils {
 				x,
 				y,
 				DefaultTooltipPositioner.INSTANCE,
-				null
+				null,
+				false
 		);
 	}
 

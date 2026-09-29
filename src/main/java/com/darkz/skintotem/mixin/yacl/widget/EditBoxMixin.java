@@ -1,7 +1,7 @@
 package com.darkz.skintotem.mixin.yacl.widget;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.*;
-import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import com.darkz.skintotem.gui.BackgroundRenderer;
 import com.darkz.skintotem.yacl.YACLConfigurationScreen;
 import net.minecraft.client.Minecraft;
@@ -22,7 +22,7 @@ public abstract class EditBoxMixin extends AbstractWidget implements Renderable 
 	@Shadow
 	protected abstract boolean isEditable();
 
-	@WrapOperation(method = "extractWidgetRenderState", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V"))
+	@WrapOperation(method = "extractWidgetRenderState", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V"))
 	private void renderTransparencyWidget(GuiGraphicsExtractor instance, RenderPipeline renderPipeline, Identifier identifier, int x, int y, int width, int height, Operation<Void> original) {
 		if (YACLConfigurationScreen.notOpen(Minecraft.getInstance().gui.screen())) {
 			original.call(instance, renderPipeline, identifier, x, y, width, height);

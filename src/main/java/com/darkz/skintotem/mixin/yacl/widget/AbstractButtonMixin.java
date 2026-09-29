@@ -18,8 +18,8 @@ public abstract class AbstractButtonMixin extends AbstractWidget implements Rend
 		super(x, y, width, height, message);
 	}
 
-	@WrapOperation(method = "extractDefaultSprite", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIIII)V"))
-	private void renderTransparencyWidget(GuiGraphicsExtractor instance, com.mojang.blaze3d.pipeline.RenderPipeline pipeline, Identifier sprite, int x, int y, int width, int height, int color, Operation<Void> original) {
+	@WrapOperation(method = "extractDefaultSprite", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIIII)V"))
+	private void renderTransparencyWidget(GuiGraphicsExtractor instance, com.mojang.renderpearl.api.pipeline.RenderPipeline pipeline, Identifier sprite, int x, int y, int width, int height, int color, Operation<Void> original) {
 		if (YACLConfigurationScreen.notOpen(Minecraft.getInstance().gui.screen())) {
 			original.call(instance, pipeline, sprite, x, y, width, height, color);
 			return;

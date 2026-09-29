@@ -31,7 +31,7 @@ public class ItemGuiElementRenderer extends PictureInPictureRenderer<ItemGuiRend
 		Minecraft client = Minecraft.getInstance();
 
 		client.gameRenderer.lighting().setupFor(Entry.ITEMS_FLAT);
-		matrices.mulPose(state.rotation());
+		matrices.rotate(state.rotation());
 		float size = state.size();
 		matrices.scale(-size, -size, size);
 		this.renderItem(

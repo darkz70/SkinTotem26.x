@@ -17,7 +17,7 @@
 	    "widget.OptionDescriptionWidgetMixin",
 		"widget.EditBoxMixin",
 		"widget.AbstractScrollAreaMixin",
-		"category.ItemInHandRendererMixin",
+		"category.FirstPersonHandsAndItemsRendererMixin",
 		"widget.AbstractButtonMixin"
 	],
     "injectors": {

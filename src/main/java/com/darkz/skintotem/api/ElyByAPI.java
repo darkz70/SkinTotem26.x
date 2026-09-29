@@ -15,7 +15,7 @@ import java.net.http.HttpResponse.BodyHandlers;
  * Endpoint: https://skinsystem.ely.by/textures/{nickname}
  * Возвращает JSON с полями SKIN, CAPE и моделью (slim/default)
  *
- * Автор: Darkz | K-TEAM |KlashRaick | LopyMine
+ * Автор: Darkz
  */
 public class ElyByAPI {
 
@@ -38,7 +38,7 @@ public class ElyByAPI {
             // Шаг 1: /textures/{nickname}
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(TEXTURES_URL + nickname))
-                    .header("User-Agent", "SkinTotem/1.0 (Darkz/K-TEAM)")
+                    .header("User-Agent", "SkinTotem/1.0 (Darkz)")
                     .build();
 
             HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
@@ -68,7 +68,7 @@ public class ElyByAPI {
             HttpRequest headRequest = HttpRequest.newBuilder()
                     .uri(URI.create(skinUrl))
                     .method("HEAD", HttpRequest.BodyPublishers.noBody())
-                    .header("User-Agent", "SkinTotem/1.0 (Darkz/K-TEAM)")
+                    .header("User-Agent", "SkinTotem/1.0 (Darkz)")
                     .build();
             HttpResponse<Void> headResponse = client.send(headRequest, HttpResponse.BodyHandlers.discarding());
 

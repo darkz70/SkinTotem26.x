@@ -21,8 +21,7 @@ import com.darkz.skintotem.utils.plugin.SkinTotemPlugin;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.MultiBufferSource.BufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Util;
@@ -34,7 +33,7 @@ import org.jetbrains.annotations.*;
 @ExtensionMethod({ItemStackExtension.class, DrawContextExtension.class})
 public class SkinTotemRenderer {
 
-	public static boolean sentRenderRequest(PoseStack matrices, ItemStack stack, DollRenderContext context, int light, int overlay, int outlineColor, @Nullable MultiBufferSource provider) {
+	public static boolean sentRenderRequest(PoseStack matrices, @Nullable ItemStack stack, DollRenderContext context, int light, int overlay, int outlineColor, @Nullable SubmitNodeCollector provider) {
 		if (canRender(stack)) {
 			SkinTotemData skinTotemData = stack.getSkinTotemData(false);
 			SkinTotemRenderRequestsCollector.getInstance().requestRender(matrices, skinTotemData, stack.getPlayerEntity(), context, light, overlay, outlineColor, provider);
@@ -46,11 +45,11 @@ public class SkinTotemRenderer {
 		return false;
 	}
 
-	public static void renderDoll(PoseStack matrices, ItemStack stack, DollRenderContext context, MultiBufferSource vertexConsumers, int light, int overlay) {
+	public static void renderDoll(PoseStack matrices, ItemStack stack, DollRenderContext context, SubmitNodeCollector vertexConsumers, int light, int overlay) {
 		renderDoll(matrices, stack.getSkinTotemData(), stack.getPlayerEntity(), context, vertexConsumers, light, overlay);
 	}
 
-	public static void renderDoll(PoseStack matrices, SkinTotemData skinTotemData, AbstractClientPlayer holdingPlayer, DollRenderContext context, MultiBufferSource vertexConsumers, int light, int overlay) {
+	public static void renderDoll(PoseStack matrices, SkinTotemData skinTotemData, AbstractClientPlayer holdingPlayer, DollRenderContext context, SubmitNodeCollector vertexConsumers, int light, int overlay) {
 		DollRenderContext renderContext = context == DollRenderContext.D_NONE ? DollRenderContext.D_GUI : context;
 		beforeDollRendered(renderContext, holdingPlayer, skinTotemData);
 		matrices.pushPose();
@@ -96,7 +95,7 @@ public class SkinTotemRenderer {
 		}
 	}
 
-	public static void renderDataPreview(PoseStack matrices, BufferSource consumers, Runnable draw, float size, @NotNull SkinTotemData data) {
+	public static void renderDataPreview(PoseStack matrices, SubmitNodeCollector consumers, Runnable draw, float size, @NotNull SkinTotemData data) {
 		float i = (size / 2F);
 
 		long currentTime = Util.getMillis();
@@ -107,7 +106,7 @@ public class SkinTotemRenderer {
 		LightningUtils.disable3dLighting();
 		matrices.pushPose();
 		matrices.scale(-i, -i, i);
-		matrices.mulPose(Axis.YP.rotationDegrees(rotation));
+		matrices.rotate(Axis.YP.rotationDegrees(rotation));
 		matrices.translate(-0.5F, -1.0F, -0.5F);
 		SkinTotemRenderer.render(matrices, consumers, 15728880, OverlayTexture.NO_OVERLAY, data);
 		matrices.popPose();
@@ -115,7 +114,7 @@ public class SkinTotemRenderer {
 		LightningUtils.enable3dLighting();
 	}
 
-	public static void renderInHand(boolean leftHanded, boolean firstPerson, PoseStack matrices, MultiBufferSource vertexConsumers, int light, int overlay, SkinTotemData skinTotemData) {
+	public static void renderInHand(boolean leftHanded, boolean firstPerson, PoseStack matrices, SubmitNodeCollector vertexConsumers, int light, int overlay, SkinTotemData skinTotemData) {
 		matrices.pushPose();
 
 		if (firstPerson) {
@@ -129,9 +128,9 @@ public class SkinTotemRenderer {
 
 			double scale = handRenderingConfig.getScale();
 			matrices.scale((float) scale, (float) scale, (float) scale);
-			matrices.mulPose(Axis.XP.rotationDegrees((float) handRenderingConfig.getRotationX()));
-			matrices.mulPose(Axis.YP.rotationDegrees((float) handRenderingConfig.getRotationY() * (leftHanded ? -1 : 1)));
-			matrices.mulPose(Axis.ZP.rotationDegrees((float) handRenderingConfig.getRotationZ() * (leftHanded ? -1 : 1)));
+			matrices.rotate(Axis.XP.rotationDegrees((float) handRenderingConfig.getRotationX()));
+			matrices.rotate(Axis.YP.rotationDegrees((float) handRenderingConfig.getRotationY() * (leftHanded ? -1 : 1)));
+			matrices.rotate(Axis.ZP.rotationDegrees((float) handRenderingConfig.getRotationZ() * (leftHanded ? -1 : 1)));
 
 			matrices.translate(-0.5F, -0.5F, -0.5F);
 		}
@@ -140,7 +139,7 @@ public class SkinTotemRenderer {
 		matrices.popPose();
 	}
 
-	public static void render(PoseStack matrices, MultiBufferSource provider, int light, int overlay, SkinTotemData skinTotemData) {
+	public static void render(PoseStack matrices, SubmitNodeCollector provider, int light, int overlay, SkinTotemData skinTotemData) {
 		SkinTotemSprites textures = skinTotemData.getSpritesToRender();
 		AtlasSprite skinSprite = textures.getSkinSprite();
 		AtlasSprite capeSprite = textures.getCapeSprite();
@@ -151,7 +150,7 @@ public class SkinTotemRenderer {
 
 		if (nickname != null && (nickname.equalsIgnoreCase("dinnerbone") || nickname.equalsIgnoreCase("grumm"))) {
 			matrices.translate(0.5F, 1.0F, 0.5F);
-			matrices.mulPose(Axis.ZP.rotationDegrees(180));
+			matrices.rotate(Axis.ZP.rotationDegrees(180));
 			matrices.translate(-0.5F, -1.0F, -0.5F);
 		}
 
@@ -189,7 +188,7 @@ public class SkinTotemRenderer {
 		if (ctx != DollRenderContext.D_GUI && ctx != DollRenderContext.D_TOOLTIP) return;
 
 		net.minecraft.client.Minecraft mc = net.minecraft.client.Minecraft.getInstance();
-		if (mc.screen == null) return;
+		if (mc.gui == null || mc.gui.screen() == null) return;
 
 		com.mojang.blaze3d.platform.Window window = mc.getWindow();
 		double scaleFactor = window.getGuiScale();

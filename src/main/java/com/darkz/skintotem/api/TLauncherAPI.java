@@ -19,7 +19,7 @@ import java.nio.charset.StandardCharsets;
  *
  * Ответ в формате base64-encoded JSON (как у Mojang sessionserver)
  *
- * Автор: Darkz | K-TEAM
+ * Автор: Darkz
  */
 public class TLauncherAPI {
 
@@ -43,7 +43,7 @@ public class TLauncherAPI {
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(TL_SKIN_URL + nickname))
-                    .header("User-Agent", "SkinTotem/1.0 (Darkz/K-TEAM)")
+                    .header("User-Agent", "SkinTotem/1.0 (Darkz)")
                     .build();
 
             HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
