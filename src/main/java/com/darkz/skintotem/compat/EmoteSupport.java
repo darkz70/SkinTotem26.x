@@ -22,6 +22,7 @@ public final class EmoteSupport {
 	private static final boolean EMOTECRAFT_LOADED = FabricLoader.getInstance().isModLoaded("emotecraft");
 
 	private static boolean failed = false;
+	private static boolean restoreFailed = false;
 
 	private EmoteSupport() {
 	}
@@ -50,14 +51,20 @@ public final class EmoteSupport {
 		}
 	}
 
-	/** Возвращает частям куклы исходную позу. Вызывать после отрисовки. */
+	/**
+	 * Возвращает частям куклы исходную позу. Вызывать после отрисовки.
+	 * <p>
+	 * Намеренно не смотрит на {@code failed}: если поза успела примениться, а потом интеграция
+	 * сломалась, её всё равно нужно снять — иначе кукла навсегда застынет в позе эмоции.
+	 */
 	public static void restorePose() {
-		if (!ANIMATION_LIB_LOADED || failed) {
+		if (!ANIMATION_LIB_LOADED || restoreFailed) {
 			return;
 		}
 		try {
 			EmotecraftBridge.restorePose();
 		} catch (Throwable throwable) {
+			restoreFailed = true;
 			disable("restore doll pose", throwable);
 		}
 	}

@@ -37,6 +37,8 @@ Replaces the Totem of Undying with a 3D doll using your Minecraft skin
 | ⚙️ Configurable | Fully configurable through ModMenu + YACL |
 | 🔧 NBT Customization | Customize individual totems via an anvil |
 | 🎬 Activation Animation | Smooth and immersive totem activation animation |
+| 🔊 Custom Sounds | Own sounds for totem activation, summoning the doll, and skin loading |
+| 🕺 Emotecraft Support | The doll mirrors the emote you are playing, and can trigger an emote when the totem saves you |
 
 ---
 
@@ -95,6 +97,11 @@ Place a Totem of Undying into an anvil and rename it using one of the formats be
 | Scale | 1.0 | Doll size (0.5–2.0) |
 | Y Rotation | 0° | Rotation angle of the doll |
 | Activation Animation | ✅ | Play animation when the totem is activated |
+| Mod Sounds | ✅ | Enable the mod's own sound effects |
+| Sound Volume | 1.0 | Volume multiplier for the mod's sounds (0.0–2.0) |
+| Replace Totem Sound | ❌ | Play the mod's sound instead of the vanilla totem sound |
+| Mirror Emotes | ✅ | The doll in your hand repeats your Emotecraft emote |
+| Activation Emote | — | Name of the emote to play when the totem saves you (empty = off) |
 
 ---
 
@@ -105,6 +112,7 @@ Place a Totem of Undying into an anvil and rename it using one of the formats be
 | Fabric API | ✅ | Core Fabric API dependency |
 | ModMenu | ❌ | Adds a settings button to the mod list |
 | YetAnotherConfigLib (YACL) | ❌ | Alternative configuration GUI library |
+| [Emotecraft](https://modrinth.com/mod/emotecraft) | ❌ | Enables emote mirroring on the doll and the activation emote |
 
 ---
 

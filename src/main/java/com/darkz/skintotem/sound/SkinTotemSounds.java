@@ -26,6 +26,13 @@ public final class SkinTotemSounds {
 	public static final SoundEvent SKIN_CHANGE = create("skin_change");
 	public static final SoundEvent SKIN_ERROR = create("skin_error");
 
+	/** Когда кукла каждого скина в последний раз рисовалась в руке, для защиты от звука в каждом кадре. */
+	private static final Map<String, Long> LAST_RENDERED = new HashMap<>();
+	/** Пауза, после которой кукла считается «появившейся заново», а не отрисованной в соседнем кадре. */
+	private static final long APPEAR_GAP_NANOS = 500_000_000L;
+	/** Через сколько запись о кукле можно забыть при чистке карты. */
+	private static final long FORGET_NANOS = 60_000_000_000L;
+
 	private SkinTotemSounds() {
 	}
 
@@ -99,11 +106,6 @@ public final class SkinTotemSounds {
 	public static void onDollSummoned(@Nullable Entity holder) {
 		playAtEntity(DOLL_SUMMON, holder, 0.6F, 1.0F);
 	}
-
-	private static final Map<String, Long> LAST_RENDERED = new HashMap<>();
-	/** Пауза, после которой кукла считается «появившейся заново», а не отрисованной в соседнем кадре. */
-	private static final long APPEAR_GAP_NANOS = 500_000_000L;
-	private static final long FORGET_NANOS = 60_000_000_000L;
 
 	/**
 	 * Вызывается на каждый кадр отрисовки куклы в руке. Звук играет только в тот кадр,
