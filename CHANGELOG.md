@@ -12,11 +12,12 @@ the full history stays in the Git log and in the GitHub releases.
 
 ### 🇬🇧 English
 
-**Ten new languages — 18 in total**
-- 🇪🇸 Español (`es_es`), 🇫🇷 Français (`fr_fr`), 🇧🇷 Português do Brasil (`pt_br`),
-  🇮🇹 Italiano (`it_it`), 🇳🇱 Nederlands (`nl_nl`), 🇨🇿 Čeština (`cs_cz`),
-  🇹🇷 Türkçe (`tr_tr`), 🇻🇳 Tiếng Việt (`vi_vn`), 🇰🇷 한국어 (`ko_kr`), 🇹🇼 繁體中文 (`zh_tw`).
-- Every one of the 18 languages now contains all 163 strings, in the same order as `en_us`.
+**Fifteen new languages — 23 in total**
+- 🇪🇸 Español (`es_es`), 🇫🇷 Français (`fr_fr`), 🇮🇹 Italiano (`it_it`), 🇳🇱 Nederlands (`nl_nl`),
+  🇧🇷 Português do Brasil (`pt_br`), 🇵🇹 Português de Portugal (`pt_pt`), 🇨🇿 Čeština (`cs_cz`),
+  🇭🇺 Magyar (`hu_hu`), 🇷🇴 Română (`ro_ro`), 🇸🇪 Svenska (`sv_se`), 🇹🇷 Türkçe (`tr_tr`),
+  🇮🇩 Bahasa Indonesia (`id_id`), 🇻🇳 Tiếng Việt (`vi_vn`), 🇰🇷 한국어 (`ko_kr`), 🇹🇼 繁體中文 (`zh_tw`).
+- Every one of the 23 languages now contains all 163 strings, in the same order as `en_us`.
   Nothing falls back to English any more.
 
 **Translation fixes in the existing languages**
@@ -40,12 +41,13 @@ the full history stays in the Git log and in the GitHub releases.
 
 ### 🇷🇺 Русский
 
-**Десять новых языков — всего 18**
-- 🇪🇸 испанский (`es_es`), 🇫🇷 французский (`fr_fr`), 🇧🇷 португальский (Бразилия, `pt_br`),
-  🇮🇹 итальянский (`it_it`), 🇳🇱 нидерландский (`nl_nl`), 🇨🇿 чешский (`cs_cz`),
-  🇹🇷 турецкий (`tr_tr`), 🇻🇳 вьетнамский (`vi_vn`), 🇰🇷 корейский (`ko_kr`),
-  🇹🇼 китайский традиционный (`zh_tw`).
-- Во всех 18 языках есть все 163 строки в том же порядке, что и в `en_us`, — ничего больше
+**Пятнадцать новых языков — всего 23**
+- 🇪🇸 испанский (`es_es`), 🇫🇷 французский (`fr_fr`), 🇮🇹 итальянский (`it_it`),
+  🇳🇱 нидерландский (`nl_nl`), 🇧🇷 португальский Бразилии (`pt_br`), 🇵🇹 португальский
+  Португалии (`pt_pt`), 🇨🇿 чешский (`cs_cz`), 🇭🇺 венгерский (`hu_hu`), 🇷🇴 румынский (`ro_ro`),
+  🇸🇪 шведский (`sv_se`), 🇹🇷 турецкий (`tr_tr`), 🇮🇩 индонезийский (`id_id`),
+  🇻🇳 вьетнамский (`vi_vn`), 🇰🇷 корейский (`ko_kr`), 🇹🇼 китайский традиционный (`zh_tw`).
+- Во всех 23 языках есть все 163 строки в том же порядке, что и в `en_us`, — ничего больше
   не откатывается на английский.
 
 **Исправления в уже существующих переводах**

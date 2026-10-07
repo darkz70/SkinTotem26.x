@@ -47,7 +47,7 @@ See [CHANGELOG.md](CHANGELOG.md) — it always describes the latest update, in E
 | 🔊 Custom Sounds | Own sounds for totem activation, summoning the doll, and skin loading |
 | 🕺 Emotecraft Support | The doll mirrors the emote you are playing, and can trigger an emote when the totem saves you |
 | 📂 Sound Pack Folder | Drop `.ogg`, `.mp3` or `.wav` files into `config/skintotem/sounds` — no extra software needed |
-| 🌍 18 Languages | English, Русский, Українська, Deutsch, Polski, Español, Français, Italiano, Português (BR), Nederlands, Čeština, Türkçe, Tiếng Việt, 日本語, 한국어, Татарча, 简体中文, 繁體中文 |
+| 🌍 23 Languages | English, Русский, Українська, Deutsch, Polski, Čeština, Magyar, Română, Svenska, Español, Français, Italiano, Nederlands, Português (BR/PT), Türkçe, Bahasa Indonesia, Tiếng Việt, 日本語, 한국어, Татарча, 简体中文, 繁體中文 |
 
 ---
 
@@ -173,8 +173,13 @@ on first launch). Name the file after the sound you want to replace:
 | Čeština (`cs_cz`) | ✅ complete |
 | Türkçe (`tr_tr`) | ✅ complete |
 | Tiếng Việt (`vi_vn`) | ✅ complete |
+| Bahasa Indonesia (`id_id`) | ✅ complete |
+| Português — Portugal (`pt_pt`) | ✅ complete |
+| Magyar (`hu_hu`) | ✅ complete |
+| Română (`ro_ro`) | ✅ complete |
+| Svenska (`sv_se`) | ✅ complete |
 
-All 18 languages contain every one of the 163 strings — no fallbacks to English anywhere.
+All 23 languages contain every one of the 163 strings — no fallbacks to English anywhere.
 
 New languages are added release by release. Pull requests with translations are welcome — copy
 `src/main/resources/assets/skintotem/lang/en_us.json`, translate the values and run the checker:
