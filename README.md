@@ -47,7 +47,7 @@ See [CHANGELOG.md](CHANGELOG.md) — it always describes the latest update, in E
 | 🔊 Custom Sounds | Own sounds for totem activation, summoning the doll, and skin loading |
 | 🕺 Emotecraft Support | The doll mirrors the emote you are playing, and can trigger an emote when the totem saves you |
 | 📂 Sound Pack Folder | Drop `.ogg`, `.mp3` or `.wav` files into `config/skintotem/sounds` — no extra software needed |
-| 🌍 23 Languages | English, Русский, Українська, Deutsch, Polski, Čeština, Magyar, Română, Svenska, Español, Français, Italiano, Nederlands, Português (BR/PT), Türkçe, Bahasa Indonesia, Tiếng Việt, 日本語, 한국어, Татарча, 简体中文, 繁體中文 |
+| 🌍 43 Languages | English, Русский, Українська, Беларуская, Deutsch, Polski, Čeština, Slovenčina, Magyar, Română, Български, Српски, Hrvatski, Slovenščina, Lietuvių, Latviešu, Eesti, Suomi, Svenska, Dansk, Norsk bokmål, Ελληνικά, Español, Català, Français, Italiano, Nederlands, Português (BR/PT), Türkçe, Қазақша, Татарча, Bahasa Indonesia, Tiếng Việt, ไทย, हिन्दी, العربية, עברית, فارسی, 日本語, 한국어, 简体中文, 繁體中文 |
 
 ---
 
@@ -178,8 +178,28 @@ on first launch). Name the file after the sound you want to replace:
 | Magyar (`hu_hu`) | ✅ complete |
 | Română (`ro_ro`) | ✅ complete |
 | Svenska (`sv_se`) | ✅ complete |
+| ไทย (`th_th`) | ✅ complete |
+| Ελληνικά (`el_gr`) | ✅ complete |
+| Suomi (`fi_fi`) | ✅ complete |
+| Dansk (`da_dk`) | ✅ complete |
+| Norsk bokmål (`nb_no`) | ✅ complete |
+| Беларуская (`be_by`) | ✅ complete |
+| Slovenčina (`sk_sk`) | ✅ complete |
+| Български (`bg_bg`) | ✅ complete |
+| Hrvatski (`hr_hr`) | ✅ complete |
+| Slovenščina (`sl_si`) | ✅ complete |
+| Lietuvių (`lt_lt`) | ✅ complete |
+| Latviešu (`lv_lv`) | ✅ complete |
+| Српски (`sr_sp`) | ✅ complete |
+| Eesti (`et_ee`) | ✅ complete |
+| Қазақша (`kk_kz`) | ✅ complete |
+| Català (`ca_es`) | ✅ complete |
+| العربية (`ar_sa`) | ✅ complete |
+| עברית (`he_il`) | ✅ complete |
+| فارسی (`fa_ir`) | ✅ complete |
+| हिन्दी (`hi_in`) | ✅ complete |
 
-All 23 languages contain every one of the 163 strings — no fallbacks to English anywhere.
+All 43 languages contain every one of the 163 strings — no fallbacks to English anywhere.
 
 New languages are added release by release. Pull requests with translations are welcome — copy
 `src/main/resources/assets/skintotem/lang/en_us.json`, translate the values and run the checker:

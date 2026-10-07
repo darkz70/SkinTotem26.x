@@ -1,68 +1,52 @@
-# Changelog / Что нового
+# Changelog
 
-This file always describes **the latest update only**. Older entries are replaced, not stacked —
-the full history stays in the Git log and in the GitHub releases.
+## 2.2 — Languages 3 & ffmpeg-free MP3
 
-В этом файле всегда описано **только последнее обновление**. Старые записи заменяются, а не
-накапливаются — полная история остаётся в истории Git и в релизах на GitHub.
+### English
 
----
+**20 new languages (23 → 43)**
 
-## 2.1.0 — 2026-10-07
+- Added: ไทย (`th_th`), Ελληνικά (`el_gr`), Suomi (`fi_fi`), Dansk (`da_dk`), Norsk bokmål (`nb_no`),
+  Беларуская (`be_by`), Slovenčina (`sk_sk`), Български (`bg_bg`), Hrvatski (`hr_hr`), Slovenščina (`sl_si`),
+  Lietuvių (`lt_lt`), Latviešu (`lv_lv`), Српски (`sr_sp`), Eesti (`et_ee`), Қазақша (`kk_kz`),
+  Català (`ca_es`), العربية (`ar_sa`), עברית (`he_il`), فارسی (`fa_ir`), हिन्दी (`hi_in`).
+- All 43 locales carry the full set of 163 strings in the canonical `en_us` order — no fallbacks to English,
+  verified by `tools/check_lang.py` (keys, `%s` placeholders, `&`-colour codes, line breaks).
+- Minecraft terminology is used in every language (Totem of Undying, anvil, cape, elytra), and the
+  colour-code multiset is preserved even where the word order differs.
 
-### 🇬🇧 English
+**MP3 now plays on its own — ffmpeg is not needed**
 
-**Fifteen new languages — 23 in total**
-- 🇪🇸 Español (`es_es`), 🇫🇷 Français (`fr_fr`), 🇮🇹 Italiano (`it_it`), 🇳🇱 Nederlands (`nl_nl`),
-  🇧🇷 Português do Brasil (`pt_br`), 🇵🇹 Português de Portugal (`pt_pt`), 🇨🇿 Čeština (`cs_cz`),
-  🇭🇺 Magyar (`hu_hu`), 🇷🇴 Română (`ro_ro`), 🇸🇪 Svenska (`sv_se`), 🇹🇷 Türkçe (`tr_tr`),
-  🇮🇩 Bahasa Indonesia (`id_id`), 🇻🇳 Tiếng Việt (`vi_vn`), 🇰🇷 한국어 (`ko_kr`), 🇹🇼 繁體中文 (`zh_tw`).
-- Every one of the 23 languages now contains all 163 strings, in the same order as `en_us`.
-  Nothing falls back to English any more.
+- Audio files are recognised **by their content**, not by their extension: OGG, WAV, AIFF/AIFC, AU, MP3
+  (including files that start with an ID3 tag), FLAC, MP4/M4A and Matroska are detected by signature.
+  A `song.mpv`, `sound.bin` or an extension-less file is now loaded correctly.
+- The MP3 decoder (bundled JLayer, nothing to install) became fault tolerant: damaged frames are skipped
+  (up to 128), frame buffers are always released, and an error is reported only if not a single frame decodes.
+- Files with an unknown extension are still picked up if their content looks like audio.
+- ffmpeg remains an optional last resort for exotic containers only; the error hint now says explicitly that
+  OGG, MP3 and WAV need nothing installed.
 
-**Translation fixes in the existing languages**
-- 🇯🇵 Japanese: the broken colour code `& l` showed up as literal text in "Unsupported Format!";
-  the welcome screen and the custom-models tooltip had lost all of their line breaks and were
-  rendered as one long line.
-- 🇺🇦 Ukrainian: a broken `&з` code and a stray line break in the middle of the YACL message.
-- 🇹🇹 Tatar: the whole file used raw `§` instead of `&`, so the mod could not recolour it.
-- Three leftover keys that no longer exist in the game were removed.
+### Русский
 
-**A lone `&` is no longer eaten**
-- Mod text turns `&a`, `&l`, ... into Minecraft colour codes. Until now *every* `&` was converted,
-  so an ordinary ampersand — "Sounds & Emotes" — became `§ ` and the font swallowed it together
-  with the next character. Only real colour codes are converted now, and translators can write
-  `&` as plain text.
+**20 новых языков (23 → 43)**
 
-**Checker for translators**
-- `python3 tools/check_lang.py` compares every locale with `en_us` and reports missing or extra
-  keys, broken colour codes, lost `%s` placeholders and lost line breaks. `--fix-order` rewrites
-  the files in the canonical `en_us` order.
+- Добавлены: ไทย (`th_th`), Ελληνικά (`el_gr`), Suomi (`fi_fi`), Dansk (`da_dk`), Norsk bokmål (`nb_no`),
+  Беларуская (`be_by`), Slovenčina (`sk_sk`), Български (`bg_bg`), Hrvatski (`hr_hr`), Slovenščina (`sl_si`),
+  Lietuvių (`lt_lt`), Latviešu (`lv_lv`), Српски (`sr_sp`), Eesti (`et_ee`), Қазақша (`kk_kz`),
+  Català (`ca_es`), العربية (`ar_sa`), עברית (`he_il`), فارسی (`fa_ir`), हिन्दी (`hi_in`).
+- Во всех 43 локалях присутствуют все 163 строки в каноническом порядке `en_us` — нигде нет отката на
+  английский; проверено скриптом `tools/check_lang.py` (ключи, подстановки `%s`, цветовые коды `&`, переносы строк).
+- Везде использована терминология Minecraft (тотем бессмертия, наковальня, плащ, элитры), а набор цветовых
+  кодов сохранён даже там, где порядок слов в языке другой.
 
-### 🇷🇺 Русский
+**MP3 теперь играет сам — ffmpeg не нужен**
 
-**Пятнадцать новых языков — всего 23**
-- 🇪🇸 испанский (`es_es`), 🇫🇷 французский (`fr_fr`), 🇮🇹 итальянский (`it_it`),
-  🇳🇱 нидерландский (`nl_nl`), 🇧🇷 португальский Бразилии (`pt_br`), 🇵🇹 португальский
-  Португалии (`pt_pt`), 🇨🇿 чешский (`cs_cz`), 🇭🇺 венгерский (`hu_hu`), 🇷🇴 румынский (`ro_ro`),
-  🇸🇪 шведский (`sv_se`), 🇹🇷 турецкий (`tr_tr`), 🇮🇩 индонезийский (`id_id`),
-  🇻🇳 вьетнамский (`vi_vn`), 🇰🇷 корейский (`ko_kr`), 🇹🇼 китайский традиционный (`zh_tw`).
-- Во всех 23 языках есть все 163 строки в том же порядке, что и в `en_us`, — ничего больше
-  не откатывается на английский.
-
-**Исправления в уже существующих переводах**
-- 🇯🇵 Японский: сломанный код `& l` выводился текстом в «Unsupported Format!», а у экрана
-  приветствия и подсказки с моделями пропали переносы строк — всё шло одной длинной строкой.
-- 🇺🇦 Украинский: сломанный код `&з` и лишний перенос строки посреди сообщения про YACL.
-- 🇹🇹 Татарский: весь файл был написан через `§` вместо `&`, поэтому мод не мог его раскрасить.
-- Удалены три старых ключа, которых уже нет в игре.
-
-**Одиночный «&» больше не пропадает**
-- Мод превращает `&a`, `&l`, ... в цветовые коды Minecraft. Раньше заменялся *любой* `&`, поэтому
-  обычный амперсанд — «Sounds & Emotes» — превращался в `§ ` и шрифт съедал его вместе со
-  следующим символом. Теперь заменяются только настоящие коды, а `&` можно писать как обычный текст.
-
-**Проверка переводов**
-- `python3 tools/check_lang.py` сравнивает каждую локаль с `en_us` и показывает пропущенные и
-  лишние ключи, сломанные цветовые коды, потерянные `%s` и переносы строк. Ключ `--fix-order`
-  пересохраняет файлы в каноническом порядке `en_us`.
+- Звуковые файлы распознаются **по содержимому**, а не по расширению: OGG, WAV, AIFF/AIFC, AU, MP3
+  (в том числе с ID3-тегом в начале), FLAC, MP4/M4A и Matroska определяются по сигнатуре.
+  Файл `song.mpv`, `sound.bin` или вовсе без расширения теперь загружается правильно.
+- Декодер MP3 (встроенный JLayer, ставить ничего не надо) стал устойчивым к повреждениям: битые кадры
+  пропускаются (до 128), буферы кадров всегда освобождаются, а ошибка выдаётся только если не декодировался
+  ни один кадр.
+- Файлы с незнакомым расширением всё равно подхватываются, если их содержимое похоже на звук.
+- ffmpeg остаётся необязательным запасным вариантом только для экзотических контейнеров; в подсказке об
+  ошибке теперь прямо сказано, что OGG, MP3 и WAV работают без установки чего-либо.
