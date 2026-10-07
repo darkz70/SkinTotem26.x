@@ -237,7 +237,7 @@ public final class CustomSoundPack {
 	private static String describeError(Path file, Throwable throwable) {
 		String message = throwable.getMessage() == null ? throwable.getClass().getSimpleName() : throwable.getMessage();
 		if (!AudioFiles.isNative(file) && message.contains("ffmpeg")) {
-			return message + " — convert the file to .ogg or .wav, or install ffmpeg";
+			return message + " — save the file as .ogg, .wav or .mp3, or install ffmpeg";
 		}
 		return message;
 	}
@@ -258,10 +258,11 @@ public final class CustomSoundPack {
 				"",
 				"Example: totem_activate.ogg, doll_summon.wav, skin_error.mp3",
 				"",
-				"Formats: .ogg and .wav / .aiff / .au are used as they are, with no quality loss and no",
-				"volume changes. Other formats (.mp3, .m4a, .flac, .opus, ...) are converted automatically",
-				"if ffmpeg is installed on your system; the result is cached in the .converted folder.",
-				"If ffmpeg is missing, the mod keeps its built-in sound and writes a hint to the log.",
+				"Formats: .ogg, .mp3, .wav, .aiff and .au work out of the box — nothing to install. The audio",
+				"is used as it is: no resampling, no volume changes, no quality loss. Rare formats (.m4a,",
+				".flac, .opus, ...) are converted automatically if ffmpeg is installed on your system; the",
+				"result is cached in the .converted folder. Without ffmpeg the mod keeps its built-in sound",
+				"and writes a hint to the log and to /skintotem sounds list.",
 				"",
 				"Random variants: add a suffix (skin_change_1.ogg, skin_change_2.ogg) or create a folder",
 				"named after the sound (skin_change/anything.ogg). One of the variants is picked per play.",
@@ -280,10 +281,11 @@ public final class CustomSoundPack {
 				"",
 				"Пример: totem_activate.ogg, doll_summon.wav, skin_error.mp3",
 				"",
-				"Форматы: .ogg и .wav / .aiff / .au берутся как есть — без потери качества и без изменения",
-				"громкости. Остальные форматы (.mp3, .m4a, .flac, .opus, ...) конвертируются автоматически,",
-				"если в системе установлен ffmpeg; результат кэшируется в папке .converted.",
-				"Если ffmpeg нет, мод оставит встроенный звук и напишет подсказку в лог.",
+				"Форматы: .ogg, .mp3, .wav, .aiff и .au работают сразу — ставить ничего не нужно. Звук берётся",
+				"как есть: без передискретизации, без изменения громкости и без потери качества. Редкие форматы",
+				"(.m4a, .flac, .opus, ...) конвертируются автоматически, если в системе установлен ffmpeg;",
+				"результат кэшируется в папке .converted. Без ffmpeg мод оставит встроенный звук и напишет",
+				"подсказку в лог и в /skintotem sounds list.",
 				"",
 				"Случайные варианты: добавьте суффикс (skin_change_1.ogg, skin_change_2.ogg) или создайте",
 				"папку с именем звука (skin_change/любое_имя.ogg). При каждом проигрывании берётся один.",

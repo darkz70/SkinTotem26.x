@@ -1,6 +1,7 @@
 package com.darkz.skintotem.sound.custom;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
@@ -15,6 +16,10 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javazoom.jl.decoder.Bitstream;
+import javazoom.jl.decoder.Decoder;
+import javazoom.jl.decoder.Header;
+import javazoom.jl.decoder.SampleBuffer;
 import net.minecraft.client.sounds.JOrbisAudioStream;
 import org.jetbrains.annotations.Nullable;
 
@@ -25,19 +30,20 @@ import org.jetbrains.annotations.Nullable;
  * не меняется, громкость не трогается, никакой дополнительной обработки нет. Приводится только то,
  * без чего OpenAL не умеет работать — разрядность (к 16 битам) и количество каналов (не больше двух).
  * <p>
- * Что читается напрямую:
+ * Что читается напрямую, без единой внешней программы:
  * <ul>
  *     <li>{@code .ogg} — тем же декодером, что использует сама игра;</li>
- *     <li>{@code .wav}, {@code .aiff}, {@code .au} — средствами JVM.</li>
+ *     <li>{@code .wav}, {@code .aiff}, {@code .au} — средствами JVM;</li>
+ *     <li>{@code .mp3} — декодером JLayer, который лежит внутри jar мода.</li>
  * </ul>
- * Остальные форматы ({@code .mp3}, {@code .m4a}, {@code .flac}, {@code .opus} и т.д.) конвертируются
- * автоматически через ffmpeg, если он есть в системе; результат кэшируется, поэтому конвертация
- * выполняется один раз на файл.
+ * Редкие форматы ({@code .m4a}, {@code .flac}, {@code .opus} и т.д.) конвертируются автоматически
+ * через ffmpeg, если он есть в системе; результат кэшируется, поэтому конвертация выполняется
+ * один раз на файл.
  */
 public final class AudioFiles {
 
-	/** Форматы, которые читаются без конвертации. */
-	public static final List<String> NATIVE_EXTENSIONS = List.of("ogg", "oga", "wav", "wave", "aif", "aiff", "aifc", "au", "snd");
+	/** Форматы, которые читаются без внешних программ. */
+	public static final List<String> NATIVE_EXTENSIONS = List.of("ogg", "oga", "wav", "wave", "aif", "aiff", "aifc", "au", "snd", "mp3", "mp2", "mp1");
 
 	/** Расширения, которые вообще имеет смысл пробовать как звук. */
 	public static final List<String> KNOWN_EXTENSIONS = List.of(
@@ -77,6 +83,17 @@ public final class AudioFiles {
 		if (extension.equals("ogg") || extension.equals("oga")) {
 			return decodeOgg(file);
 		}
+		if (extension.equals("mp3") || extension.equals("mp2") || extension.equals("mp1")) {
+			try {
+				return decodeMpeg(file);
+			} catch (UnsupportedAudioFileException broken) {
+				// Нестандартный mp3: если в системе есть ffmpeg, пробуем через него.
+				if (conversionCache == null) {
+					throw broken;
+				}
+				return decodePcm(convert(file, conversionCache, null), file);
+			}
+		}
 
 		try {
 			return decodePcm(file, file);
@@ -103,6 +120,73 @@ public final class AudioFiles {
 			ByteBuffer data = stream.readAll();
 			checkSize(data.limit(), file);
 			return new DecodedSound(file, data, stream.getFormat());
+		}
+	}
+
+	/**
+	 * MP3 раскодирован встроенным JLayer, поэтому mp3-файл работает сразу: ни ffmpeg, ни кодеки
+	 * системы не нужны. Частота и количество каналов берутся из самого файла и не меняются.
+	 */
+	private static DecodedSound decodeMpeg(Path file) throws IOException, UnsupportedAudioFileException {
+		try (InputStream input = new BufferedInputStream(Files.newInputStream(file))) {
+			Bitstream bitstream = new Bitstream(input);
+			Decoder decoder = new Decoder();
+			ByteArrayOutputStream pcm = new ByteArrayOutputStream(1 << 16);
+
+			int channels = 0;
+			float sampleRate = 0.0F;
+			byte[] chunk = new byte[0];
+
+			try {
+				Header header;
+				while ((header = bitstream.readFrame()) != null) {
+					SampleBuffer samples = (SampleBuffer) decoder.decodeFrame(header, bitstream);
+					channels = samples.getChannelCount();
+					sampleRate = samples.getSampleFrequency();
+
+					short[] values = samples.getBuffer();
+					int length = samples.getBufferLength();
+					if (chunk.length < length * 2) {
+						chunk = new byte[length * 2];
+					}
+
+					// OpenAL ждёт 16 бит со знаком в порядке little-endian.
+					for (int i = 0; i < length; i++) {
+						short value = values[i];
+						chunk[i * 2] = (byte) (value & 0xFF);
+						chunk[i * 2 + 1] = (byte) ((value >> 8) & 0xFF);
+					}
+
+					pcm.write(chunk, 0, length * 2);
+					bitstream.closeFrame();
+
+					if (pcm.size() > MAX_DECODED_BYTES) {
+						throw new IOException("Sound is too long: " + file.getFileName());
+					}
+				}
+			} catch (Exception exception) {
+				throw new UnsupportedAudioFileException("JLayer could not decode " + file.getFileName() + ": " + exception);
+			} finally {
+				try {
+					bitstream.close();
+				} catch (Exception ignored) {
+					// поток уже закрыт — ничего делать не нужно
+				}
+			}
+
+			if (channels < 1 || channels > 2 || sampleRate <= 0.0F) {
+				throw new UnsupportedAudioFileException("Unsupported MP3 layout: " + channels + " channels at " + sampleRate + " Hz");
+			}
+
+			byte[] bytes = pcm.toByteArray();
+			checkSize(bytes.length, file);
+
+			ByteBuffer data = ByteBuffer.allocateDirect(bytes.length);
+			data.put(bytes);
+			data.flip();
+
+			AudioFormat format = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, sampleRate, 16, channels, channels * 2, sampleRate, false);
+			return new DecodedSound(file, data, format);
 		}
 	}
 

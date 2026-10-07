@@ -8,7 +8,7 @@ Replaces the Totem of Undying with a 3D doll using your Minecraft skin
 
 ![Minecraft](https://img.shields.io/badge/Minecraft-1.20.1--26.3-green?style=for-the-badge)
 [![Fabric](https://img.shields.io/badge/Loader-Fabric-blue?style=for-the-badge)](https://fabricmc.net)
-![Version](https://img.shields.io/badge/Version-2.0.4-orange?style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-2.0.5-orange?style=for-the-badge)
 
 </div>
 
@@ -46,7 +46,7 @@ See [CHANGELOG.md](CHANGELOG.md) — every release is described in English and R
 | 🎬 Activation Animation | Smooth and immersive totem activation animation |
 | 🔊 Custom Sounds | Own sounds for totem activation, summoning the doll, and skin loading |
 | 🕺 Emotecraft Support | The doll mirrors the emote you are playing, and can trigger an emote when the totem saves you |
-| 📂 Sound Pack Folder | Drop your own audio files into `config/skintotem/sounds` — any format, converted automatically |
+| 📂 Sound Pack Folder | Drop `.ogg`, `.mp3` or `.wav` files into `config/skintotem/sounds` — no extra software needed |
 | 🌍 7 Languages | English, Русский, Українська, Deutsch, Polski, 日本語, Татарча |
 
 ---
@@ -55,7 +55,7 @@ See [CHANGELOG.md](CHANGELOG.md) — every release is described in English and R
 
 1. Install [Fabric Loader](https://fabricmc.net) for Minecraft 1.20.1 — 26.3
 2. Install [Fabric API](https://modrinth.com/mod/fabric-api)
-3. Download `skintotem-2.0.4.jar` and place it in your `mods/` folder
+3. Download `skintotem-2.0.5.jar` and place it in your `mods/` folder
 4. **Optional:** Install [ModMenu](https://modrinth.com/mod/modmenu) and [YACL](https://modrinth.com/mod/yacl) for an in-game configuration GUI
 
 ---
@@ -109,9 +109,10 @@ on first launch). Name the file after the sound you want to replace:
 | `skin_change` | a skin was loaded successfully |
 | `skin_error` | a skin could not be loaded |
 
-* `.ogg`, `.wav`, `.aiff` and `.au` are used as they are — no resampling, no volume changes.
-* Other formats (`.mp3`, `.m4a`, `.flac`, `.opus`, ...) are converted automatically if **ffmpeg** is
-  installed; the result is cached, so conversion happens only once per file.
+* `.ogg`, `.mp3`, `.wav`, `.aiff` and `.au` work out of the box — nothing to install. The audio is
+  used as it is: no resampling, no volume changes, no quality loss.
+* Rare formats (`.m4a`, `.flac`, `.opus`, ...) are converted automatically if **ffmpeg** is installed;
+  the result is cached, so conversion happens only once per file.
 * Several files for one sound (`skin_change_1.ogg`, `skin_change_2.ogg` or a `skin_change/` folder)
   become random variants.
 * Changes are applied on resource reload (F3+T) or with `/skintotem sounds reload`.
@@ -135,7 +136,7 @@ on first launch). Name the file after the sound you want to replace:
 | Mirror Emotes | ✅ | The doll in your hand repeats your Emotecraft emote |
 | Activation Emote | — | Name of the emote to play when the totem saves you (empty = off) |
 | Sounds From Folder | ✅ | Use your own files from `config/skintotem/sounds` |
-| Convert Any Format | ✅ | Convert formats Minecraft cannot read (mp3, flac, ...) with ffmpeg |
+| Convert Any Format | ✅ | Convert rare formats (m4a, flac, opus, ...) with ffmpeg when it is installed |
 
 ---
 
@@ -174,6 +175,9 @@ New languages are added release by release. Pull requests with translations are 
 | 👨‍💻 Mod Author | Darkz |
 
 Inspired by the [SkinTotem](https://github.com/darkz70/SkinTotem) and [My-Totem-Doll](https://github.com/LopyMine/my-totem-doll) projects.
+
+MP3 playback uses [JLayer](http://www.javazoom.net/javalayer/javalayer.html) by JavaZOOM, bundled
+inside the mod jar under the LGPL 2.1 license.
 
 ---
 
