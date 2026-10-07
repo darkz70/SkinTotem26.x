@@ -226,18 +226,25 @@ public final class CustomSoundPack {
 		return files;
 	}
 
+	/**
+	 * Берём файл, если расширение знакомое ИЛИ если его содержимое похоже на звук:
+	 * пользователю не нужно думать про расширения — достаточно положить файл в папку.
+	 */
 	private static boolean looksLikeAudio(Path file) {
 		String fileName = file.getFileName().toString();
 		if (fileName.startsWith(".") || fileName.equalsIgnoreCase(README_NAME)) {
 			return false;
 		}
-		return AudioFiles.KNOWN_EXTENSIONS.contains(AudioFiles.extension(file));
+		if (AudioFiles.KNOWN_EXTENSIONS.contains(AudioFiles.extension(file))) {
+			return true;
+		}
+		return !AudioFiles.sniff(file).isEmpty();
 	}
 
 	private static String describeError(Path file, Throwable throwable) {
 		String message = throwable.getMessage() == null ? throwable.getClass().getSimpleName() : throwable.getMessage();
-		if (!AudioFiles.isNative(file) && message.contains("ffmpeg")) {
-			return message + " — save the file as .ogg, .wav or .mp3, or install ffmpeg";
+		if (message.contains("ffmpeg")) {
+			return message + " — save the file as .ogg, .mp3 or .wav (these need nothing installed), or install ffmpeg";
 		}
 		return message;
 	}

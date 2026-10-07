@@ -51,6 +51,12 @@ public final class AudioFiles {
 			"mp3", "m4a", "aac", "flac", "opus", "wma", "mp4", "webm", "mka", "mov", "3gp", "amr", "ac3"
 	);
 
+	/** Форматы, которые читаются без внешних программ (по содержимому файла). */
+	private static final List<String> NATIVE_KINDS = List.of("ogg", "wav", "aiff", "au", "mpeg");
+
+	/** Сколько повреждённых кадров mp3 можно молча пропустить, не теряя весь звук. */
+	private static final int MAX_BROKEN_FRAMES = 128;
+
 	private static final long CONVERT_TIMEOUT_SECONDS = 180L;
 	private static final int MAX_DECODED_BYTES = 64 * 1024 * 1024;
 
@@ -70,7 +76,78 @@ public final class AudioFiles {
 	}
 
 	public static boolean isNative(Path file) {
-		return NATIVE_EXTENSIONS.contains(extension(file));
+		return NATIVE_EXTENSIONS.contains(extension(file)) || NATIVE_KINDS.contains(sniff(file));
+	}
+
+	/**
+	 * Определяет формат по первым байтам файла, а не по расширению: файл можно назвать как угодно
+	 * (или ошибиться с расширением), звук всё равно должен заиграть.
+	 *
+	 * @return {@code ogg}, {@code wav}, {@code aiff}, {@code au}, {@code mpeg}, {@code flac},
+	 *         {@code mp4}, {@code matroska} или пустая строка, если формат не опознан
+	 */
+	public static String sniff(Path file) {
+		byte[] head = new byte[16];
+		int read;
+		try (InputStream input = Files.newInputStream(file)) {
+			read = input.readNBytes(head, 0, head.length);
+		} catch (IOException exception) {
+			return "";
+		}
+		if (read < 4) {
+			return "";
+		}
+
+		if (starts(head, 0, "OggS")) {
+			return "ogg";
+		}
+		if (read >= 12 && starts(head, 0, "RIFF") && starts(head, 8, "WAVE")) {
+			return "wav";
+		}
+		if (read >= 12 && starts(head, 0, "FORM") && (starts(head, 8, "AIFF") || starts(head, 8, "AIFC"))) {
+			return "aiff";
+		}
+		if (starts(head, 0, ".snd")) {
+			return "au";
+		}
+		if (starts(head, 0, "fLaC")) {
+			return "flac";
+		}
+		if (starts(head, 0, "ID3") || ((head[0] & 0xFF) == 0xFF && (head[1] & 0xE0) == 0xE0)) {
+			return "mpeg";
+		}
+		if (read >= 12 && starts(head, 4, "ftyp")) {
+			return "mp4";
+		}
+		if ((head[0] & 0xFF) == 0x1A && (head[1] & 0xFF) == 0x45 && (head[2] & 0xFF) == 0xDF && (head[3] & 0xFF) == 0xA3) {
+			return "matroska";
+		}
+		return "";
+	}
+
+	private static boolean starts(byte[] bytes, int offset, String text) {
+		if (bytes.length < offset + text.length()) {
+			return false;
+		}
+		for (int i = 0; i < text.length(); i++) {
+			if (bytes[offset + i] != (byte) text.charAt(i)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/** Формат по расширению — запасной вариант, когда содержимое ни на что не похоже. */
+	private static String kindByExtension(String extension) {
+		return switch (extension) {
+			case "ogg", "oga" -> "ogg";
+			case "wav", "wave" -> "wav";
+			case "aif", "aiff", "aifc" -> "aiff";
+			case "au", "snd" -> "au";
+			case "mp3", "mp2", "mp1" -> "mpeg";
+			case "flac" -> "flac";
+			default -> "";
+		};
 	}
 
 	/**
@@ -79,15 +156,19 @@ public final class AudioFiles {
 	 * @param conversionCache куда складывать сконвертированные файлы, {@code null} — конвертация запрещена
 	 */
 	public static DecodedSound decode(Path file, @Nullable Path conversionCache) throws Exception {
-		String extension = extension(file);
-		if (extension.equals("ogg") || extension.equals("oga")) {
+		String kind = sniff(file);
+		if (kind.isEmpty()) {
+			kind = kindByExtension(extension(file));
+		}
+
+		if (kind.equals("ogg")) {
 			return decodeOgg(file);
 		}
-		if (extension.equals("mp3") || extension.equals("mp2") || extension.equals("mp1")) {
+		if (kind.equals("mpeg")) {
 			try {
 				return decodeMpeg(file);
 			} catch (UnsupportedAudioFileException broken) {
-				// Нестандартный mp3: если в системе есть ffmpeg, пробуем через него.
+				// Совсем нечитаемый mp3: если в системе есть ffmpeg, пробуем через него.
 				if (conversionCache == null) {
 					throw broken;
 				}
@@ -137,35 +218,57 @@ public final class AudioFiles {
 			float sampleRate = 0.0F;
 			byte[] chunk = new byte[0];
 
+			int decodedFrames = 0;
+			int brokenFrames = 0;
 			try {
-				Header header;
-				while ((header = bitstream.readFrame()) != null) {
-					SampleBuffer samples = (SampleBuffer) decoder.decodeFrame(header, bitstream);
-					channels = samples.getChannelCount();
-					sampleRate = samples.getSampleFrequency();
-
-					short[] values = samples.getBuffer();
-					int length = samples.getBufferLength();
-					if (chunk.length < length * 2) {
-						chunk = new byte[length * 2];
+				while (true) {
+					Header header;
+					try {
+						header = bitstream.readFrame();
+					} catch (Exception unreadable) {
+						// Битый кусок внутри файла: пропускаем его и ищем следующий кадр.
+						if (++brokenFrames > MAX_BROKEN_FRAMES) {
+							break;
+						}
+						bitstream.closeFrame();
+						continue;
+					}
+					if (header == null) {
+						break;
 					}
 
-					// OpenAL ждёт 16 бит со знаком в порядке little-endian.
-					for (int i = 0; i < length; i++) {
-						short value = values[i];
-						chunk[i * 2] = (byte) (value & 0xFF);
-						chunk[i * 2 + 1] = (byte) ((value >> 8) & 0xFF);
-					}
+					try {
+						SampleBuffer samples = (SampleBuffer) decoder.decodeFrame(header, bitstream);
+						channels = samples.getChannelCount();
+						sampleRate = samples.getSampleFrequency();
 
-					pcm.write(chunk, 0, length * 2);
-					bitstream.closeFrame();
+						short[] values = samples.getBuffer();
+						int length = samples.getBufferLength();
+						if (chunk.length < length * 2) {
+							chunk = new byte[length * 2];
+						}
+
+						// OpenAL ждёт 16 бит со знаком в порядке little-endian.
+						for (int i = 0; i < length; i++) {
+							short value = values[i];
+							chunk[i * 2] = (byte) (value & 0xFF);
+							chunk[i * 2 + 1] = (byte) ((value >> 8) & 0xFF);
+						}
+
+						pcm.write(chunk, 0, length * 2);
+						decodedFrames++;
+					} catch (Exception undecodable) {
+						if (++brokenFrames > MAX_BROKEN_FRAMES) {
+							break;
+						}
+					} finally {
+						bitstream.closeFrame();
+					}
 
 					if (pcm.size() > MAX_DECODED_BYTES) {
 						throw new IOException("Sound is too long: " + file.getFileName());
 					}
 				}
-			} catch (Exception exception) {
-				throw new UnsupportedAudioFileException("JLayer could not decode " + file.getFileName() + ": " + exception);
 			} finally {
 				try {
 					bitstream.close();
@@ -174,6 +277,9 @@ public final class AudioFiles {
 				}
 			}
 
+			if (decodedFrames == 0) {
+				throw new UnsupportedAudioFileException("JLayer found no playable MPEG frames in " + file.getFileName());
+			}
 			if (channels < 1 || channels > 2 || sampleRate <= 0.0F) {
 				throw new UnsupportedAudioFileException("Unsupported MP3 layout: " + channels + " channels at " + sampleRate + " Hz");
 			}
