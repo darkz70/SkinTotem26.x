@@ -3,13 +3,11 @@ name: Build Fabric
 on:
   workflow_dispatch:
   push:
-    branches: [main, 26.3, neoforge, 'arena/**']
+    branches: [main, 26.3, neoforge]
 
 jobs:
   debug_build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -24,28 +22,13 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build with Gradle
-        run: |
-          set -o pipefail
-          (./gradlew buildAndCollect+All || ./gradlew buildAndCollect || ./gradlew build) 2>&1 | tee /tmp/build.log
+        run: ./gradlew buildAndCollect+All || ./gradlew buildAndCollect || ./gradlew build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_ACTOR: ${{ github.actor }}
           GPR_KEY: ${{ secrets.GPR_KEY }}
           ORG_GRADLE_PROJECT_gpr.user: ${{ github.actor }}
           ORG_GRADLE_PROJECT_gpr.key: ${{ secrets.GPR_KEY }}
-
-      - name: Report build failure
-        if: failure()
-        continue-on-error: true
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          set +e
-          grep -nE "error:|FAILURE:|What went wrong|Caused by:|Could not (find|resolve)|cannot find symbol" /tmp/build.log | tail -n 40 > /tmp/errors.txt
-          cat /tmp/errors.txt
-          { echo '### Build failure digest'; echo; echo '```'; cat /tmp/errors.txt; echo '```'; echo; echo '<details><summary>tail</summary>'; echo; echo '```'; tail -c 20000 /tmp/build.log; echo '```'; echo '</details>'; } > /tmp/report.md
-          jq -Rs '{body: .}' /tmp/report.md > /tmp/report.json
-          gh api -X POST "repos/${{ github.repository }}/commits/${{ github.sha }}/comments" --input /tmp/report.json || echo "commit comment failed"
 
       - name: List all files (Debug)
         run: |
