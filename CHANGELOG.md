@@ -12,10 +12,11 @@ the full history stays in the Git log and in the GitHub releases.
 
 ### 🇬🇧 English
 
-**Six new languages — 14 in total**
+**Ten new languages — 18 in total**
 - 🇪🇸 Español (`es_es`), 🇫🇷 Français (`fr_fr`), 🇧🇷 Português do Brasil (`pt_br`),
-  🇮🇹 Italiano (`it_it`), 🇰🇷 한국어 (`ko_kr`), 🇹🇼 繁體中文 (`zh_tw`).
-- Every one of the 14 languages now contains all 163 strings, in the same order as `en_us`.
+  🇮🇹 Italiano (`it_it`), 🇳🇱 Nederlands (`nl_nl`), 🇨🇿 Čeština (`cs_cz`),
+  🇹🇷 Türkçe (`tr_tr`), 🇻🇳 Tiếng Việt (`vi_vn`), 🇰🇷 한국어 (`ko_kr`), 🇹🇼 繁體中文 (`zh_tw`).
+- Every one of the 18 languages now contains all 163 strings, in the same order as `en_us`.
   Nothing falls back to English any more.
 
 **Translation fixes in the existing languages**
@@ -39,10 +40,12 @@ the full history stays in the Git log and in the GitHub releases.
 
 ### 🇷🇺 Русский
 
-**Шесть новых языков — всего 14**
+**Десять новых языков — всего 18**
 - 🇪🇸 испанский (`es_es`), 🇫🇷 французский (`fr_fr`), 🇧🇷 португальский (Бразилия, `pt_br`),
-  🇮🇹 итальянский (`it_it`), 🇰🇷 корейский (`ko_kr`), 🇹🇼 китайский традиционный (`zh_tw`).
-- Во всех 14 языках есть все 163 строки в том же порядке, что и в `en_us`, — ничего больше
+  🇮🇹 итальянский (`it_it`), 🇳🇱 нидерландский (`nl_nl`), 🇨🇿 чешский (`cs_cz`),
+  🇹🇷 турецкий (`tr_tr`), 🇻🇳 вьетнамский (`vi_vn`), 🇰🇷 корейский (`ko_kr`),
+  🇹🇼 китайский традиционный (`zh_tw`).
+- Во всех 18 языках есть все 163 строки в том же порядке, что и в `en_us`, — ничего больше
   не откатывается на английский.
 
 **Исправления в уже существующих переводах**
