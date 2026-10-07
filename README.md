@@ -16,8 +16,8 @@ Replaces the Totem of Undying with a 3D doll using your Minecraft skin
 
 ## 📜 Changelog
 
-See [CHANGELOG.md](CHANGELOG.md) — every release is described in English and Russian.
-См. [CHANGELOG.md](CHANGELOG.md) — каждая версия описана на английском и русском.
+See [CHANGELOG.md](CHANGELOG.md) — it always describes the latest update, in English and Russian.
+См. [CHANGELOG.md](CHANGELOG.md) — там всегда описано последнее обновление, на английском и русском.
 
 ---
 
@@ -47,7 +47,7 @@ See [CHANGELOG.md](CHANGELOG.md) — every release is described in English and R
 | 🔊 Custom Sounds | Own sounds for totem activation, summoning the doll, and skin loading |
 | 🕺 Emotecraft Support | The doll mirrors the emote you are playing, and can trigger an emote when the totem saves you |
 | 📂 Sound Pack Folder | Drop `.ogg`, `.mp3` or `.wav` files into `config/skintotem/sounds` — no extra software needed |
-| 🌍 7 Languages | English, Русский, Українська, Deutsch, Polski, 日本語, Татарча |
+| 🌍 8 Languages | English, Русский, Українська, Deutsch, Polski, 日本語, Татарча, 简体中文 |
 
 ---
 
@@ -161,7 +161,8 @@ on first launch). Name the file after the sound you want to replace:
 | 日本語 (`ja_jp`) | ✅ complete |
 | Polski (`pl_pl`) | ✅ complete |
 | Deutsch (`de_de`) | ✅ complete |
-| Татарча (`tt_ru`) | 🚧 in progress |
+| Татарча (`tt_ru`) | ✅ complete |
+| 简体中文 (`zh_cn`) | ✅ complete |
 
 New languages are added release by release. Pull requests with translations are welcome — copy
 `src/main/resources/assets/skintotem/lang/en_us.json` and translate the values.

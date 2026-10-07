@@ -157,7 +157,7 @@
   "skintotem.modmenu.option.custom_sounds_enabled.name": "Звуки з теки",
   "skintotem.modmenu.option.custom_sounds_enabled.description": "Використовувати власні файли з config/skintotem/sounds замість вбудованих звуків.",
   "skintotem.modmenu.option.custom_sounds_auto_convert.name": "Конвертувати будь-який формат",
-  "skintotem.modmenu.option.custom_sounds_auto_convert.description": "Автоматично конвертувати формати, які Minecraft не читає (mp3, m4a, flac, ...), через ffmpeg, якщо він встановлений.",
+  "skintotem.modmenu.option.custom_sounds_auto_convert.description": "Конвертувати рідкісні формати (m4a, flac, opus, ...) через ffmpeg, якщо він встановлений. OGG, MP3 і WAV працюють і без нього.",
   "skintotem.command.sounds.reloading": "&6Перечитую звуки з теки...",
   "skintotem.command.sounds.folder": "&7Тека звуків: %s",
   "skintotem.command.sounds.empty": "Файлів не знайдено — грають вбудовані звуки.",

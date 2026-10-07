@@ -157,7 +157,7 @@
   "skintotem.modmenu.option.custom_sounds_enabled.name": "Sounds From Folder",
   "skintotem.modmenu.option.custom_sounds_enabled.description": "Use your own files from config/skintotem/sounds instead of the built-in sounds.",
   "skintotem.modmenu.option.custom_sounds_auto_convert.name": "Convert Any Format",
-  "skintotem.modmenu.option.custom_sounds_auto_convert.description": "Automatically convert formats Minecraft cannot read (mp3, m4a, flac, ...) with ffmpeg, if it is installed.",
+  "skintotem.modmenu.option.custom_sounds_auto_convert.description": "Convert rare formats (m4a, flac, opus, ...) with ffmpeg when it is installed. OGG, MP3 and WAV work without it.",
   "skintotem.command.sounds.reloading": "&6Reloading sounds from the folder...",
   "skintotem.command.sounds.folder": "&7Sound folder: %s",
   "skintotem.command.sounds.empty": "No sound files found — built-in sounds are used.",

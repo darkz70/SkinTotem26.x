@@ -157,7 +157,7 @@
   "skintotem.modmenu.option.custom_sounds_enabled.name": "フォルダーのサウンド",
   "skintotem.modmenu.option.custom_sounds_enabled.description": "内蔵サウンドの代わりに config/skintotem/sounds にある自分のファイルを使用します。",
   "skintotem.modmenu.option.custom_sounds_auto_convert.name": "どの形式も変換する",
-  "skintotem.modmenu.option.custom_sounds_auto_convert.description": "Minecraft が読めない形式 (mp3、m4a、flac など) を、ffmpeg が導入されていれば自動的に変換します。",
+  "skintotem.modmenu.option.custom_sounds_auto_convert.description": "まれな形式 (m4a、flac、opus など) を、ffmpeg が導入されていれば変換します。OGG・MP3・WAV は無くても動作します。",
   "skintotem.command.sounds.reloading": "&6フォルダーのサウンドを再読み込み中...",
   "skintotem.command.sounds.folder": "&7サウンドフォルダー: %s",
   "skintotem.command.sounds.empty": "ファイルが見つかりません。内蔵サウンドを使用します。",
