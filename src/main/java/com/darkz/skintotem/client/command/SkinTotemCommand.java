@@ -1,8 +1,10 @@
 package com.darkz.skintotem.client.command;
 
+import com.darkz.skintotem.SkinTotem;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.network.chat.Component;
 
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommands.literal;
@@ -12,10 +14,18 @@ public class SkinTotemCommand {
 
     private static final String P = "§6[SkinTotem]§r ";
 
+    /** Версия берётся из метаданных мода, чтобы не расходиться с gradle.properties. */
+    private static final String VERSION = FabricLoader.getInstance()
+            .getModContainer(SkinTotem.MOD_ID)
+            .map(container -> container.getMetadata().getVersion().getFriendlyString())
+            .orElse("unknown");
+
+    private static final String SOURCE_URL = "https://github.com/darkz70/SkinTotem26.x";
+
     public static LiteralArgumentBuilder<FabricClientCommandSource> getInfoCommand() {
         return literal("info").executes(ctx -> {
             ctx.getSource().sendFeedback(Component.literal(
-                P + "§bv1.0.0 §8| §bAuthor: §fDarkz"
+                P + "§bv" + VERSION + " §8| §bAuthor: §fDarkz"
             ));
             return 1;
         });
@@ -24,10 +34,9 @@ public class SkinTotemCommand {
     public static LiteralArgumentBuilder<FabricClientCommandSource> getCreditsCommand() {
         return literal("credits").executes(ctx -> {
             ctx.getSource().sendFeedback(Component.literal(
-                "\n§6╔══════════════════════════════════════════════════╗\n" +
-                "§6║  §bSkinTotem §fv1.0.0                                     §6║\n" +
-                "§6║  §7Author:       §fDarkz                                  §6║\n" +
-                "§6╚════════════════════════════════════════════════════╝\n"
+                "\n§6§lSkinTotem §fv" + VERSION + "\n" +
+                "§7Author: §fDarkz\n" +
+                "§7Source: §f" + SOURCE_URL + "\n"
             ));
             return 1;
         });

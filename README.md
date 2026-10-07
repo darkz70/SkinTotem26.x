@@ -6,9 +6,9 @@
 
 Replaces the Totem of Undying with a 3D doll using your Minecraft skin
 
-![Minecraft](https://img.shields.io/badge/Minecraft-1.20.1--26.1.2-green?style=for-the-badge)
+![Minecraft](https://img.shields.io/badge/Minecraft-1.20.1--26.3-green?style=for-the-badge)
 [![Fabric](https://img.shields.io/badge/Loader-Fabric-blue?style=for-the-badge)](https://fabricmc.net)
-![Version](https://img.shields.io/badge/Version-1.0.0-orange?style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-2.0.1-orange?style=for-the-badge)
 
 </div>
 
@@ -34,7 +34,7 @@ Replaces the Totem of Undying with a 3D doll using your Minecraft skin
 | 💾 Caching | Skins are cached for 10 minutes to reduce API requests |
 | 🎨 Slim / Classic Support | Supports both Alex and Steve player models |
 | 🌐 Multiplayer Compatible | Works on any server without requiring a server-side mod |
-| ⚙️ Configurable | Fully configurable through ModMenu + Cloth Config |
+| ⚙️ Configurable | Fully configurable through ModMenu + YACL |
 | 🔧 NBT Customization | Customize individual totems via an anvil |
 | 🎬 Activation Animation | Smooth and immersive totem activation animation |
 
@@ -104,7 +104,6 @@ Place a Totem of Undying into an anvil and rename it using one of the formats be
 |-----|----------|-------------|
 | Fabric API | ✅ | Core Fabric API dependency |
 | ModMenu | ❌ | Adds a settings button to the mod list |
-| Cloth Config | ❌ | Configuration GUI library |
 | YetAnotherConfigLib (YACL) | ❌ | Alternative configuration GUI library |
 
 ---

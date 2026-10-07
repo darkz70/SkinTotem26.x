@@ -1,17 +1,17 @@
 {
     "schemaVersion": 1,
-    "id": "skintotem",
-    "version": "1.0.0",
-    "name": "SkinTotem",
+    "id": "${mod_id}",
+    "version": "${mod_version}",
+    "name": "${mod_name}",
     "description": "Client-Side Fabric Mod which replaces all totems with player dolls. Rename your totem to player's nickname to use it's skin.",
     "authors": [
-        "Darkz"
+        "${mod_authors}"
     ],
     "contact": {
         "homepage": "https://github.com/darkz70/SkinTotem",
         "issues": "https://github.com/darkz70/SkinTotem/issues"
     },
-    "license": "CC BY-ND 4.0",
+    "license": "${mod_license}",
     "icon": "icon/icon.png",
     "environment": "*",
     "entrypoints": {
