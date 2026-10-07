@@ -8,48 +8,56 @@ the full history stays in the Git log and in the GitHub releases.
 
 ---
 
-## 2.0.5 — 2026-10-07
+## 2.1.0 — 2026-10-07
 
 ### 🇬🇧 English
 
-**MP3 now works out of the box**
-- A built-in MP3 decoder (JLayer) ships inside the mod jar, so `.mp3` files in
-  `config/skintotem/sounds` just play — no ffmpeg, no codecs, nothing to install.
-- Formats that need nothing at all: `.ogg`, `.mp3`, `.wav`, `.aiff`, `.au`.
-- Rare formats (`.m4a`, `.flac`, `.opus`, ...) are still converted automatically with ffmpeg when
-  it happens to be installed; the result is cached so each file is converted only once.
-- The audio is never touched: no resampling, no volume changes, no muffling — only bit depth and
-  channel count are adjusted when OpenAL cannot handle them.
-- If an unusual `.mp3` cannot be decoded, the mod falls back to ffmpeg and, failing that, keeps the
-  built-in sound and explains why in `/skintotem sounds list`.
+**Six new languages — 14 in total**
+- 🇪🇸 Español (`es_es`), 🇫🇷 Français (`fr_fr`), 🇧🇷 Português do Brasil (`pt_br`),
+  🇮🇹 Italiano (`it_it`), 🇰🇷 한국어 (`ko_kr`), 🇹🇼 繁體中文 (`zh_tw`).
+- Every one of the 14 languages now contains all 163 strings, in the same order as `en_us`.
+  Nothing falls back to English any more.
 
-**Languages**
-- 🇨🇳 Chinese Simplified (`zh_cn`) added — fully translated.
-- 🇷🇺 Tatar (`tt_ru`) finished: the remaining 89 strings were translated, so **all 8 languages are
-  now complete** (English, Русский, Українська, Deutsch, Polski, 日本語, Татарча, 简体中文).
+**Translation fixes in the existing languages**
+- 🇯🇵 Japanese: the broken colour code `& l` showed up as literal text in "Unsupported Format!";
+  the welcome screen and the custom-models tooltip had lost all of their line breaks and were
+  rendered as one long line.
+- 🇺🇦 Ukrainian: a broken `&з` code and a stray line break in the middle of the YACL message.
+- 🇹🇹 Tatar: the whole file used raw `§` instead of `&`, so the mod could not recolour it.
+- Three leftover keys that no longer exist in the game were removed.
 
-**Docs**
-- This changelog now keeps only the newest release, in English and Russian.
-- README: updated sound formats, language table and the JLayer credit (LGPL 2.1).
+**A lone `&` is no longer eaten**
+- Mod text turns `&a`, `&l`, ... into Minecraft colour codes. Until now *every* `&` was converted,
+  so an ordinary ampersand — "Sounds & Emotes" — became `§ ` and the font swallowed it together
+  with the next character. Only real colour codes are converted now, and translators can write
+  `&` as plain text.
+
+**Checker for translators**
+- `python3 tools/check_lang.py` compares every locale with `en_us` and reports missing or extra
+  keys, broken colour codes, lost `%s` placeholders and lost line breaks. `--fix-order` rewrites
+  the files in the canonical `en_us` order.
 
 ### 🇷🇺 Русский
 
-**MP3 работает сразу**
-- Встроенный MP3-декодер (JLayer) лежит внутри jar мода, поэтому `.mp3` из
-  `config/skintotem/sounds` просто играет — ни ffmpeg, ни кодеков, ставить ничего не нужно.
-- Форматы, которым вообще ничего не требуется: `.ogg`, `.mp3`, `.wav`, `.aiff`, `.au`.
-- Редкие форматы (`.m4a`, `.flac`, `.opus`, ...) по-прежнему конвертируются автоматически через
-  ffmpeg, если он случайно установлен; результат кэшируется, так что файл конвертируется один раз.
-- Звук не трогается: без передискретизации, без изменения громкости, без приглушения — приводится
-  только разрядность и число каналов, когда OpenAL с ними не работает.
-- Если нестандартный `.mp3` раскодировать не удалось, мод пробует ffmpeg, а если и его нет —
-  оставляет встроенный звук и объясняет причину в `/skintotem sounds list`.
+**Шесть новых языков — всего 14**
+- 🇪🇸 испанский (`es_es`), 🇫🇷 французский (`fr_fr`), 🇧🇷 португальский (Бразилия, `pt_br`),
+  🇮🇹 итальянский (`it_it`), 🇰🇷 корейский (`ko_kr`), 🇹🇼 китайский традиционный (`zh_tw`).
+- Во всех 14 языках есть все 163 строки в том же порядке, что и в `en_us`, — ничего больше
+  не откатывается на английский.
 
-**Языки**
-- 🇨🇳 Добавлен китайский упрощённый (`zh_cn`), переведён полностью.
-- 🇷🇺 Татарский (`tt_ru`) дополнен: переведены оставшиеся 89 строк, так что **все 8 языков теперь
-  полные** (English, Русский, Українська, Deutsch, Polski, 日本語, Татарча, 简体中文).
+**Исправления в уже существующих переводах**
+- 🇯🇵 Японский: сломанный код `& l` выводился текстом в «Unsupported Format!», а у экрана
+  приветствия и подсказки с моделями пропали переносы строк — всё шло одной длинной строкой.
+- 🇺🇦 Украинский: сломанный код `&з` и лишний перенос строки посреди сообщения про YACL.
+- 🇹🇹 Татарский: весь файл был написан через `§` вместо `&`, поэтому мод не мог его раскрасить.
+- Удалены три старых ключа, которых уже нет в игре.
 
-**Документация**
-- В этом файле теперь остаётся только последний релиз — на английском и русском.
-- README: обновлены форматы звука, таблица языков и упоминание JLayer (LGPL 2.1).
+**Одиночный «&» больше не пропадает**
+- Мод превращает `&a`, `&l`, ... в цветовые коды Minecraft. Раньше заменялся *любой* `&`, поэтому
+  обычный амперсанд — «Sounds & Emotes» — превращался в `§ ` и шрифт съедал его вместе со
+  следующим символом. Теперь заменяются только настоящие коды, а `&` можно писать как обычный текст.
+
+**Проверка переводов**
+- `python3 tools/check_lang.py` сравнивает каждую локаль с `en_us` и показывает пропущенные и
+  лишние ключи, сломанные цветовые коды, потерянные `%s` и переносы строк. Ключ `--fix-order`
+  пересохраняет файлы в каноническом порядке `en_us`.

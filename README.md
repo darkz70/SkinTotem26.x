@@ -8,7 +8,7 @@ Replaces the Totem of Undying with a 3D doll using your Minecraft skin
 
 ![Minecraft](https://img.shields.io/badge/Minecraft-1.20.1--26.3-green?style=for-the-badge)
 [![Fabric](https://img.shields.io/badge/Loader-Fabric-blue?style=for-the-badge)](https://fabricmc.net)
-![Version](https://img.shields.io/badge/Version-2.0.5-orange?style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-2.1.0-orange?style=for-the-badge)
 
 </div>
 
@@ -47,7 +47,7 @@ See [CHANGELOG.md](CHANGELOG.md) — it always describes the latest update, in E
 | 🔊 Custom Sounds | Own sounds for totem activation, summoning the doll, and skin loading |
 | 🕺 Emotecraft Support | The doll mirrors the emote you are playing, and can trigger an emote when the totem saves you |
 | 📂 Sound Pack Folder | Drop `.ogg`, `.mp3` or `.wav` files into `config/skintotem/sounds` — no extra software needed |
-| 🌍 8 Languages | English, Русский, Українська, Deutsch, Polski, 日本語, Татарча, 简体中文 |
+| 🌍 14 Languages | English, Русский, Українська, Deutsch, Polski, Español, Français, Italiano, Português (BR), 日本語, 한국어, Татарча, 简体中文, 繁體中文 |
 
 ---
 
@@ -55,7 +55,7 @@ See [CHANGELOG.md](CHANGELOG.md) — it always describes the latest update, in E
 
 1. Install [Fabric Loader](https://fabricmc.net) for Minecraft 1.20.1 — 26.3
 2. Install [Fabric API](https://modrinth.com/mod/fabric-api)
-3. Download `skintotem-2.0.5.jar` and place it in your `mods/` folder
+3. Download `skintotem-2.1.0.jar` and place it in your `mods/` folder
 4. **Optional:** Install [ModMenu](https://modrinth.com/mod/modmenu) and [YACL](https://modrinth.com/mod/yacl) for an in-game configuration GUI
 
 ---
@@ -163,9 +163,25 @@ on first launch). Name the file after the sound you want to replace:
 | Deutsch (`de_de`) | ✅ complete |
 | Татарча (`tt_ru`) | ✅ complete |
 | 简体中文 (`zh_cn`) | ✅ complete |
+| 繁體中文 (`zh_tw`) | ✅ complete |
+| Español (`es_es`) | ✅ complete |
+| Français (`fr_fr`) | ✅ complete |
+| Português — Brasil (`pt_br`) | ✅ complete |
+| Italiano (`it_it`) | ✅ complete |
+| 한국어 (`ko_kr`) | ✅ complete |
+
+All 14 languages contain every one of the 163 strings — no fallbacks to English anywhere.
 
 New languages are added release by release. Pull requests with translations are welcome — copy
-`src/main/resources/assets/skintotem/lang/en_us.json` and translate the values.
+`src/main/resources/assets/skintotem/lang/en_us.json`, translate the values and run the checker:
+
+```bash
+python3 tools/check_lang.py
+```
+
+It compares every locale with `en_us` and reports missing or extra keys, broken `&` colour codes,
+lost `%s` placeholders and lost line breaks. Colours are written as `&a`, `&l`, ... — a lone `&`
+(as in "Sounds & Emotes") is kept as plain text.
 
 ---
 

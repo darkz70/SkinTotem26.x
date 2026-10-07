@@ -2,7 +2,7 @@
   "modmenu.descriptionTranslation.skintotem": "Простенький мод для Fabric, що замінює тотеми на ляльки, які якщо перейменувати на ім'я гравця зміняться на нього!",
   "skintotem.modmenu.title": "&lSkinTotem",
   "skintotem.modmenu.no_config_library_screen.message": "Ви маєте установити &6&lYet Another Config Lib [YACL]&f, щоб відкрити меню налаштувань мода.\n\n&a&lВідкрити Modrinth-сторінку &6&lYACL&a&l?",
-  "skintotem.modmenu.old_config_library_screen.message": "Версія %s &6&lYet Another Config Lib [YACL]&f застаріла для SkinTotem. Будь ласка оновіть&6\n&lYACL&f до версії %s або вище.\n\n&a&lВідкрити Modrinth-сторінку &6&lYACL&a&l?",
+  "skintotem.modmenu.old_config_library_screen.message": "Версія %s &6&lYet Another Config Lib [YACL]&f застаріла для SkinTotem. Будь ласка, оновіть &6&lYACL&f до версії %s або вище.\n\n&a&lВідкрити Modrinth-сторінку &6&lYACL&a&l?",
   "skintotem.modmenu.category.general.name": "&lЗагальні",
   "skintotem.modmenu.group.main.name": "&lГоловна",
   "skintotem.modmenu.group.main.description": "Головні налаштування мода SkinTotem.",
@@ -81,7 +81,7 @@
   "skintotem.modmenu.formatter.enabled_or_disabled.false": "ВИМК.",
   "skintotem.standard_model_selection_screen.title": "Екран вибору стандартної моделі",
   "skintotem.tags.info.title": "&lЩо це?",
-  "skintotem.tags.info.text": "Це &eменю теґів ляльки&f.\nУ цьому меню ви можете знайти список &eкнопок&f.\nНатискаючи кнопки, ви можете &змінити зовнішній вигляд&f свого тотема. Наприклад: &eВимкнути/увімкнути певні частини&f, &eповторно вибрати спеціальну модель&f тощо.",
+  "skintotem.tags.info.text": "Це &eменю теґів ляльки&f.\nУ цьому меню ви можете знайти список &eкнопок&f.\nНатискаючи кнопки, ви можете &eзмінити зовнішній вигляд&f свого тотема. Наприклад: &eвимкнути/увімкнути певні частини&f, &eвибрати власну модель&f тощо.",
   "skintotem.tags.tips.title": "&e&lПідказки!",
   "skintotem.tags.tips.text": "  &e&l1. &rУтримуйте &7[Shift]&r наводячи курсор на тотем, щоб побачити його статус. Завжди увімкнено в ковадлі усталено.\n\n&e&l2. &rВикористати команду &7/skintotem reload […]&r для перезавантаження ляльок.",
   "skintotem.tags.title": "&7Теґи ляльки",
@@ -112,7 +112,7 @@
   "skintotem.text.value": "Значення:",
   "skintotem.text.char": "Символ:",
   "skintotem.text.nothing_found": "Нічого не знайдено:(",
-  "skintotem.text.found_models": "Знайдено &e%s&e моделі",
+  "skintotem.text.found_models": "Знайдено моделей: &e%s",
   "skintotem.text.nice_id": "&6%s:%s",
   "skintotem.text.nice_id.quoted": "&6«%s:%s»",
   "skintotem.text.status": "Статус: ",
@@ -161,6 +161,5 @@
   "skintotem.command.sounds.reloading": "&6Перечитую звуки з теки...",
   "skintotem.command.sounds.folder": "&7Тека звуків: %s",
   "skintotem.command.sounds.empty": "Файлів не знайдено — грають вбудовані звуки.",
-  "skintotem.command.sounds.loaded": "&aЗавантажено файлів: &f%s",
-  "skintotem.text.loading.failed": "&c&lПомилка завантаження!"
+  "skintotem.command.sounds.loaded": "&aЗавантажено файлів: &f%s"
 }
