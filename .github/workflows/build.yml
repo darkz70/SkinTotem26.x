@@ -41,7 +41,9 @@ jobs:
         run: |
           {
             echo '```'
-            grep -nE "error:|FAILURE|What went wrong|Caused by|\.java:" /tmp/build.log | tail -n 60
+            grep -A 14 "What went wrong" /tmp/build.log | tail -n 60
+            echo "--- tail ---"
+            tail -n 40 /tmp/build.log
             echo '```'
           } > /tmp/report.txt
           python3 - <<'EOF' > /tmp/report.json
