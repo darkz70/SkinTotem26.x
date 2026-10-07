@@ -8,9 +8,16 @@ Replaces the Totem of Undying with a 3D doll using your Minecraft skin
 
 ![Minecraft](https://img.shields.io/badge/Minecraft-1.20.1--26.3-green?style=for-the-badge)
 [![Fabric](https://img.shields.io/badge/Loader-Fabric-blue?style=for-the-badge)](https://fabricmc.net)
-![Version](https://img.shields.io/badge/Version-2.0.3-orange?style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-2.0.4-orange?style=for-the-badge)
 
 </div>
+
+---
+
+## 📜 Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) — every release is described in English and Russian.
+См. [CHANGELOG.md](CHANGELOG.md) — каждая версия описана на английском и русском.
 
 ---
 
@@ -39,6 +46,8 @@ Replaces the Totem of Undying with a 3D doll using your Minecraft skin
 | 🎬 Activation Animation | Smooth and immersive totem activation animation |
 | 🔊 Custom Sounds | Own sounds for totem activation, summoning the doll, and skin loading |
 | 🕺 Emotecraft Support | The doll mirrors the emote you are playing, and can trigger an emote when the totem saves you |
+| 📂 Sound Pack Folder | Drop your own audio files into `config/skintotem/sounds` — any format, converted automatically |
+| 🌍 7 Languages | English, Русский, Українська, Deutsch, Polski, 日本語, Татарча |
 
 ---
 
@@ -46,7 +55,7 @@ Replaces the Totem of Undying with a 3D doll using your Minecraft skin
 
 1. Install [Fabric Loader](https://fabricmc.net) for Minecraft 1.20.1 — 26.3
 2. Install [Fabric API](https://modrinth.com/mod/fabric-api)
-3. Download `skintotem-2.0.3.jar` and place it in your `mods/` folder
+3. Download `skintotem-2.0.4.jar` and place it in your `mods/` folder
 4. **Optional:** Install [ModMenu](https://modrinth.com/mod/modmenu) and [YACL](https://modrinth.com/mod/yacl) for an in-game configuration GUI
 
 ---
@@ -75,6 +84,8 @@ Place a Totem of Undying into an anvil and rename it using one of the formats be
 /skintotem refresh             — Refresh the current player's skin
 /skintotem refresh <player>    — Refresh a specific player's skin
 /skintotem refresh all         — Clear the entire skin cache
+/skintotem sounds              — Show the custom sound folder and loaded files
+/skintotem sounds reload       — Reload sound files from the folder
 
 /totem <nickname>              — Set totem skin (Mojang)
 /totem tl <nickname>           — Set totem skin (TLauncher)
@@ -83,6 +94,27 @@ Place a Totem of Undying into an anvil and rename it using one of the formats be
 /totem model <model_id>        — Change the default doll model
 /totem refresh                 — Force Mojang API fallback refresh
 ```
+
+---
+
+## 🔊 Custom Sounds
+
+Put your own audio files into `config/skintotem/sounds` (the folder and a `README.txt` are created
+on first launch). Name the file after the sound you want to replace:
+
+| File name | Plays when |
+|-----------|------------|
+| `totem_activate` | the totem saves you |
+| `doll_summon` | a doll appears in your hand |
+| `skin_change` | a skin was loaded successfully |
+| `skin_error` | a skin could not be loaded |
+
+* `.ogg`, `.wav`, `.aiff` and `.au` are used as they are — no resampling, no volume changes.
+* Other formats (`.mp3`, `.m4a`, `.flac`, `.opus`, ...) are converted automatically if **ffmpeg** is
+  installed; the result is cached, so conversion happens only once per file.
+* Several files for one sound (`skin_change_1.ogg`, `skin_change_2.ogg` or a `skin_change/` folder)
+  become random variants.
+* Changes are applied on resource reload (F3+T) or with `/skintotem sounds reload`.
 
 ---
 
@@ -102,6 +134,8 @@ Place a Totem of Undying into an anvil and rename it using one of the formats be
 | Replace Totem Sound | ❌ | Play the mod's sound instead of the vanilla totem sound |
 | Mirror Emotes | ✅ | The doll in your hand repeats your Emotecraft emote |
 | Activation Emote | — | Name of the emote to play when the totem saves you (empty = off) |
+| Sounds From Folder | ✅ | Use your own files from `config/skintotem/sounds` |
+| Convert Any Format | ✅ | Convert formats Minecraft cannot read (mp3, flac, ...) with ffmpeg |
 
 ---
 
@@ -113,6 +147,23 @@ Place a Totem of Undying into an anvil and rename it using one of the formats be
 | ModMenu | ❌ | Adds a settings button to the mod list |
 | YetAnotherConfigLib (YACL) | ❌ | Alternative configuration GUI library |
 | [Emotecraft](https://modrinth.com/mod/emotecraft) | ❌ | Enables emote mirroring on the doll and the activation emote |
+
+---
+
+## 🌍 Languages
+
+| Language | Status |
+|----------|--------|
+| English (`en_us`) | ✅ complete |
+| Русский (`ru_ru`) | ✅ complete |
+| Українська (`uk_ua`) | ✅ complete |
+| 日本語 (`ja_jp`) | ✅ complete |
+| Polski (`pl_pl`) | ✅ complete |
+| Deutsch (`de_de`) | ✅ complete |
+| Татарча (`tt_ru`) | 🚧 in progress |
+
+New languages are added release by release. Pull requests with translations are welcome — copy
+`src/main/resources/assets/skintotem/lang/en_us.json` and translate the values.
 
 ---
 

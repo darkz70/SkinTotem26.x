@@ -37,6 +37,16 @@ public class SoundsCategory {
 								.withBinding(defConfig.isReplaceVanillaTotemSound(), config::isReplaceVanillaTotemSound, config::setReplaceVanillaTotemSound, true)
 								.withDescription(SimpleContent.NONE)
 								.withController()
+								.build(),
+						SimpleOption.<Boolean>startBuilder("custom_sounds_enabled")
+								.withBinding(defConfig.isCustomSoundsEnabled(), config::isCustomSoundsEnabled, config::setCustomSoundsEnabled, true)
+								.withDescription(SimpleContent.NONE)
+								.withController()
+								.build(),
+						SimpleOption.<Boolean>startBuilder("custom_sounds_auto_convert")
+								.withBinding(defConfig.isCustomSoundsAutoConvert(), config::isCustomSoundsAutoConvert, config::setCustomSoundsAutoConvert, true)
+								.withDescription(SimpleContent.NONE)
+								.withController()
 								.build()
 				)
 				.build();

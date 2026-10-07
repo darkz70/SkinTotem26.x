@@ -80,10 +80,10 @@
   "skintotem.modmenu.formatter.enabled_or_disabled.true": "Включено",
   "skintotem.modmenu.formatter.enabled_or_disabled.false": "Выключено",
   "skintotem.standard_model_selection_screen.title": "Меню выбора стандартной модели",
-  "skintotem.tags.tips.title": "&e&lПодсказки!",
-  "skintotem.tags.tips.text": " &e&l1.&r Зажмите &7[Shift]&r при наведении на тотем, чтобы увидеть его статус. Всегда включено в наковальне.\n\n &e&l2. &rИспользуйте команду &7/skintotem refresh [...]&r, чтобы обновить скины тотемов.",
   "skintotem.tags.info.title": "&lЧто это такое?",
   "skintotem.tags.info.text": "Это меню &eкукольных тегов&f.\nВ этом меню вы можете найти список &eкнопок&f.\nНажимая на эти кнопки, вы можете &eизменить&f внешний вид вашей куклы. К примеру: &eВыключить/отключить части модели&f, &eвыбрать особую модель&f, и так далее.",
+  "skintotem.tags.tips.title": "&e&lПодсказки!",
+  "skintotem.tags.tips.text": " &e&l1.&r Зажмите &7[Shift]&r при наведении на тотем, чтобы увидеть его статус. Всегда включено в наковальне.\n\n &e&l2. &rИспользуйте команду &7/skintotem refresh [...]&r, чтобы обновить скины тотемов.",
   "skintotem.tags.title": "&7Теги куклы:",
   "skintotem.tags.0": "Установить тонкие руки",
   "skintotem.tags.1": "Установить широкие руки",
@@ -153,5 +153,13 @@
   "subtitles.skintotem.totem_activate": "Кукла тотема вспыхивает",
   "subtitles.skintotem.doll_summon": "Появляется кукла тотема",
   "subtitles.skintotem.skin_change": "Скин тотема обновлён",
-  "subtitles.skintotem.skin_error": "Не удалось загрузить скин"
+  "subtitles.skintotem.skin_error": "Не удалось загрузить скин",
+  "skintotem.modmenu.option.custom_sounds_enabled.name": "Звуки из папки",
+  "skintotem.modmenu.option.custom_sounds_enabled.description": "Использовать свои файлы из config/skintotem/sounds вместо встроенных звуков.",
+  "skintotem.modmenu.option.custom_sounds_auto_convert.name": "Конвертировать любой формат",
+  "skintotem.modmenu.option.custom_sounds_auto_convert.description": "Автоматически конвертировать форматы, которые Minecraft не читает (mp3, m4a, flac, ...), через ffmpeg, если он установлен.",
+  "skintotem.command.sounds.reloading": "&6Перечитываю звуки из папки...",
+  "skintotem.command.sounds.folder": "&7Папка звуков: %s",
+  "skintotem.command.sounds.empty": "Файлов не найдено — играют встроенные звуки.",
+  "skintotem.command.sounds.loaded": "&aЗагружено файлов: &f%s"
 }

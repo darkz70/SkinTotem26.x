@@ -2,6 +2,7 @@ package com.darkz.skintotem.client.command;
 
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import com.darkz.skintotem.client.command.refresh.RefreshCommand;
+import com.darkz.skintotem.client.command.sounds.SoundsCommand;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommands.literal;
 
 public class SkinTotemCommandManager {
@@ -15,6 +16,7 @@ public class SkinTotemCommandManager {
                     .then(SkinTotemCommand.getTlCommand())
                     .then(SkinTotemCommand.getElyCommand())
                     .then(SkinTotemCommand.getUrlCommand())
+                    .then(SoundsCommand.getInstance())
                     .executes(SkinTotemCommand.getHelpExecutor())
             );
         });

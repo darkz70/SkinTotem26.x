@@ -29,6 +29,8 @@ public class SkinTotemConfig {
     public boolean isSoundsEnabled() { return soundsEnabled; }
     public boolean isReplaceVanillaTotemSound() { return replaceVanillaTotemSound; }
     public boolean isEmoteMirroringEnabled() { return emoteMirroringEnabled; }
+    public boolean isCustomSoundsEnabled() { return customSoundsEnabled; }
+    public boolean isCustomSoundsAutoConvert() { return customSoundsAutoConvert; }
 
     private static class DataGroup1 {
         boolean modEnabled;
@@ -110,13 +112,17 @@ public class SkinTotemConfig {
         boolean replaceVanillaTotemSound;
         boolean emoteMirroringEnabled;
         String activationEmote;
+        boolean customSoundsEnabled;
+        boolean customSoundsAutoConvert;
 
-        DataGroup3(boolean soundsEnabled, float soundsVolume, boolean replaceVanillaTotemSound, boolean emoteMirroringEnabled, String activationEmote) {
+        DataGroup3(boolean soundsEnabled, float soundsVolume, boolean replaceVanillaTotemSound, boolean emoteMirroringEnabled, String activationEmote, boolean customSoundsEnabled, boolean customSoundsAutoConvert) {
             this.soundsEnabled = soundsEnabled;
             this.soundsVolume = soundsVolume;
             this.replaceVanillaTotemSound = replaceVanillaTotemSound;
             this.emoteMirroringEnabled = emoteMirroringEnabled;
             this.activationEmote = activationEmote;
+            this.customSoundsEnabled = customSoundsEnabled;
+            this.customSoundsAutoConvert = customSoundsAutoConvert;
         }
 
         static final MapCodec<DataGroup3> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
@@ -124,18 +130,20 @@ public class SkinTotemConfig {
                 option("sounds_volume", 1.0F, Codec.FLOAT, d -> d.soundsVolume),
                 option("replace_vanilla_totem_sound", false, Codec.BOOL, d -> d.replaceVanillaTotemSound),
                 option("emote_mirroring_enabled", true, Codec.BOOL, d -> d.emoteMirroringEnabled),
-                option("activation_emote", "", Codec.STRING, d -> d.activationEmote)
+                option("activation_emote", "", Codec.STRING, d -> d.activationEmote),
+                option("custom_sounds_enabled", true, Codec.BOOL, d -> d.customSoundsEnabled),
+                option("custom_sounds_auto_convert", true, Codec.BOOL, d -> d.customSoundsAutoConvert)
         ).apply(instance, DataGroup3::new));
     }
 
     public static final Codec<SkinTotemConfig> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             DataGroup1.CODEC.forGetter(c -> new DataGroup1(c.modEnabled, c.debugLogEnabled, c.renderingConfig, c.standardSkinTotemSkinValue, c.standardSkinTotemSkinType, c.selectedStandardSkinTotemModelValue, c.standardSkinTotemModelValue, c.standardSkinTotemArmsType, c.tagButtonPos)),
             DataGroup2.CODEC.forGetter(c -> new DataGroup2(c.useVanillaTotemModel, c.betterTagMenuTooltipSize, c.tagMenuTooltipModelScale, c.parallelTasksCount, c.firstRun, c.firstRunTemp, c.supportOtherModsTotems, c.autoRefreshEnabled, c.autoRefreshIntervalMinutes)),
-            DataGroup3.CODEC.forGetter(c -> new DataGroup3(c.soundsEnabled, c.soundsVolume, c.replaceVanillaTotemSound, c.emoteMirroringEnabled, c.activationEmote))
+            DataGroup3.CODEC.forGetter(c -> new DataGroup3(c.soundsEnabled, c.soundsVolume, c.replaceVanillaTotemSound, c.emoteMirroringEnabled, c.activationEmote, c.customSoundsEnabled, c.customSoundsAutoConvert))
     ).apply(instance, (dg1, dg2, dg3) -> new SkinTotemConfig(
             dg1.modEnabled, dg1.debugLogEnabled, dg1.renderingConfig, dg1.standardSkinTotemSkinValue, dg1.standardSkinTotemSkinType, dg1.selectedStandardSkinTotemModelValue, dg1.standardSkinTotemModelValue, dg1.standardSkinTotemArmsType, dg1.tagButtonPos,
             dg2.useVanillaTotemModel, dg2.betterTagMenuTooltipSize, dg2.tagMenuTooltipModelScale, dg2.parallelTasksCount, dg2.firstRun, dg2.firstRunTemp, dg2.supportOtherModsTotems, dg2.autoRefreshEnabled, dg2.autoRefreshIntervalMinutes,
-            dg3.soundsEnabled, dg3.soundsVolume, dg3.replaceVanillaTotemSound, dg3.emoteMirroringEnabled, dg3.activationEmote
+            dg3.soundsEnabled, dg3.soundsVolume, dg3.replaceVanillaTotemSound, dg3.emoteMirroringEnabled, dg3.activationEmote, dg3.customSoundsEnabled, dg3.customSoundsAutoConvert
     )));
 
 	private static final File CONFIG_FILE = FabricLoader.getInstance().getConfigDir().resolve(SkinTotem.MOD_ID + ".json5").toFile();
@@ -165,6 +173,8 @@ public class SkinTotemConfig {
 	private boolean replaceVanillaTotemSound;
 	private boolean emoteMirroringEnabled;
 	private String activationEmote;
+	private boolean customSoundsEnabled;
+	private boolean customSoundsAutoConvert;
 
 	public Identifier getSelectedStandardSkinTotemModelValue() {
 		return this.selectedStandardSkinTotemModelValue == SkinTotemModel.NONE ? this.selectedStandardSkinTotemModelValue = this.standardSkinTotemModelValue : this.selectedStandardSkinTotemModelValue;

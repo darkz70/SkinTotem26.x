@@ -153,5 +153,13 @@
   "subtitles.skintotem.totem_activate": "Totem doll flares up",
   "subtitles.skintotem.doll_summon": "Totem doll appears",
   "subtitles.skintotem.skin_change": "Totem skin updated",
-  "subtitles.skintotem.skin_error": "Totem skin failed to load"
+  "subtitles.skintotem.skin_error": "Totem skin failed to load",
+  "skintotem.modmenu.option.custom_sounds_enabled.name": "Sounds From Folder",
+  "skintotem.modmenu.option.custom_sounds_enabled.description": "Use your own files from config/skintotem/sounds instead of the built-in sounds.",
+  "skintotem.modmenu.option.custom_sounds_auto_convert.name": "Convert Any Format",
+  "skintotem.modmenu.option.custom_sounds_auto_convert.description": "Automatically convert formats Minecraft cannot read (mp3, m4a, flac, ...) with ffmpeg, if it is installed.",
+  "skintotem.command.sounds.reloading": "&6Reloading sounds from the folder...",
+  "skintotem.command.sounds.folder": "&7Sound folder: %s",
+  "skintotem.command.sounds.empty": "No sound files found — built-in sounds are used.",
+  "skintotem.command.sounds.loaded": "&aLoaded files: &f%s"
 }

@@ -12,6 +12,7 @@ import com.darkz.skintotem.doll.renderer.special.SkinTotemGuiElementRenderer;
 import com.darkz.skintotem.pack.SkinTotemReloadListener;
 import com.darkz.skintotem.tag.manager.*;
 import com.darkz.skintotem.refresh.SkinAutoRefresher;
+import com.darkz.skintotem.sound.custom.CustomSoundPack;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.*;
 import org.jetbrains.annotations.Nullable;
@@ -41,6 +42,7 @@ public class SkinTotemClient implements ClientModInitializer {
 		SkinTotemReloadListener.register();
 		KnownPlayerUUIDsConfigManager.start();
 		SkinAutoRefresher.start();
+		CustomSoundPack.init();
 		PictureInPictureRendererRegistry.register(context -> new ItemGuiElementRenderer());
 		PictureInPictureRendererRegistry.register(context -> new SkinTotemGuiElementRenderer());
 	}
