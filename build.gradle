@@ -26,6 +26,16 @@ repositories {
 		name = "Mixin Squared"
 		url = "https://maven.bawnorton.com/releases"
 	}
+	// Emotecraft API
+	maven {
+		name = "KosmX"
+		url = "https://maven.kosmx.dev/"
+	}
+	// Player Animation Library (транзитивная зависимость Emotecraft)
+	maven {
+		name = "Redlance"
+		url = "https://repo.redlance.org/public"
+	}
 }
 
 dependencies {
@@ -35,6 +45,13 @@ dependencies {
 	// Lombok (explicit fallback in case mossyDependencies' automatic wiring doesn't apply)
 	compileOnly "org.projectlombok:lombok:${prop("base.lombok_version")}"
 	annotationProcessor "org.projectlombok:lombok:${prop("base.lombok_version")}"
+
+	// Emotecraft: только для компиляции — мод полностью опционален в рантайме.
+	// emotesAPI транзитивно тянет PlayerAnimationLibCore, MC-часть библиотеки нужна отдельно.
+	compileOnly("io.github.kosmx.emotes:emotesAPI:${prop("dep.emotecraft_api")}") {
+		exclude group: "com.plasmoverse"
+	}
+	compileOnly "com.zigythebird.playeranim:PlayerAnimationLibCommon:${prop("dep.player_anim_lib")}"
 
 	// CIT Resewn
 	def cit = prop("dep.cit-resewn")

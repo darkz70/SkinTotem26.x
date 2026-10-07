@@ -9,6 +9,7 @@ import com.darkz.skintotem.client.SkinTotemClient;
 import com.darkz.skintotem.doll.data.*;
 import com.darkz.skintotem.doll.model.SkinTotemModel;
 import com.darkz.skintotem.doll.renderer.*;
+import com.darkz.skintotem.sound.SkinTotemSounds;
 import com.darkz.skintotem.extension.MatrixStackEntryExtension;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.*;
@@ -66,6 +67,10 @@ public class SkinTotemRenderRequestsCollector {
 		SkinTotemModel modelToRender = data.getModelToRender();
 		modelToRender.resetPartsVisibility();
 		data.getRenderProperties().applyToModel(modelToRender);
+
+		if (request.context().isHand()) {
+			SkinTotemSounds.onDollRendered(data.getNickname(), request.holdingPlayer());
+		}
 
 		// Обводка (свечение) снова работает: outlineColor уходит вторым проходом в outline-слой атласа.
 		SkinTotemRenderer.renderDoll(this.matrices, data, request.holdingPlayer(), request.context(), mainProvider, request.light(), request.overlay(), request.outlineColor());

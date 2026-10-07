@@ -11,6 +11,7 @@ import com.darkz.skintotem.api.MojangAPI;
 import com.darkz.skintotem.client.SkinTotemClient;
 import com.darkz.skintotem.client.command.builder.CommandTextBuilder;
 import com.darkz.skintotem.doll.manager.SkinTotemManager;
+import com.darkz.skintotem.sound.SkinTotemSounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.network.chat.Component;
@@ -46,11 +47,15 @@ public class RefreshCommand {
 
 		RELOADING_ALL_FUTURE = SkinTotemManager.reloadData((seconds) -> {
 			Component endFeedback = CommandTextBuilder.startBuilder("command.refresh.all.end", seconds).build();
-			Minecraft.getInstance().execute(() -> context.getSource().sendFeedback(endFeedback));
+			Minecraft.getInstance().execute(() -> {
+				context.getSource().sendFeedback(endFeedback);
+				SkinTotemSounds.onSkinChanged();
+			});
 		}).whenComplete((r, e) -> {
 			RELOADING_ALL_FUTURE = null;
 			if (e != null) {
 				SkinTotemClient.LOGGER.error("Failed to refresh all doll data: ", e);
+				Minecraft.getInstance().execute(SkinTotemSounds::onSkinError);
 			}
 		});
 
@@ -72,7 +77,10 @@ public class RefreshCommand {
 
 		CompletableFuture<Float> f = SkinTotemManager.reloadData(nickname, (seconds) -> {
 			Component endFeedback = CommandTextBuilder.startBuilder("command.refresh.player.end", nickname, seconds).build();
-			Minecraft.getInstance().execute(() -> context.getSource().sendFeedback(endFeedback));
+			Minecraft.getInstance().execute(() -> {
+				context.getSource().sendFeedback(endFeedback);
+				SkinTotemSounds.onSkinChanged();
+			});
 		});
 
 		if (f != null) {
@@ -80,6 +88,7 @@ public class RefreshCommand {
 				RELOADING_FUTURES.remove(nickname);
 				if (e != null) {
 					SkinTotemClient.LOGGER.error("Failed to refresh doll data for \"{}\": ", nickname, e);
+					Minecraft.getInstance().execute(SkinTotemSounds::onSkinError);
 				}
 			});
 			RELOADING_FUTURES.put(nickname, fc);

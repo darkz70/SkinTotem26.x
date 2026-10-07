@@ -6,6 +6,7 @@ import lombok.experimental.ExtensionMethod;
 import com.darkz.skintotem.SkinTotem;
 import com.darkz.skintotem.atlas.AtlasSprite;
 import com.darkz.skintotem.client.SkinTotemClient;
+import com.darkz.skintotem.compat.EmoteSupport;
 import com.darkz.skintotem.config.SkinTotemConfig;
 import com.darkz.skintotem.config.rendering.*;
 import com.darkz.skintotem.config.totem.SkinTotemSkinType;
@@ -238,6 +239,11 @@ public class SkinTotemRenderer {
 		if (StandardSkinTotemManager.getStandardDoll().equals(skinTotemData)) {
 			SkinTotemRenderer.prepareStandardDollForRendering(playerEntity, skinTotemData);
 		}
+
+		// Кукла повторяет эмоцию игрока (Emotecraft), пока тотем в руке
+		if (context != null && context.isHand()) {
+			EmoteSupport.applyEmotePose(playerEntity, skinTotemData.getModelToRender());
+		}
 	}
 
 	private static void prepareStandardDollForRendering(AbstractClientPlayer playerEntity, SkinTotemData skinTotemData) {
@@ -250,6 +256,8 @@ public class SkinTotemRenderer {
 	}
 
 	private static void afterDollRenderer() {
+		EmoteSupport.restorePose();
+
 		ProfilerFiller profiler = ProfilerUtils.getProfiler();
 		profiler.pop();
 	}
