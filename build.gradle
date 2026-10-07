@@ -48,10 +48,10 @@ dependencies {
 
 	// Emotecraft: только для компиляции — мод полностью опционален в рантайме.
 	// emotesAPI транзитивно тянет PlayerAnimationLibCore, MC-часть библиотеки нужна отдельно.
-	compileOnly("io.github.kosmx.emotes:emotesAPI:${prop("dep.emotecraft_api")}") {
+	compileOnly("io.github.kosmx.emotes:emotesAPI:${prop("compat.emotecraft_api")}") {
 		exclude group: "com.plasmoverse"
 	}
-	compileOnly "com.zigythebird.playeranim:PlayerAnimationLibCommon:${prop("dep.player_anim_lib")}"
+	compileOnly "com.zigythebird.playeranim:PlayerAnimationLibCommon:${prop("compat.player_anim_lib")}"
 
 	// CIT Resewn
 	def cit = prop("dep.cit-resewn")
