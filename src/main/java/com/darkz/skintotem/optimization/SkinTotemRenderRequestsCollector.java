@@ -67,12 +67,8 @@ public class SkinTotemRenderRequestsCollector {
 		modelToRender.resetPartsVisibility();
 		data.getRenderProperties().applyToModel(modelToRender);
 
-		SkinTotemRenderer.renderDoll(this.matrices, data, request.holdingPlayer(), request.context(), mainProvider, request.light(), request.overlay());
-
-		// NOTE: outline/glowing rendering was temporarily removed during 26.2 migration.
-		// OutlineBufferSource no longer exists in RenderBuffers; the new submit-based API
-		// likely exposes outlineColor directly on submit*() calls instead of a second pass.
-		// TODO: re-implement glow effect once the correct 26.2 outline mechanism is confirmed.
+		// Обводка (свечение) снова работает: outlineColor уходит вторым проходом в outline-слой атласа.
+		SkinTotemRenderer.renderDoll(this.matrices, data, request.holdingPlayer(), request.context(), mainProvider, request.light(), request.overlay(), request.outlineColor());
 
 		data.getRenderProperties().copyFrom(this.tempProperties);
 

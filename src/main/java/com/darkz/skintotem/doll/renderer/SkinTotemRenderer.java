@@ -50,6 +50,10 @@ public class SkinTotemRenderer {
 	}
 
 	public static void renderDoll(PoseStack matrices, SkinTotemData skinTotemData, AbstractClientPlayer holdingPlayer, DollRenderContext context, SubmitNodeCollector vertexConsumers, int light, int overlay) {
+		renderDoll(matrices, skinTotemData, holdingPlayer, context, vertexConsumers, light, overlay, 0);
+	}
+
+	public static void renderDoll(PoseStack matrices, SkinTotemData skinTotemData, AbstractClientPlayer holdingPlayer, DollRenderContext context, SubmitNodeCollector vertexConsumers, int light, int overlay, int outlineColor) {
 		DollRenderContext renderContext = context == DollRenderContext.D_NONE ? DollRenderContext.D_GUI : context;
 		beforeDollRendered(renderContext, holdingPlayer, skinTotemData);
 		matrices.pushPose();
@@ -63,7 +67,7 @@ public class SkinTotemRenderer {
 			     D_FIRST_PERSON_RIGHT_HAND -> SkinTotemRenderer.renderInHand(renderContext.isLeftHanded(), true, matrices, vertexConsumers, light, overlay, skinTotemData);
 			case D_THIRD_PERSON_LEFT_HAND,
 			     D_THIRD_PERSON_RIGHT_HAND -> SkinTotemRenderer.renderInHand(renderContext.isLeftHanded(), false, matrices, vertexConsumers, light, overlay, skinTotemData);
-			default -> SkinTotemRenderer.render(matrices, vertexConsumers, light, overlay, skinTotemData);
+			default -> SkinTotemRenderer.render(matrices, vertexConsumers, light, overlay, skinTotemData, outlineColor);
 		}
 
 		afterDollRenderer();
@@ -140,6 +144,10 @@ public class SkinTotemRenderer {
 	}
 
 	public static void render(PoseStack matrices, SubmitNodeCollector provider, int light, int overlay, SkinTotemData skinTotemData) {
+		render(matrices, provider, light, overlay, skinTotemData, 0);
+	}
+
+	public static void render(PoseStack matrices, SubmitNodeCollector provider, int light, int overlay, SkinTotemData skinTotemData, int outlineColor) {
 		SkinTotemSprites textures = skinTotemData.getSpritesToRender();
 		AtlasSprite skinSprite = textures.getSkinSprite();
 		AtlasSprite capeSprite = textures.getCapeSprite();
@@ -174,7 +182,7 @@ public class SkinTotemRenderer {
 		}
 
 		applyHeadLookAtCursor(skinTotemData, model);
-		drawer.draw(matrices, provider, skinSprite, light, overlay, -1);
+		drawer.draw(matrices, provider, skinSprite, light, overlay, -1, outlineColor);
 		restoreHeadRotation(skinTotemData, model);
 
 		matrices.popPose();
