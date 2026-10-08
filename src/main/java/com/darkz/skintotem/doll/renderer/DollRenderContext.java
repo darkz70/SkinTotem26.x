@@ -79,4 +79,12 @@ public enum DollRenderContext {
 	public boolean isLeftHanded() {
 		return this == D_FIRST_PERSON_LEFT_HAND || this == D_THIRD_PERSON_LEFT_HAND;
 	}
+
+	/** Кукла рисуется в руке игрока (а не в GUI, на земле и т.п.). */
+	public boolean isHand() {
+		return this == D_FIRST_PERSON_LEFT_HAND
+				|| this == D_FIRST_PERSON_RIGHT_HAND
+				|| this == D_THIRD_PERSON_LEFT_HAND
+				|| this == D_THIRD_PERSON_RIGHT_HAND;
+	}
 }

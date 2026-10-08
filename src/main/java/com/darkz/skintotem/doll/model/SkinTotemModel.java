@@ -175,6 +175,10 @@ public class SkinTotemModel extends Model<Object> {
 		}
 
 		public void draw(PoseStack matrices, SubmitNodeCollector collector, AtlasSprite mainTexture, int light, int overlay, int color) {
+			this.draw(matrices, collector, mainTexture, light, overlay, color, 0);
+		}
+
+		public void draw(PoseStack matrices, SubmitNodeCollector collector, AtlasSprite mainTexture, int light, int overlay, int color, int outlineColor) {
 			LockableAtlasTexture atlasTexture = SkinTotemAtlasManager.getNullableAtlasTexture();
 			if (atlasTexture == null) {
 				SkinTotemClient.LOGGER.error("Game tried to render doll model, but atlas not initialized yet!");
@@ -194,6 +198,10 @@ public class SkinTotemModel extends Model<Object> {
 				atlasTexture.setLocked(true);
 			}
 			this.model.getMain().draw(matrices, collector, atlasTexture.getAtlas(), renderLayer, mainTexture, this.sprites, light, overlay, color);
+			if (outlineColor != 0) {
+				// Обводка (эффект свечения) — отдельный проход тем же мешем в outline-слой.
+				this.model.getMain().draw(matrices, collector, atlasTexture.getAtlas(), SkinTotemAtlasManager.getOutlineRenderLayer(), mainTexture, this.sprites, light, overlay, outlineColor);
+			}
 			if (!wasLocked) {
 				atlasTexture.setLocked(false);
 			}

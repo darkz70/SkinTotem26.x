@@ -5,7 +5,6 @@ import com.darkz.skintotem.doll.renderer.SkinTotemRenderer;
 import com.darkz.skintotem.doll.renderer.special.SkinTotemRenderState;
 import com.darkz.skintotem.utils.mixin.ItemRenderStateWithStack;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.GuiGraphicsExtractor.ScissorStack;
 import net.minecraft.client.renderer.item.*;
 import net.minecraft.client.renderer.state.gui.GuiRenderState;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,10 +23,6 @@ public class GuiGraphicsMixin {
 	@Shadow
 	@Final
 	public GuiRenderState guiRenderState;
-
-	@Shadow
-	@Final
-	public ScissorStack scissorStack;
 
 	@Shadow
 	@Final
@@ -53,7 +48,9 @@ public class GuiGraphicsMixin {
 		if (!SkinTotemRenderer.canRender(stack)) {
 			return false;
 		}
-		this.guiRenderState.addPicturesInPictureState(SkinTotemRenderState.getGui(stack, x, y, new Matrix3x2f(this.pose), this.scissorStack.peek()));
+		// Тип GuiGraphicsExtractor.ScissorStack приватный (на NeoForge его нельзя называть в коде),
+		// поэтому обращаемся к полю через каст, не упоминая сам тип.
+		this.guiRenderState.addPicturesInPictureState(SkinTotemRenderState.getGui(stack, x, y, new Matrix3x2f(this.pose), ((GuiGraphicsExtractor) (Object) this).scissorStack.peek()));
 		ci.cancel();
 		return true;
 	}

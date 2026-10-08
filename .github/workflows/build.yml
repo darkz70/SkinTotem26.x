@@ -1,13 +1,23 @@
-name: Build Fabric 
+name: Build
 
 on:
   workflow_dispatch:
   push:
-    branches: [main, 26.1, neoforge]
+    branches: [main, 26.3, neoforge]
+  pull_request:
+    branches: [main, 26.3, neoforge]
+
+concurrency:
+  group: build-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   debug_build:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [fabric, neoforge]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -18,11 +28,55 @@ jobs:
           java-version: '25'
           distribution: 'microsoft'
 
+      - name: Restore Gradle caches
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/.gradle/caches/modules-2
+            ~/.gradle/caches/jars-9
+            ~/.gradle/wrapper
+          key: gradle2-${{ matrix.platform }}-${{ hashFiles('gradle.properties', 'versions/*/gradle.properties', 'settings.gradle', 'build.gradle') }}
+          restore-keys: |
+            gradle2-${{ matrix.platform }}-
+
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
-      - name: Build with Gradle
-        run: ./gradlew buildAndCollect+All || ./gradlew buildAndCollect || ./gradlew build
+      - name: Build ${{ matrix.platform }}
+        run: |
+          set -o pipefail
+          GRADLE_ARGS="-Dorg.gradle.internal.http.connectionTimeout=180000 -Dorg.gradle.internal.http.socketTimeout=180000"
+          for attempt in 1 2 3; do
+            echo "::group::Build attempt $attempt"
+            # Loom иногда не может пересоздать свой кэш ("Incompatible Gradle cache") и роняет
+            # конфигурацию проекта, а вместе с ней — регистрацию задач moddevgradle. Кэшей у него три:
+            # в домашней папке Gradle, в .gradle проекта (переживает попытки внутри джоба) и в build/.
+            ./gradlew --stop >/dev/null 2>&1 || true
+            rm -rf ~/.gradle/caches/fabric-loom ~/.gradle/caches/*/fabric-loom \
+                   .gradle/loom-cache build/loom-cache versions/*/build/loom-cache 2>/dev/null || true
+            if ./gradlew "buildAndCollect+${{ matrix.platform }}+All" -Pci_loader=${{ matrix.platform }} $GRADLE_ARGS 2>&1 | tee /tmp/build.log; then
+              echo "::endgroup::"
+              exit 0
+            fi
+            echo "::endgroup::"
+            if grep -qE "Incompatible Gradle cache|createMinecraftArtifacts' not found" /tmp/build.log; then
+              # Mossy тянет Fabric Loom как 1.17-SNAPSHOT: в кэше Gradle может осесть состояние от
+              # другой сборки снапшота, и тогда loom не поднимает Minecraft (NPE в DependenciesManager).
+              # Вычищаем ВЕСЬ кэш Gradle, чтобы следующая попытка стартовала как на чистой машине.
+              echo "Loom cache flake detected, wiping the whole Gradle cache and retrying..."
+              ./gradlew --stop >/dev/null 2>&1 || true
+              rm -rf ~/.gradle/caches ~/.gradle/daemon .gradle versions/*/.gradle 2>/dev/null || true
+              sleep 5
+              continue
+            fi
+            # Повторяем только сетевые сбои сторонних maven-зеркал, ошибки кода повторять бессмысленно.
+            if ! grep -qE "kikugie\.dev|failed to respond|Could not (GET|HEAD)|Connection (timed out|reset)" /tmp/build.log; then
+              exit 1
+            fi
+            echo "Network failure detected, retrying in 120s..."
+            sleep 120
+          done
+          exit 1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_ACTOR: ${{ github.actor }}
@@ -30,13 +84,28 @@ jobs:
           ORG_GRADLE_PROJECT_gpr.user: ${{ github.actor }}
           ORG_GRADLE_PROJECT_gpr.key: ${{ secrets.GPR_KEY }}
 
-      - name: List all files (Debug)
-        run: |
-          echo "Listing all .jar files in the project:"
-          find . -name "*.jar"
+      - name: Save Gradle caches
+        if: success()
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.gradle/caches/modules-2
+            ~/.gradle/caches/jars-9
+            ~/.gradle/wrapper
+          key: gradle2-${{ matrix.platform }}-${{ hashFiles('gradle.properties', 'versions/*/gradle.properties', 'settings.gradle', 'build.gradle') }}-${{ github.run_id }}
 
-      - name: Capture ALL .jar files
+      - name: Collect the mod jar
+        run: |
+          mkdir -p dist
+          find versions/*/build/libs -name "SkinTotem-*.jar" ! -name "*-sources.jar" -exec cp {} dist/ \;
+          echo "Собранные моды / built mod jars:"
+          ls -l dist
+
+      # В артефакт кладётся только сам мод: minecraft-patched-*.jar, jlayer-*.jar и прочее,
+      # что лежит в дереве сборки, модами не являются и в mods/ не ставятся.
+      - name: Upload the mod jar
         uses: actions/upload-artifact@v4
         with:
-          name: All-Jars-Found
-          path: "**/*.jar"
+          name: SkinTotem-${{ matrix.platform }}
+          path: dist/*.jar
+          if-no-files-found: error

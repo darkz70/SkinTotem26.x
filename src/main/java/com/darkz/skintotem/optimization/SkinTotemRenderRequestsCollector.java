@@ -9,6 +9,7 @@ import com.darkz.skintotem.client.SkinTotemClient;
 import com.darkz.skintotem.doll.data.*;
 import com.darkz.skintotem.doll.model.SkinTotemModel;
 import com.darkz.skintotem.doll.renderer.*;
+import com.darkz.skintotem.sound.SkinTotemSounds;
 import com.darkz.skintotem.extension.MatrixStackEntryExtension;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.*;
@@ -67,12 +68,12 @@ public class SkinTotemRenderRequestsCollector {
 		modelToRender.resetPartsVisibility();
 		data.getRenderProperties().applyToModel(modelToRender);
 
-		SkinTotemRenderer.renderDoll(this.matrices, data, request.holdingPlayer(), request.context(), mainProvider, request.light(), request.overlay());
+		if (request.context().isHand()) {
+			SkinTotemSounds.onDollRendered(data.getNickname(), request.holdingPlayer());
+		}
 
-		// NOTE: outline/glowing rendering was temporarily removed during 26.2 migration.
-		// OutlineBufferSource no longer exists in RenderBuffers; the new submit-based API
-		// likely exposes outlineColor directly on submit*() calls instead of a second pass.
-		// TODO: re-implement glow effect once the correct 26.2 outline mechanism is confirmed.
+		// Обводка (свечение) снова работает: outlineColor уходит вторым проходом в outline-слой атласа.
+		SkinTotemRenderer.renderDoll(this.matrices, data, request.holdingPlayer(), request.context(), mainProvider, request.light(), request.overlay(), request.outlineColor());
 
 		data.getRenderProperties().copyFrom(this.tempProperties);
 

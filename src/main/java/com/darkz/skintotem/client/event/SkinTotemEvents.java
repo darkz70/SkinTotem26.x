@@ -1,8 +1,6 @@
 package com.darkz.skintotem.client.event;
 
 import java.util.List;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
-import net.fabricmc.fabric.api.client.rendering.v1.ClientTooltipComponentCallback;
 import com.darkz.skintotem.SkinTotem;
 import com.darkz.skintotem.atlas.manager.*;
 import com.darkz.skintotem.doll.data.*;
@@ -12,18 +10,23 @@ import com.darkz.skintotem.gui.tooltip.preview.*;
 import com.darkz.skintotem.gui.tooltip.state.LoadingStateTooltipData;
 import com.darkz.skintotem.gui.tooltip.tags.*;
 import com.darkz.skintotem.gui.tooltip.wrapped.*;
+import com.darkz.skintotem.loader.SkinTotemLoader;
 import com.darkz.skintotem.thread.SkinTotemTaskExecutor;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import net.minecraft.world.inventory.tooltip.TooltipComponent;
+import org.jetbrains.annotations.Nullable;
 
 public class SkinTotemEvents {
 
 	public static void register() {
-		registerTooltipCallbacks();
-		registerLifecycleEvents();
+		SkinTotemLoader.registerTooltipComponents();
+		SkinTotemLoader.registerClientStopping(SkinTotemEvents::onClientStopping);
 	}
 
-	private static void registerTooltipCallbacks() {
-		ClientTooltipComponentCallback.EVENT.register((data) -> {
+	/** Единая для Fabric и NeoForge фабрика компонентов подсказок. */
+	@Nullable
+	public static ClientTooltipComponent createTooltipComponent(TooltipComponent data) {
+		{
 			if (data instanceof TagsTooltipData tooltipData) {
 				return new TagsTooltipComponent(tooltipData.tags());
 			}
@@ -43,14 +46,12 @@ public class SkinTotemEvents {
 				return new WrappedTextTooltipComponent(tooltipData.text());
 			}
 			return null;
-		});
+		}
 	}
 
-	private static void registerLifecycleEvents() {
-		ClientLifecycleEvents.CLIENT_STOPPING.register((client) -> {
-			SkinTotemTaskExecutor.stop();
-			SkinTotemAtlasManager.close();
-			SkinTotemAtlasSpriteManager.close();
-		});
+	private static void onClientStopping() {
+		SkinTotemTaskExecutor.stop();
+		SkinTotemAtlasManager.close();
+		SkinTotemAtlasSpriteManager.close();
 	}
 }

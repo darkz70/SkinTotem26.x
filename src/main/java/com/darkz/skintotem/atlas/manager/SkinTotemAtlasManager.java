@@ -20,6 +20,8 @@ public class SkinTotemAtlasManager {
 
 	public static final Identifier ATLAS_ID = SkinTotem.id("main_atlas.png");
 	public static final RenderType ATLAS_RENDER_LAYER = RenderTypes.entityTranslucent(ATLAS_ID);
+	/** Слой обводки: submitCustomGeometry() сам направляет такой RenderType в outline-фазу. */
+	public static final RenderType ATLAS_OUTLINE_RENDER_LAYER = RenderTypes.outline(ATLAS_ID);
 	private static final StitchHooksManager STITCH_HOOKS_MANAGER = new StitchHooksManager();
 	private static final AtomicInteger LATEST_ATLAS_VERSION = new AtomicInteger();
 	@Nullable
@@ -32,6 +34,10 @@ public class SkinTotemAtlasManager {
 
 	public static RenderType getRenderLayer() {
 		return ATLAS_RENDER_LAYER;
+	}
+
+	public static RenderType getOutlineRenderLayer() {
+		return ATLAS_OUTLINE_RENDER_LAYER;
 	}
 
 	public static LockableAtlasTexture getNullableAtlasTexture() {

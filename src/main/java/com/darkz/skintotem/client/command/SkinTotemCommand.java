@@ -1,63 +1,70 @@
 package com.darkz.skintotem.client.command;
 
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.darkz.skintotem.SkinTotem;
+import com.darkz.skintotem.loader.SkinTotemLoader;
 import com.mojang.brigadier.arguments.StringArgumentType;
-import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import net.minecraft.network.chat.Component;
-
-import static net.fabricmc.fabric.api.client.command.v2.ClientCommands.literal;
-import static net.fabricmc.fabric.api.client.command.v2.ClientCommands.argument;
 
 public class SkinTotemCommand {
 
     private static final String P = "§6[SkinTotem]§r ";
 
-    public static LiteralArgumentBuilder<FabricClientCommandSource> getInfoCommand() {
-        return literal("info").executes(ctx -> {
-            ctx.getSource().sendFeedback(Component.literal(
-                P + "§bv1.0.0 §8| §bAuthor: §fDarkz §8| §fLopyMine §8| KlashRaick §8| §fK-TEAM"
+    /** Версия берётся из метаданных мода, чтобы не расходиться с gradle.properties. */
+    private static final String VERSION = getModVersion();
+
+    private static final String SOURCE_URL = "https://github.com/darkz70/SkinTotem26.x";
+
+    private static String getModVersion() {
+        String version = SkinTotemLoader.getModVersion(SkinTotem.MOD_ID);
+        return version != null ? version : "unknown";
+    }
+
+    public static <S> LiteralArgumentBuilder<S> getInfoCommand() {
+        return LiteralArgumentBuilder.<S>literal("info").executes(ctx -> {
+            CommandFeedback.send(Component.literal(
+                P + "§bv" + VERSION + " §8| §bAuthor: §fDarkz"
             ));
             return 1;
         });
     }
 
-    public static LiteralArgumentBuilder<FabricClientCommandSource> getCreditsCommand() {
-        return literal("credits").executes(ctx -> {
-            ctx.getSource().sendFeedback(Component.literal(
-                "\n§6╔══════════════════════════════════════════════════╗\n" +
-                "§6║  §bSkinTotem §fv1.0.0                                     §6║\n" +
-                "§6║  §7Author:       §fDarkz      §fKlashRaisk   §fLopyMine    §6║\n" +
-                "§6║  §7Team:         §fK-TEAM                                 §6║\n" +
-                "§6╚════════════════════════════════════════════════════╝\n"
+    public static <S> LiteralArgumentBuilder<S> getCreditsCommand() {
+        return LiteralArgumentBuilder.<S>literal("credits").executes(ctx -> {
+            CommandFeedback.send(Component.literal(
+                "\n§6§lSkinTotem §fv" + VERSION + "\n" +
+                "§7Author: §fDarkz\n" +
+                "§7Source: §f" + SOURCE_URL + "\n"
             ));
             return 1;
         });
     }
 
-    public static LiteralArgumentBuilder<FabricClientCommandSource> getTlCommand() {
-        return literal("tl").executes(ctx -> {
-            ctx.getSource().sendFeedback(
+    public static <S> LiteralArgumentBuilder<S> getTlCommand() {
+        return LiteralArgumentBuilder.<S>literal("tl").executes(ctx -> {
+            CommandFeedback.send(
                 Component.literal(P + "§aUsing TLauncher skin source")
             );
             return 1;
         });
     }
 
-    public static LiteralArgumentBuilder<FabricClientCommandSource> getElyCommand() {
-        return literal("ely").executes(ctx -> {
-            ctx.getSource().sendFeedback(
+    public static <S> LiteralArgumentBuilder<S> getElyCommand() {
+        return LiteralArgumentBuilder.<S>literal("ely").executes(ctx -> {
+            CommandFeedback.send(
                 Component.literal(P + "§aUsing Ely.by skin source")
             );
             return 1;
         });
     }
 
-    public static LiteralArgumentBuilder<FabricClientCommandSource> getUrlCommand() {
-        return literal("url")
-            .then(argument("url", StringArgumentType.greedyString())
+    public static <S> LiteralArgumentBuilder<S> getUrlCommand() {
+        return LiteralArgumentBuilder.<S>literal("url")
+            .then(RequiredArgumentBuilder.<S, String>argument("url", StringArgumentType.greedyString())
                 .executes(ctx -> {
                     String url = StringArgumentType.getString(ctx, "url");
-                    ctx.getSource().sendFeedback(
+                    CommandFeedback.send(
                         Component.literal(P + "§aCustom skin URL:\n§f" + url)
                     );
                     return 1;
@@ -65,15 +72,16 @@ public class SkinTotemCommand {
             );
     }
 
-    public static com.mojang.brigadier.Command<FabricClientCommandSource> getHelpExecutor() {
+    public static <S> com.mojang.brigadier.Command<S> getHelpExecutor() {
         return ctx -> {
-            ctx.getSource().sendFeedback(Component.literal(
+            CommandFeedback.send(Component.literal(
                 P + "§7Commands:\n" +
                 "  §f/skintotem info\n" +
                 "  §f/skintotem refresh\n" +
                 "  §f/skintotem tl\n" +
                 "  §f/skintotem ely\n" +
                 "  §f/skintotem url <url>\n" +
+                "  §f/skintotem sounds [reload|list]\n" +
                 "  §f/skintotem credits"
             ));
             return 1;

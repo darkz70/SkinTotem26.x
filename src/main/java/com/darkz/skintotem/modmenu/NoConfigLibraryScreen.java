@@ -1,21 +1,22 @@
 package com.darkz.skintotem.modmenu;
 
 import com.google.common.collect.Sets;
+import com.mojang.blaze3d.Blaze3D;
 import java.net.*;
 import java.util.*;
 import com.darkz.skintotem.client.SkinTotemClient;
+import com.darkz.skintotem.loader.SkinTotemLoader;
 import com.darkz.skintotem.utils.ModMenuUtils;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.network.chat.CommonComponents;
-import net.minecraft.util.Util;
 import org.jetbrains.annotations.*;
 
 public class NoConfigLibraryScreen {
 
 	private static final Set<String> ALLOWED_PROTOCOLS = Sets.newHashSet("http", "https");
-	private static final String YACL_MODRINTH_LINK = "https://modrinth.com/mod/yacl/versions?l=fabric&g=";
+	private static final String YACL_MODRINTH_LINK = "https://modrinth.com/mod/yacl/versions?l=" + SkinTotemLoader.LOADER_ID + "&g=";
 
 	private NoConfigLibraryScreen() {
 		throw new IllegalStateException("Screen class, use createScreen(...) method!");
@@ -38,7 +39,7 @@ public class NoConfigLibraryScreen {
 				if (!NoConfigLibraryScreen.ALLOWED_PROTOCOLS.contains(string.toLowerCase(Locale.ROOT))) {
 					throw new URISyntaxException(url, "Unsupported protocol: " + string.toLowerCase(Locale.ROOT));
 				}
-				Util.getPlatform().openUri(link);
+				Blaze3D.openUri(link);
 			} catch (URISyntaxException e) {
 				SkinTotemClient.LOGGER.error("Can't open YACL Modrinth page:", e);
 			}

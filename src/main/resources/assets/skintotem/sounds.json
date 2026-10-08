@@ -1,0 +1,42 @@
+{
+  "totem_activate": {
+    "category": "player",
+    "subtitle": "subtitles.skintotem.totem_activate",
+    "sounds": [
+      {
+        "name": "skintotem:totem_activate",
+        "stream": false
+      }
+    ]
+  },
+  "doll_summon": {
+    "category": "player",
+    "subtitle": "subtitles.skintotem.doll_summon",
+    "sounds": [
+      {
+        "name": "skintotem:doll_summon",
+        "stream": false
+      }
+    ]
+  },
+  "skin_change": {
+    "category": "player",
+    "subtitle": "subtitles.skintotem.skin_change",
+    "sounds": [
+      {
+        "name": "skintotem:skin_change",
+        "stream": false
+      }
+    ]
+  },
+  "skin_error": {
+    "category": "player",
+    "subtitle": "subtitles.skintotem.skin_error",
+    "sounds": [
+      {
+        "name": "skintotem:skin_error",
+        "stream": false
+      }
+    ]
+  }
+}

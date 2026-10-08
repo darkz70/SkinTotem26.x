@@ -1,13 +1,12 @@
 package com.darkz.skintotem.pack;
 
 import java.util.concurrent.*;
-import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
 import com.darkz.skintotem.SkinTotem;
 import com.darkz.skintotem.atlas.manager.*;
+import com.darkz.skintotem.loader.SkinTotemLoader;
 import com.darkz.skintotem.model.bb.manager.BlockBenchModelManager;
 import com.darkz.skintotem.tag.manager.TagsManager;
 import net.minecraft.resources.Identifier;
-import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.*;
 import net.minecraft.util.Unit;
 import net.minecraft.util.profiling.*;
@@ -15,10 +14,10 @@ import net.minecraft.util.profiling.*;
 public class SkinTotemReloadListener implements PreparableReloadListener {
 
 	public static void register() {
-		ResourceLoader.get(PackType.CLIENT_RESOURCES).registerReloadListener(getFabricId(), new SkinTotemReloadListener());
+		SkinTotemLoader.registerReloadListener();
 	}
 
-	public static Identifier getFabricId() {
+	public static Identifier getListenerId() {
 		return SkinTotem.id("%s-reload-listener".formatted(SkinTotem.MOD_ID));
 	}
 

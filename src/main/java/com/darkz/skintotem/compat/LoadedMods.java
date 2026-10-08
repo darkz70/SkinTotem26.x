@@ -1,9 +1,9 @@
 package com.darkz.skintotem.compat;
 
-import net.fabricmc.loader.api.FabricLoader;
+import com.darkz.skintotem.loader.SkinTotemLoader;
 
 public class LoadedMods {
 
-	public static final boolean EARS_LOADED = FabricLoader.getInstance().isModLoaded("ears");
+	public static final boolean EARS_LOADED = SkinTotemLoader.isModLoaded("ears");
 
 }

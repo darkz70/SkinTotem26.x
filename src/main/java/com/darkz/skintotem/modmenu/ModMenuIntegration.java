@@ -1,5 +1,6 @@
 package com.darkz.skintotem.modmenu;
 
+//? if fabric {
 import com.terraformersmc.modmenu.api.*;
 import net.fabricmc.loader.api.*;
 import com.darkz.skintotem.SkinTotem;
@@ -27,3 +28,4 @@ public class ModMenuIntegration implements ModMenuApi {
 		return NoConfigLibraryScreen::createScreen;
 	}
 }
+//?}
