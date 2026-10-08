@@ -7,6 +7,10 @@ on:
   pull_request:
     branches: [main, 26.3, neoforge]
 
+concurrency:
+  group: build-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   debug_build:
     runs-on: ubuntu-latest
@@ -33,9 +37,9 @@ jobs:
             ~/.gradle/caches/modules-2
             ~/.gradle/caches/jars-9
             ~/.gradle/wrapper
-          key: gradle-${{ matrix.platform }}-${{ hashFiles('gradle.properties', 'versions/*/gradle.properties', 'settings.gradle', 'build.gradle') }}
+          key: gradle2-${{ matrix.platform }}-${{ hashFiles('gradle.properties', 'versions/*/gradle.properties', 'settings.gradle', 'build.gradle') }}
           restore-keys: |
-            gradle-${{ matrix.platform }}-
+            gradle2-${{ matrix.platform }}-
 
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
@@ -78,14 +82,14 @@ jobs:
           ORG_GRADLE_PROJECT_gpr.key: ${{ secrets.GPR_KEY }}
 
       - name: Save Gradle caches
-        if: always()
+        if: success()
         uses: actions/cache/save@v4
         with:
           path: |
             ~/.gradle/caches/modules-2
             ~/.gradle/caches/jars-9
             ~/.gradle/wrapper
-          key: gradle-${{ matrix.platform }}-${{ hashFiles('gradle.properties', 'versions/*/gradle.properties', 'settings.gradle', 'build.gradle') }}-${{ github.run_id }}
+          key: gradle2-${{ matrix.platform }}-${{ hashFiles('gradle.properties', 'versions/*/gradle.properties', 'settings.gradle', 'build.gradle') }}-${{ github.run_id }}
 
       - name: Report build log on failure
         if: failure()
