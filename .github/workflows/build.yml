@@ -8,6 +8,8 @@ on:
 jobs:
   debug_build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     strategy:
       fail-fast: false
       matrix:
@@ -26,13 +28,33 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build ${{ matrix.platform }}
-        run: ./gradlew "buildAndCollect+${{ matrix.platform }}+All" -Pci_loader=${{ matrix.platform }}
+        run: |
+          set -o pipefail
+          ./gradlew "buildAndCollect+${{ matrix.platform }}+All" -Pci_loader=${{ matrix.platform }} 2>&1 | tee /tmp/build.log
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_ACTOR: ${{ github.actor }}
           GPR_KEY: ${{ secrets.GPR_KEY }}
           ORG_GRADLE_PROJECT_gpr.user: ${{ github.actor }}
           ORG_GRADLE_PROJECT_gpr.key: ${{ secrets.GPR_KEY }}
+
+      - name: Report build log on failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          {
+            echo "### CI failure (${{ matrix.platform }})"
+            echo
+            echo '```'
+            grep -n -E "error:|cannot find symbol|does not exist|FAILURE:|What went wrong|Caused by:|Task .* FAILED|Could not (resolve|find|determine)|Unresolved|Stonecutter|Mixin" -A 2 /tmp/build.log | tail -c 35000
+            echo '```'
+            echo
+            echo '```'
+            tail -c 20000 /tmp/build.log
+            echo '```'
+          } > /tmp/report.md
+          gh api -X POST "repos/${{ github.repository }}/commits/${{ github.sha }}/comments" -F body=@/tmp/report.md
 
       - name: List all files (Debug)
         run: |
