@@ -1,13 +1,17 @@
-name: Build Fabric 
+name: Build
 
 on:
   workflow_dispatch:
   push:
-    branches: [main, 26.3, neoforge]
+    branches: [main, 26.3, neoforge, 'arena/**']
 
 jobs:
   debug_build:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [fabric, neoforge]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -21,8 +25,8 @@ jobs:
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
-      - name: Build with Gradle
-        run: ./gradlew buildAndCollect+All || ./gradlew buildAndCollect || ./gradlew build
+      - name: Build ${{ matrix.platform }}
+        run: ./gradlew "buildAndCollect+${{ matrix.platform }}+All" -Pci_loader=${{ matrix.platform }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_ACTOR: ${{ github.actor }}
@@ -38,5 +42,5 @@ jobs:
       - name: Capture ALL .jar files
         uses: actions/upload-artifact@v4
         with:
-          name: All-Jars-Found
+          name: All-Jars-${{ matrix.platform }}
           path: "**/*.jar"

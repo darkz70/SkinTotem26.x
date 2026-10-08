@@ -1,14 +1,14 @@
 package com.darkz.skintotem.client;
 
+//? if fabric {
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.rendering.v1.PictureInPictureRendererRegistry;
+//?}
 import com.darkz.skintotem.SkinTotem;
 import com.darkz.skintotem.cache.KnownPlayerUUIDsConfigManager;
 import com.darkz.skintotem.client.command.SkinTotemCommandManager;
 import com.darkz.skintotem.client.event.SkinTotemEvents;
 import com.darkz.skintotem.config.SkinTotemConfig;
-import com.darkz.skintotem.doll.renderer.special.ItemGuiElementRenderer;
-import com.darkz.skintotem.doll.renderer.special.SkinTotemGuiElementRenderer;
+import com.darkz.skintotem.loader.SkinTotemLoader;
 import com.darkz.skintotem.pack.SkinTotemReloadListener;
 import com.darkz.skintotem.tag.manager.*;
 import com.darkz.skintotem.refresh.SkinAutoRefresher;
@@ -18,7 +18,11 @@ import net.minecraft.world.item.*;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.*;
 
-public class SkinTotemClient implements ClientModInitializer {
+public class SkinTotemClient
+//? if fabric {
+		implements ClientModInitializer
+//?}
+{
 
 	public static Logger LOGGER = LoggerFactory.getLogger(SkinTotem.MOD_NAME + "/Client");
 
@@ -32,8 +36,8 @@ public class SkinTotemClient implements ClientModInitializer {
 			return bl || (SkinTotemConfig.getInstance().isSupportOtherModsTotems() && BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath().contains("totem"));
 		}
 
-	@Override
-	public void onInitializeClient() {
+	/** Общая для всех загрузчиков инициализация клиента. */
+	public static void init() {
 		LOGGER.info("{} Client Initialized", SkinTotem.MOD_NAME);
 		TagsManager.register();
 		TagsSkinProviders.register();
@@ -43,7 +47,13 @@ public class SkinTotemClient implements ClientModInitializer {
 		KnownPlayerUUIDsConfigManager.start();
 		SkinAutoRefresher.start();
 		CustomSoundPack.init();
-		PictureInPictureRendererRegistry.register(context -> new ItemGuiElementRenderer());
-		PictureInPictureRendererRegistry.register(context -> new SkinTotemGuiElementRenderer());
+		SkinTotemLoader.registerPictureInPictureRenderers();
 	}
+
+	//? if fabric {
+	@Override
+	public void onInitializeClient() {
+		init();
+	}
+	//?}
 }

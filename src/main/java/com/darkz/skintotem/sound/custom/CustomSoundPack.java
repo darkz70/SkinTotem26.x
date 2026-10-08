@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
-import net.fabricmc.loader.api.FabricLoader;
+import com.darkz.skintotem.loader.SkinTotemLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.Nullable;
@@ -39,7 +39,7 @@ public final class CustomSoundPack {
 	/** Звуки мода, которые можно заменить. */
 	public static final List<String> SOUND_NAMES = List.of("totem_activate", "doll_summon", "skin_change", "skin_error");
 
-	private static final Path FOLDER = FabricLoader.getInstance().getConfigDir().resolve(SkinTotem.MOD_ID).resolve("sounds");
+	private static final Path FOLDER = SkinTotemLoader.getConfigDir().resolve(SkinTotem.MOD_ID).resolve("sounds");
 	private static final Path CONVERSION_CACHE = FOLDER.resolve(".converted");
 	private static final String README_NAME = "README.txt";
 

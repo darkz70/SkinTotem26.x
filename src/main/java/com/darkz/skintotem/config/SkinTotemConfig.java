@@ -7,8 +7,8 @@ import java.io.File;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import lombok.*;
-import net.fabricmc.loader.api.FabricLoader;
 import com.darkz.skintotem.SkinTotem;
+import com.darkz.skintotem.loader.SkinTotemLoader;
 import com.darkz.skintotem.config.other.vector.Vec2i;
 import com.darkz.skintotem.config.rendering.RenderingConfig;
 import com.darkz.skintotem.config.totem.*;
@@ -146,7 +146,7 @@ public class SkinTotemConfig {
             dg3.soundsEnabled, dg3.soundsVolume, dg3.replaceVanillaTotemSound, dg3.emoteMirroringEnabled, dg3.activationEmote, dg3.customSoundsEnabled, dg3.customSoundsAutoConvert
     )));
 
-	private static final File CONFIG_FILE = FabricLoader.getInstance().getConfigDir().resolve(SkinTotem.MOD_ID + ".json5").toFile();
+	private static final File CONFIG_FILE = SkinTotemLoader.getConfigDir().resolve(SkinTotem.MOD_ID + ".json5").toFile();
 	private static final Logger LOGGER = LoggerFactory.getLogger(SkinTotem.MOD_NAME + "/Config");
 	private static SkinTotemConfig INSTANCE;
 

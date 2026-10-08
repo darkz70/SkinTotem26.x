@@ -2,16 +2,21 @@ plugins {
 	id "net.lopymine.mossy-plugin-core" version "$mossy_plugin_version"
 }
 
+// Имя подпроекта всегда вида "<loader>-<minecraft>", например "fabric-26.3" или "neoforge-26.3".
+def projectName = stonecutter.current.project
+def loaderName = projectName.substring(0, projectName.lastIndexOf("-"))
+def isFabric = loaderName == "fabric"
+
 mossyDependencies {
-	minecraft = stonecutter.current.project.substring(stonecutter.current.project.indexOf("-") + 1)
+	minecraft = projectName.substring(projectName.indexOf("-") + 1)
 	lombok = prop("base.lombok_version")
 
 	fabricApi = prop("build.fabric_api")
 	fabricLoader = prop("build.fabric_loader")
 
 //	forge = prop("build.forge")
-//
-//	neoForge = prop("build.neoforge")
+
+	neoForge = prop("build.neoforge")
 //	parchment = prop("build.parchment")
 
 	additional {
@@ -39,8 +44,27 @@ repositories {
 }
 
 dependencies {
-	// Mixin^2
-	include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:${prop("build.mixin_squared")}")))
+	def mixinSquaredVersion = prop("build.mixin_squared")
+	def jlayerVersion = prop("base.jlayer_version")
+
+	if (isFabric) {
+		// Mixin^2 (нужен для патчей совместимости с Sodium)
+		include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:${mixinSquaredVersion}")))
+
+		// MP3 без внешних программ: декодер JLayer кладётся внутрь jar (JiJ), лицензия LGPL 2.1.
+		include(implementation("javazoom:jlayer:${jlayerVersion}"))
+	} else {
+		// На NeoForge патчи Sodium пока не подключаются, нужны только аннотации Mixin^2 для компиляции.
+		compileOnly("com.github.bawnorton.mixinsquared:mixinsquared-common:${mixinSquaredVersion}")
+
+		// MP3 без внешних программ: JLayer встраивается в jar через Jar-in-Jar NeoForge.
+		jarJar(implementation("javazoom:jlayer")) {
+			version {
+				strictly "[${jlayerVersion},)"
+				prefer jlayerVersion
+			}
+		}
+	}
 
 	// Lombok (explicit fallback in case mossyDependencies' automatic wiring doesn't apply)
 	compileOnly "org.projectlombok:lombok:${prop("base.lombok_version")}"
@@ -53,12 +77,9 @@ dependencies {
 	}
 	compileOnly "com.zigythebird.playeranim:PlayerAnimationLibCommon:${prop("compat.player_anim_lib")}"
 
-	// MP3 без внешних программ: декодер JLayer кладётся внутрь jar (JiJ), лицензия LGPL 2.1.
-	include(implementation("javazoom:jlayer:${prop("base.jlayer_version")}"))
-
 	// CIT Resewn
 	def cit = prop("dep.cit-resewn")
-	if (cit != "unknown") {
+	if (isFabric && cit != "unknown") {
 		modImplementation "maven.modrinth:cit-resewn:${cit}"
 		modImplementation "maven.modrinth:cit-resewn-defaults:${cit}"
 	}

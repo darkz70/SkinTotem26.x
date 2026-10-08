@@ -4,7 +4,7 @@ import com.darkz.skintotem.client.SkinTotemClient;
 import com.darkz.skintotem.compat.emotecraft.EmotecraftBridge;
 import com.darkz.skintotem.config.SkinTotemConfig;
 import com.darkz.skintotem.doll.model.SkinTotemModel;
-import net.fabricmc.loader.api.FabricLoader;
+import com.darkz.skintotem.loader.SkinTotemLoader;
 import net.minecraft.client.player.AbstractClientPlayer;
 import org.jetbrains.annotations.Nullable;
 
@@ -18,8 +18,8 @@ import org.jetbrains.annotations.Nullable;
 public final class EmoteSupport {
 
 	/** Анимации кукле отдаёт эта библиотека (обязательная зависимость Emotecraft). */
-	private static final boolean ANIMATION_LIB_LOADED = FabricLoader.getInstance().isModLoaded("player_animation_library");
-	private static final boolean EMOTECRAFT_LOADED = FabricLoader.getInstance().isModLoaded("emotecraft");
+	private static final boolean ANIMATION_LIB_LOADED = SkinTotemLoader.isModLoaded("player_animation_library");
+	private static final boolean EMOTECRAFT_LOADED = SkinTotemLoader.isModLoaded("emotecraft");
 
 	private static boolean failed = false;
 	private static boolean restoreFailed = false;

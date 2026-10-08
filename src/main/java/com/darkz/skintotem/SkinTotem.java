@@ -2,12 +2,18 @@ package com.darkz.skintotem;
 
 import java.util.regex.Pattern;
 
+//? if fabric {
 import net.fabricmc.api.ModInitializer;
+//?}
 import net.minecraft.network.chat.*;
 import net.minecraft.resources.Identifier;
 import org.slf4j.*;
 
-public class SkinTotem implements ModInitializer {
+public class SkinTotem
+//? if fabric {
+		implements ModInitializer
+//?}
+{
 
 	public static final String MOD_NAME = /*$ mod_name*/ "SkinTotem";
 	public static final String MOD_ID = /*$ mod_id*/ "skintotem";
@@ -44,8 +50,10 @@ public class SkinTotem implements ModInitializer {
 		return id(path);
 	}
 
+	//? if fabric {
 	@Override
 	public void onInitialize() {
 		LOGGER.info("{} Initialized", MOD_NAME);
 	}
+	//?}
 }

@@ -2,8 +2,8 @@ package com.darkz.skintotem.mixin;
 
 import java.util.List;
 import java.util.function.Function;
-import net.fabricmc.loader.api.FabricLoader;
 import com.darkz.skintotem.config.SkinTotemConfig;
+import com.darkz.skintotem.loader.SkinTotemLoader;
 import com.darkz.skintotem.gui.screen.WelcomeScreen;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.screens.Screen;
@@ -19,7 +19,7 @@ public class MinecraftMixin {
 		SkinTotemConfig config = SkinTotemConfig.getInstance();
 		if (config.isFirstRun() || config.isFirstRunTemp()) {
 			list.add(WelcomeScreen::new);
-			if (!FabricLoader.getInstance().isDevelopmentEnvironment()) {
+			if (!SkinTotemLoader.isDevelopmentEnvironment()) {
 				config.setFirstRun(false);
 				config.setFirstRunTemp(false);
 			}

@@ -9,7 +9,6 @@ import java.nio.file.NoSuchFileException;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.Consumer;
-import net.fabricmc.loader.api.*;
 import com.darkz.skintotem.SkinTotem;
 import com.darkz.skintotem.api.Response;
 import com.darkz.skintotem.atlas.manager.*;
@@ -22,6 +21,7 @@ import com.darkz.skintotem.model.bb.*;
 import com.darkz.skintotem.model.bb.BBCube.*;
 import com.darkz.skintotem.model.bb.BBModel.*;
 import com.darkz.skintotem.utils.CodecUtils;
+import com.darkz.skintotem.utils.VersionUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.resources.model.cuboid.*;
@@ -129,11 +129,11 @@ public class BlockBenchModelManager {
 				return Response.empty(102);
 			}
 
-			SemanticVersion modelVersion = SemanticVersion.parse(meta.getVersion());
+			String modelVersion = meta.getVersion();
 
-			if (modelVersion.compareTo((Version) SemanticVersion.parse("5.0")) >= 0) {
+			if (VersionUtils.isAtLeast(modelVersion, "5.0")) {
 				return processBBModel50(id, jsonObject, name, meta);
-			} else if (modelVersion.compareTo((Version) SemanticVersion.parse("4.10")) >= 0) {
+			} else if (VersionUtils.isAtLeast(modelVersion, "4.10")) {
 				return processBBModel410(id, jsonObject, name, meta);
 			}
 		} catch (NoSuchFileException | FileNotFoundException e) {
