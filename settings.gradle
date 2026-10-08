@@ -16,13 +16,21 @@ pluginManagement {
 			name "NeoForged"
 			url "https://maven.neoforged.net/releases"
 		}
+		// Зеркала Kiku регулярно не отвечают, а отключённый по таймауту репозиторий валит
+		// резолв целиком. Поэтому к ним обращаемся только за самим Stonecutter.
 		maven {
 			name "Kiku Releases"
 			url "https://maven.kikugie.dev/releases"
+			content {
+				includeGroupByRegex("dev\\.kikugie.*")
+			}
 		}
 		maven {
 			name "Kiku Snapshots"
 			url "https://maven.kikugie.dev/snapshots"
+			content {
+				includeGroupByRegex("dev\\.kikugie.*")
+			}
 		}
 		mavenLocal()
 	}

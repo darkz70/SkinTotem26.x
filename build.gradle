@@ -25,6 +25,17 @@ mossyDependencies {
 	}
 }
 
+// Зеркала Kiku (их подключает Mossy) периодически не отвечают: Gradle помечает репозиторий
+// как отключённый и роняет резолв даже тех артефактов, которые есть на Maven Central.
+// Поэтому обращаемся к ним только за артефактами самого Stonecutter.
+repositories.configureEach { repo ->
+	if (repo instanceof MavenArtifactRepository && repo.url.toString().contains("kikugie.dev")) {
+		repo.content {
+			includeGroupByRegex("dev\\.kikugie.*")
+		}
+	}
+}
+
 repositories {
 	// Mixin^2
 	maven {
