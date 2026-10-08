@@ -24,29 +24,56 @@ jobs:
           java-version: '25'
           distribution: 'microsoft'
 
+      - name: Restore Gradle caches
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/.gradle/caches/modules-2
+            ~/.gradle/caches/jars-9
+            ~/.gradle/wrapper
+          key: gradle-${{ matrix.platform }}-${{ hashFiles('gradle.properties', 'versions/*/gradle.properties', 'settings.gradle', 'build.gradle') }}
+          restore-keys: |
+            gradle-${{ matrix.platform }}-
+            gradle-
+
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
-
-      - name: Inspect and clean stale Gradle caches
-        run: |
-          echo "--- ~/.gradle ---"
-          ls -la ~/.gradle 2>/dev/null || echo "no ~/.gradle"
-          echo "--- ~/.gradle/caches ---"
-          ls -la ~/.gradle/caches 2>/dev/null || echo "no caches"
-          rm -rf ~/.gradle/caches/fabric-loom ~/.gradle/caches/*/fabric-loom 2>/dev/null || true
-          echo "--- after cleanup ---"
-          ls -la ~/.gradle/caches 2>/dev/null || echo "no caches"
 
       - name: Build ${{ matrix.platform }}
         run: |
           set -o pipefail
-          ./gradlew "buildAndCollect+${{ matrix.platform }}+All" -Pci_loader=${{ matrix.platform }} 2>&1 | tee /tmp/build.log
+          GRADLE_ARGS="-Dorg.gradle.internal.http.connectionTimeout=180000 -Dorg.gradle.internal.http.socketTimeout=180000"
+          for attempt in 1 2 3; do
+            echo "::group::Build attempt $attempt"
+            if ./gradlew "buildAndCollect+${{ matrix.platform }}+All" -Pci_loader=${{ matrix.platform }} $GRADLE_ARGS 2>&1 | tee /tmp/build.log; then
+              echo "::endgroup::"
+              exit 0
+            fi
+            echo "::endgroup::"
+            # Повторяем только сетевые сбои сторонних maven-зеркал, ошибки кода повторять бессмысленно.
+            if ! grep -qE "kikugie\.dev|failed to respond|Could not (GET|HEAD)|Connection (timed out|reset)" /tmp/build.log; then
+              exit 1
+            fi
+            echo "Network failure detected, retrying in 120s..."
+            sleep 120
+          done
+          exit 1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_ACTOR: ${{ github.actor }}
           GPR_KEY: ${{ secrets.GPR_KEY }}
           ORG_GRADLE_PROJECT_gpr.user: ${{ github.actor }}
           ORG_GRADLE_PROJECT_gpr.key: ${{ secrets.GPR_KEY }}
+
+      - name: Save Gradle caches
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.gradle/caches/modules-2
+            ~/.gradle/caches/jars-9
+            ~/.gradle/wrapper
+          key: gradle-${{ matrix.platform }}-${{ hashFiles('gradle.properties', 'versions/*/gradle.properties', 'settings.gradle', 'build.gradle') }}-${{ github.run_id }}
 
       - name: Report build log on failure
         if: failure()
@@ -57,7 +84,7 @@ jobs:
             echo "### CI failure (${{ matrix.platform }})"
             echo
             echo '```'
-            grep -n -E "error:|cannot find symbol|does not exist|FAILURE:|What went wrong|Caused by:|Task .* FAILED|Could not (resolve|find|determine)|Unresolved|Stonecutter|Mixin" -A 2 /tmp/build.log | tail -c 35000
+            grep -n -E "error:|cannot find symbol|does not exist|FAILURE:|What went wrong|Caused by:|Task .* FAILED|Could not (resolve|find|determine|download|GET|HEAD)|Unresolved|Stonecutter|Mixin" -A 2 /tmp/build.log | tail -c 35000
             echo '```'
             echo
             echo '```'
@@ -69,7 +96,7 @@ jobs:
       - name: List all files (Debug)
         run: |
           echo "Listing all .jar files in the project:"
-          find . -name "*.jar"
+          find . -name "*.jar" -not -path "*/.gradle/*"
 
       - name: Capture ALL .jar files
         uses: actions/upload-artifact@v4
