@@ -45,6 +45,10 @@ jobs:
           GRADLE_ARGS="-Dorg.gradle.internal.http.connectionTimeout=180000 -Dorg.gradle.internal.http.socketTimeout=180000"
           for attempt in 1 2 3; do
             echo "::group::Build attempt $attempt"
+            # Loom падает на несовместимом кэше в домашней папке Gradle ("Incompatible Gradle cache"),
+            # и тогда ни loom, ни moddev не успевают настроить Minecraft. Чистим его перед каждой попыткой.
+            ./gradlew --stop >/dev/null 2>&1 || true
+            rm -rf ~/.gradle/caches/fabric-loom ~/.gradle/caches/*/fabric-loom 2>/dev/null || true
             if ./gradlew "buildAndCollect+${{ matrix.platform }}+All" -Pci_loader=${{ matrix.platform }} $GRADLE_ARGS 2>&1 | tee /tmp/build.log; then
               echo "::endgroup::"
               exit 0
