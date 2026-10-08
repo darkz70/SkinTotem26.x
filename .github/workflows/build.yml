@@ -3,13 +3,15 @@ name: Build
 on:
   workflow_dispatch:
   push:
-    branches: [main, 26.3, neoforge]
+    branches: [main, 26.3, neoforge, 'arena/**']
   pull_request:
     branches: [main, 26.3, neoforge]
 
 jobs:
   debug_build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     strategy:
       fail-fast: false
       matrix:
@@ -41,7 +43,7 @@ jobs:
       - name: Build ${{ matrix.platform }}
         run: |
           set -o pipefail
-          GRADLE_ARGS="-Dorg.gradle.internal.http.connectionTimeout=180000 -Dorg.gradle.internal.http.socketTimeout=180000"
+          GRADLE_ARGS="-Dorg.gradle.internal.http.connectionTimeout=180000 -Dorg.gradle.internal.http.socketTimeout=180000 --stacktrace"
           for attempt in 1 2 3; do
             echo "::group::Build attempt $attempt"
             # Loom иногда не может пересоздать свой кэш ("Incompatible Gradle cache") и роняет
@@ -84,6 +86,20 @@ jobs:
             ~/.gradle/caches/jars-9
             ~/.gradle/wrapper
           key: gradle-${{ matrix.platform }}-${{ hashFiles('gradle.properties', 'versions/*/gradle.properties', 'settings.gradle', 'build.gradle') }}-${{ github.run_id }}
+
+      - name: Report build log on failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          {
+            echo "### CI failure (${{ matrix.platform }})"
+            echo
+            echo '```'
+            grep -n -E "Incompatible Gradle cache|at net\.fabricmc|at dev\.kikugie|at net\.lopymine|Caused by:|What went wrong" -A 3 /tmp/build.log | head -c 30000
+            echo '```'
+          } > /tmp/report.md
+          gh api -X POST "repos/${{ github.repository }}/commits/${{ github.sha }}/comments" -F body=@/tmp/report.md
 
       - name: List all files (Debug)
         run: |
