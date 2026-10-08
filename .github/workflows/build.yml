@@ -3,13 +3,11 @@ name: Build
 on:
   workflow_dispatch:
   push:
-    branches: [main, 26.3, neoforge, 'arena/**']
+    branches: [main, 26.3, neoforge]
 
 jobs:
   debug_build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     strategy:
       fail-fast: false
       matrix:
@@ -34,7 +32,6 @@ jobs:
           key: gradle-${{ matrix.platform }}-${{ hashFiles('gradle.properties', 'versions/*/gradle.properties', 'settings.gradle', 'build.gradle') }}
           restore-keys: |
             gradle-${{ matrix.platform }}-
-            gradle-
 
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
@@ -43,11 +40,11 @@ jobs:
         run: |
           set -o pipefail
           GRADLE_ARGS="-Dorg.gradle.internal.http.connectionTimeout=180000 -Dorg.gradle.internal.http.socketTimeout=180000"
-          for attempt in 1 2 3 4; do
+          for attempt in 1 2 3; do
             echo "::group::Build attempt $attempt"
-            # Loom падает на несовместимом кэше ("Incompatible Gradle cache"), и тогда ни loom,
-            # ни moddevgradle не успевают настроить Minecraft. Кэшей у него три: в домашней папке
-            # Gradle, в .gradle проекта (переживает попытки внутри джоба) и в build/.
+            # Loom иногда не может пересоздать свой кэш ("Incompatible Gradle cache") и роняет
+            # конфигурацию проекта, а вместе с ней — регистрацию задач moddevgradle. Кэшей у него три:
+            # в домашней папке Gradle, в .gradle проекта (переживает попытки внутри джоба) и в build/.
             ./gradlew --stop >/dev/null 2>&1 || true
             rm -rf ~/.gradle/caches/fabric-loom ~/.gradle/caches/*/fabric-loom \
                    .gradle/loom-cache build/loom-cache versions/*/build/loom-cache 2>/dev/null || true
@@ -56,8 +53,6 @@ jobs:
               exit 0
             fi
             echo "::endgroup::"
-            # Флейк loom: иногда он не может пересоздать свой кэш и роняет конфигурацию проекта
-            # (вместе с ней — регистрацию задач moddevgradle). Повторяем сразу.
             if grep -qE "Incompatible Gradle cache|createMinecraftArtifacts' not found" /tmp/build.log; then
               echo "Loom cache flake detected, retrying..."
               sleep 10
@@ -88,53 +83,10 @@ jobs:
             ~/.gradle/wrapper
           key: gradle-${{ matrix.platform }}-${{ hashFiles('gradle.properties', 'versions/*/gradle.properties', 'settings.gradle', 'build.gradle') }}-${{ github.run_id }}
 
-      - name: Report build log on failure
-        if: failure()
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: List all files (Debug)
         run: |
-          {
-            echo "### CI failure (${{ matrix.platform }})"
-            echo
-            echo '```'
-            grep -n -E "error:|cannot find symbol|does not exist|FAILURE:|What went wrong|Caused by:|Task .* FAILED|Could not (resolve|find|determine|download|GET|HEAD)|Unresolved|Stonecutter|Mixin" -A 2 /tmp/build.log | tail -c 35000
-            echo '```'
-            echo
-            echo '```'
-            tail -c 20000 /tmp/build.log
-            echo '```'
-          } > /tmp/report.md
-          gh api -X POST "repos/${{ github.repository }}/commits/${{ github.sha }}/comments" -F body=@/tmp/report.md
-
-      - name: Inspect built jars
-        if: success()
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          {
-            echo "### Jar report (${{ matrix.platform }})"
-            echo
-            echo '```'
-            find . -name "*.jar" -not -path "*/.gradle/*" -not -path "*/wrapper/*" -printf "%10s  %p\n" | sort -k2
-            echo '```'
-            for jar in $(find . -path "*/build/libs/*.jar" -not -name "*-sources.jar" -not -name "*-dev*.jar" | head -3); do
-              echo
-              echo "#### $jar"
-              echo '```'
-              echo "lang files: $(unzip -l "$jar" | grep -c 'assets/skintotem/lang/')"
-              echo "nested jars: $(unzip -l "$jar" | grep -E '\.jar$' | awk '{print $4}' | tr '\n' ' ')"
-              unzip -l "$jar" | awk '{print $4}' \
-                | grep -vE '^$|^Name$|^----|^[0-9]+ files?$' \
-                | sed -E 's#^(assets/skintotem/lang)/.*#\1/...#; s#^(assets/skintotem/(textures|models|sounds))/.*#\1/...#; s#^(com/darkz/skintotem/[^/]+)/.*#\1/...#' \
-                | sort -u | head -45
-              echo '```'
-              echo '```'
-              unzip -p "$jar" META-INF/neoforge.mods.toml 2>/dev/null | head -45
-              unzip -p "$jar" fabric.mod.json 2>/dev/null | head -45
-              echo '```'
-            done
-          } > /tmp/jars.md
-          gh api -X POST "repos/${{ github.repository }}/commits/${{ github.sha }}/comments" -F body=@/tmp/jars.md
+          echo "Listing all .jar files in the project:"
+          find . -name "*.jar" -not -path "*/.gradle/*"
 
       - name: Capture ALL .jar files
         uses: actions/upload-artifact@v4
