@@ -2,7 +2,6 @@ package com.darkz.skintotem.client.command;
 
 import com.darkz.skintotem.client.SkinTotemClient;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 
 /**
@@ -16,9 +15,8 @@ public final class CommandFeedback {
 
 	public static void send(Component text) {
 		Minecraft client = Minecraft.getInstance();
-		LocalPlayer player = client.player;
-		if (player != null) {
-			player.displayClientMessage(text, false);
+		if (client.gui != null) {
+			client.gui.hud.getChat().addClientSystemMessage(text);
 			return;
 		}
 		SkinTotemClient.LOGGER.info("{}", text.getString());
