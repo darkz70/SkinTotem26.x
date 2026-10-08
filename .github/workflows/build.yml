@@ -27,6 +27,16 @@ jobs:
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
+      - name: Inspect and clean stale Gradle caches
+        run: |
+          echo "--- ~/.gradle ---"
+          ls -la ~/.gradle 2>/dev/null || echo "no ~/.gradle"
+          echo "--- ~/.gradle/caches ---"
+          ls -la ~/.gradle/caches 2>/dev/null || echo "no caches"
+          rm -rf ~/.gradle/caches/fabric-loom ~/.gradle/caches/*/fabric-loom 2>/dev/null || true
+          echo "--- after cleanup ---"
+          ls -la ~/.gradle/caches 2>/dev/null || echo "no caches"
+
       - name: Build ${{ matrix.platform }}
         run: |
           set -o pipefail
