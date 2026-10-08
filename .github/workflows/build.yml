@@ -62,8 +62,13 @@ jobs:
             fi
             echo "::endgroup::"
             if grep -qE "Incompatible Gradle cache|createMinecraftArtifacts' not found" /tmp/build.log; then
-              echo "Loom cache flake detected, retrying..."
-              sleep 10
+              # Mossy тянет Fabric Loom как 1.17-SNAPSHOT: в кэше Gradle может осесть состояние от
+              # другой сборки снапшота, и тогда loom не поднимает Minecraft (NPE в DependenciesManager).
+              # Вычищаем ВЕСЬ кэш Gradle, чтобы следующая попытка стартовала как на чистой машине.
+              echo "Loom cache flake detected, wiping the whole Gradle cache and retrying..."
+              ./gradlew --stop >/dev/null 2>&1 || true
+              rm -rf ~/.gradle/caches ~/.gradle/daemon .gradle versions/*/.gradle 2>/dev/null || true
+              sleep 5
               continue
             fi
             # Повторяем только сетевые сбои сторонних maven-зеркал, ошибки кода повторять бессмысленно.
