@@ -8,7 +8,8 @@ Replaces the Totem of Undying with a 3D doll using your Minecraft skin
 
 ![Minecraft](https://img.shields.io/badge/Minecraft-1.20.1--26.3-green?style=for-the-badge)
 [![Fabric](https://img.shields.io/badge/Loader-Fabric-blue?style=for-the-badge)](https://fabricmc.net)
-![Version](https://img.shields.io/badge/Version-2.2-orange?style=for-the-badge)
+[![NeoForge](https://img.shields.io/badge/Loader-NeoForge-orange?style=for-the-badge)](https://neoforged.net)
+![Version](https://img.shields.io/badge/Version-2.2.1-orange?style=for-the-badge)
 
 </div>
 
@@ -47,16 +48,27 @@ See [CHANGELOG.md](CHANGELOG.md) — it always describes the latest update, in E
 | 🔊 Custom Sounds | Own sounds for totem activation, summoning the doll, and skin loading |
 | 🕺 Emotecraft Support | The doll mirrors the emote you are playing, and can trigger an emote when the totem saves you |
 | 📂 Sound Pack Folder | Drop `.ogg`, `.mp3` or `.wav` files into `config/skintotem/sounds` — no extra software needed |
-| 🌍 63 Languages | English (US/GB), Русский, Українська, Беларуская, Deutsch, Polski, Čeština, Slovenčina, Magyar, Română, Български, Македонски, Српски (ћир./lat.), Hrvatski, Slovenščina, Shqip, Lietuvių, Latviešu, Eesti, Suomi, Svenska, Dansk, Norsk (bokmål/nynorsk), Íslenska, Ελληνικά, Español (ES/MX), Català, Galego, Euskara, Português (BR/PT), Français, Italiano, Nederlands, Afrikaans, Gaeilge, Cymraeg, Türkçe, Azərbaycan, Қазақша, Татарча, Монгол, Հայերեն, ქართული, Bahasa Indonesia, Bahasa Melayu, Filipino, Tiếng Việt, ไทย, हिन्दी, தமிழ், ಕನ್ನಡ, العربية, עברית, فارسی, 日本語, 한국어, 简体中文, 繁體中文 |
+| 🌍 65 Languages | English (US/GB), Русский, Українська, Беларуская, Deutsch, Polski, Čeština, Slovenčina, Magyar, Română, Български, Македонски, Српски (ћир./lat.), Hrvatski, Bosanski, Slovenščina, Shqip, Lietuvių, Latviešu, Eesti, Suomi, Svenska, Dansk, Norsk (bokmål/nynorsk), Íslenska, Ελληνικά, Español (ES/MX), Català, Galego, Euskara, Português (BR/PT), Français, Italiano, Nederlands, Afrikaans, Gaeilge, Cymraeg, Türkçe, Azərbaycan, Қазақша, Татарча, Монгол, Հայերեն, ქართული, Bahasa Indonesia, Bahasa Melayu, Filipino, Tiếng Việt, ไทย, हिन्दी, தமிழ், ಕನ್ನಡ, العربية, עברית, فارسی, 日本語, 한국어, 简体中文, 繁體中文, Esperanto |
 
 ---
 
 ## 📦 Installation
 
+### Fabric
+
 1. Install [Fabric Loader](https://fabricmc.net) for Minecraft 1.20.1 — 26.3
 2. Install [Fabric API](https://modrinth.com/mod/fabric-api)
-3. Download `skintotem-2.2.jar` and place it in your `mods/` folder
+3. Download `skintotem-2.2.1+<mc>-fabric.jar` and place it in your `mods/` folder
 4. **Optional:** Install [ModMenu](https://modrinth.com/mod/modmenu) and [YACL](https://modrinth.com/mod/yacl) for an in-game configuration GUI
+
+### NeoForge
+
+1. Install [NeoForge](https://neoforged.net) for Minecraft 26.3
+2. Download `skintotem-2.2.1+<mc>-neoforge.jar` and place it in your `mods/` folder
+3. **Optional:** Install [YACL](https://modrinth.com/mod/yacl) — the settings screen then opens straight from
+   the NeoForge mod list (`Mods → SkinTotem → Config`); no ModMenu needed
+
+> The mod is **client-side only** on both loaders — it does not need to be installed on the server.
 
 ---
 
@@ -142,12 +154,13 @@ on first launch). Name the file after the sound you want to replace:
 
 ## 📋 Dependencies
 
-| Mod | Required | Description |
-|-----|----------|-------------|
-| Fabric API | ✅ | Core Fabric API dependency |
-| ModMenu | ❌ | Adds a settings button to the mod list |
-| YetAnotherConfigLib (YACL) | ❌ | Alternative configuration GUI library |
-| [Emotecraft](https://modrinth.com/mod/emotecraft) | ❌ | Enables emote mirroring on the doll and the activation emote |
+| Mod | Required | Loader | Description |
+|-----|----------|--------|-------------|
+| Fabric API | ✅ | Fabric | Core Fabric API dependency (not used by the NeoForge build) |
+| ModMenu | ❌ | Fabric | Adds a settings button to the mod list (on NeoForge the button is built in) |
+| YetAnotherConfigLib (YACL) | ❌ | both | Configuration GUI library |
+| [Emotecraft](https://modrinth.com/mod/emotecraft) | ❌ | both | Enables emote mirroring on the doll and the activation emote |
+| [Sodium](https://modrinth.com/mod/sodium) | ❌ | Fabric | Compatibility patches for the Sodium model pipeline |
 
 ---
 
@@ -218,8 +231,10 @@ on first launch). Name the file after the sound you want to replace:
 | Cymraeg (`cy_gb`) | ✅ complete |
 | Norsk nynorsk (`nn_no`) | ✅ complete |
 | Srpski — latinica (`sr_cs`) | ✅ complete |
+| Bosanski (`bs_ba`) | ✅ complete |
+| Esperanto (`eo_uy`) | ✅ complete |
 
-All 63 languages contain every one of the 163 strings — no fallbacks to English anywhere.
+All 65 languages contain every one of the 163 strings — no fallbacks to English anywhere.
 
 New languages are added release by release. Pull requests with translations are welcome — copy
 `src/main/resources/assets/skintotem/lang/en_us.json`, translate the values and run the checker:
