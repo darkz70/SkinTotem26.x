@@ -8,11 +8,13 @@
   * разном количестве переносов строк \\n;
   * различающемся наборе цветовых кодов (&a, &l, ...);
   * символах § (в переводах нужен &: мод сам заменяет его на §);
-  * непереведённых строках (значение совпадает с английским).
+  * непереведённых строках (значение совпадает с английским; варианты английского,
+    например en_gb, от этой проверки освобождены).
 
 Compares every <locale>.json with en_us.json and reports missing/extra keys,
 mismatched %s placeholders, mismatched line breaks, a different set of colour
-codes, raw § characters and untranslated values.
+codes, raw § characters and untranslated values (English variants such as en_gb are
+exempt from the untranslated check).
 
 Запуск / usage:
     python3 tools/check_lang.py            # отчёт / report only
@@ -32,6 +34,8 @@ SOURCE = "en_us"
 COLOR_CODE = re.compile(r"&[0-9A-Fa-fK-Ok-oRr]")
 # строки, которые нормально оставить как в английском (имена собственные и т.п.)
 ALLOWED_SAME = re.compile(r"^[&§%\w\s.:,!?\"'/\[\]()+-]{0,16}$")
+# варианты английского (en_gb и т.п.) совпадают с en_us по большинству строк
+SAME_LANGUAGE_PREFIX = f"{SOURCE.split('_')[0]}_"
 
 
 def load(path: pathlib.Path) -> collections.OrderedDict:
@@ -63,7 +67,10 @@ def main() -> int:
         newlines = [k for k in shared if data[k].count("\n") != source[k].count("\n")]
         colors = [k for k in shared if sorted(COLOR_CODE.findall(data[k])) != sorted(COLOR_CODE.findall(source[k]))]
         sections = [k for k, v in data.items() if "§" in v]
-        untranslated = [k for k in shared if data[k] == source[k] and source[k] and not ALLOWED_SAME.match(source[k])]
+        same_language = locale.startswith(SAME_LANGUAGE_PREFIX)
+        untranslated = [] if same_language else [
+            k for k in shared if data[k] == source[k] and source[k] and not ALLOWED_SAME.match(source[k])
+        ]
         order_ok = list(data.keys()) == [k for k in source if k in data]
 
         issues = {

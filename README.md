@@ -47,7 +47,7 @@ See [CHANGELOG.md](CHANGELOG.md) — it always describes the latest update, in E
 | 🔊 Custom Sounds | Own sounds for totem activation, summoning the doll, and skin loading |
 | 🕺 Emotecraft Support | The doll mirrors the emote you are playing, and can trigger an emote when the totem saves you |
 | 📂 Sound Pack Folder | Drop `.ogg`, `.mp3` or `.wav` files into `config/skintotem/sounds` — no extra software needed |
-| 🌍 43 Languages | English, Русский, Українська, Беларуская, Deutsch, Polski, Čeština, Slovenčina, Magyar, Română, Български, Српски, Hrvatski, Slovenščina, Lietuvių, Latviešu, Eesti, Suomi, Svenska, Dansk, Norsk bokmål, Ελληνικά, Español, Català, Français, Italiano, Nederlands, Português (BR/PT), Türkçe, Қазақша, Татарча, Bahasa Indonesia, Tiếng Việt, ไทย, हिन्दी, العربية, עברית, فارسی, 日本語, 한국어, 简体中文, 繁體中文 |
+| 🌍 63 Languages | English (US/GB), Русский, Українська, Беларуская, Deutsch, Polski, Čeština, Slovenčina, Magyar, Română, Български, Македонски, Српски (ћир./lat.), Hrvatski, Slovenščina, Shqip, Lietuvių, Latviešu, Eesti, Suomi, Svenska, Dansk, Norsk (bokmål/nynorsk), Íslenska, Ελληνικά, Español (ES/MX), Català, Galego, Euskara, Português (BR/PT), Français, Italiano, Nederlands, Afrikaans, Gaeilge, Cymraeg, Türkçe, Azərbaycan, Қазақша, Татарча, Монгол, Հայերեն, ქართული, Bahasa Indonesia, Bahasa Melayu, Filipino, Tiếng Việt, ไทย, हिन्दी, தமிழ், ಕನ್ನಡ, العربية, עברית, فارسی, 日本語, 한국어, 简体中文, 繁體中文 |
 
 ---
 
@@ -198,8 +198,28 @@ on first launch). Name the file after the sound you want to replace:
 | עברית (`he_il`) | ✅ complete |
 | فارسی (`fa_ir`) | ✅ complete |
 | हिन्दी (`hi_in`) | ✅ complete |
+| English — United Kingdom (`en_gb`) | ✅ complete |
+| Español — México (`es_mx`) | ✅ complete |
+| Shqip (`sq_al`) | ✅ complete |
+| Македонски (`mk_mk`) | ✅ complete |
+| Azərbaycan (`az_az`) | ✅ complete |
+| Հայերեն (`hy_am`) | ✅ complete |
+| ქართული (`ka_ge`) | ✅ complete |
+| Íslenska (`is_is`) | ✅ complete |
+| Gaeilge (`ga_ie`) | ✅ complete |
+| Galego (`gl_es`) | ✅ complete |
+| Euskara (`eu_es`) | ✅ complete |
+| Bahasa Melayu (`ms_my`) | ✅ complete |
+| Filipino (`fil_ph`) | ✅ complete |
+| தமிழ் (`ta_in`) | ✅ complete |
+| ಕನ್ನಡ (`kn_in`) | ✅ complete |
+| Монгол (`mn_mn`) | ✅ complete |
+| Afrikaans (`af_za`) | ✅ complete |
+| Cymraeg (`cy_gb`) | ✅ complete |
+| Norsk nynorsk (`nn_no`) | ✅ complete |
+| Srpski — latinica (`sr_cs`) | ✅ complete |
 
-All 43 languages contain every one of the 163 strings — no fallbacks to English anywhere.
+All 63 languages contain every one of the 163 strings — no fallbacks to English anywhere.
 
 New languages are added release by release. Pull requests with translations are welcome — copy
 `src/main/resources/assets/skintotem/lang/en_us.json`, translate the values and run the checker:
