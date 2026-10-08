@@ -5,7 +5,10 @@
     "name": "${mod_name}",
     "description": "Client-Side Fabric Mod which replaces all totems with player dolls. Rename your totem to player's nickname to use it's skin.",
     "authors": [
-        "${mod_authors}"
+        "Darkz",
+        "K-TEAM",
+        "KlashRaick",
+        "LopyMine"
     ],
     "contact": {
         "homepage": "https://github.com/darkz70/SkinTotem",
