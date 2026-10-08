@@ -157,7 +157,7 @@
   "skintotem.modmenu.option.custom_sounds_enabled.name": "Звуци од папка",
   "skintotem.modmenu.option.custom_sounds_enabled.description": "Користи ги своите датотеки од config/skintotem/sounds наместо вградените звуци на модот.",
   "skintotem.modmenu.option.custom_sounds_auto_convert.name": "Претвори кој било формат",
-  "skintotem.modmenu.option.custom_sounds_auto_convert.description": "Ги претвора рeтките формати (m4a, flac, opus, ...) со ffmpeg ако е инсталиран. OGG, MP3 и WAV работат и без него.",
+  "skintotem.modmenu.option.custom_sounds_auto_convert.description": "Ги претвора ретките формати (m4a, flac, opus, ...) со ffmpeg ако е инсталиран. OGG, MP3 и WAV работат и без него.",
   "skintotem.command.sounds.reloading": "&6Повторно вчитување на звуците од папката...",
   "skintotem.command.sounds.folder": "&7Папка со звуци: %s",
   "skintotem.command.sounds.empty": "Не се најдени звучни датотеки — се користат вградените звуци.",
