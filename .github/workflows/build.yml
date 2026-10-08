@@ -43,7 +43,7 @@ jobs:
         run: |
           set -o pipefail
           GRADLE_ARGS="-Dorg.gradle.internal.http.connectionTimeout=180000 -Dorg.gradle.internal.http.socketTimeout=180000"
-          for attempt in 1 2 3; do
+          for attempt in 1 2 3 4; do
             echo "::group::Build attempt $attempt"
             # Loom падает на несовместимом кэше в домашней папке Gradle ("Incompatible Gradle cache"),
             # и тогда ни loom, ни moddev не успевают настроить Minecraft. Чистим его перед каждой попыткой.
@@ -54,6 +54,13 @@ jobs:
               exit 0
             fi
             echo "::endgroup::"
+            # Флейк loom: иногда он не может пересоздать свой кэш и роняет конфигурацию проекта
+            # (вместе с ней — регистрацию задач moddevgradle). Повторяем сразу.
+            if grep -qE "Incompatible Gradle cache|createMinecraftArtifacts' not found" /tmp/build.log; then
+              echo "Loom cache flake detected, retrying..."
+              sleep 10
+              continue
+            fi
             # Повторяем только сетевые сбои сторонних maven-зеркал, ошибки кода повторять бессмысленно.
             if ! grep -qE "kikugie\.dev|failed to respond|Could not (GET|HEAD)|Connection (timed out|reset)" /tmp/build.log; then
               exit 1
