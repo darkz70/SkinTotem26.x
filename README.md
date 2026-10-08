@@ -249,11 +249,26 @@ lost `%s` placeholders and lost line breaks. Colours are written as `&a`, `&l`, 
 
 ---
 
+## 🔨 Building from source
+
+```bash
+./tools/clean_build.sh fabric      # Windows: tools\clean_build.bat fabric
+./tools/clean_build.sh neoforge    # Windows: tools\clean_build.bat neoforge
+```
+
+Requires **JDK 25**. The finished mods land in `libs/`. Full instructions, including what to do with
+the `Incompatible Gradle cache` error from Fabric Loom, are in **[docs/BUILDING.md](docs/BUILDING.md)**
+(English + Русский).
+
+---
+
 ## 👥 Credits
 
 | Role | Contributor |
 |------|-------------|
-| 👨‍💻 Mod Author | Darkz |
+| 👨‍💻 Mod Author | Darkz, KlashRaick, LopyMine |
+| 🏆 Team | K-TEAM |
+| 💛 Special Thanks | KlashRaick |
 
 Inspired by the [SkinTotem](https://github.com/darkz70/SkinTotem) and [My-Totem-Doll](https://github.com/LopyMine/my-totem-doll) projects.
 

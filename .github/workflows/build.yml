@@ -94,13 +94,18 @@ jobs:
             ~/.gradle/wrapper
           key: gradle2-${{ matrix.platform }}-${{ hashFiles('gradle.properties', 'versions/*/gradle.properties', 'settings.gradle', 'build.gradle') }}-${{ github.run_id }}
 
-      - name: List all files (Debug)
+      - name: Collect the mod jar
         run: |
-          echo "Listing all .jar files in the project:"
-          find . -name "*.jar" -not -path "*/.gradle/*"
+          mkdir -p dist
+          find versions/*/build/libs -name "SkinTotem-*.jar" ! -name "*-sources.jar" -exec cp {} dist/ \;
+          echo "Собранные моды / built mod jars:"
+          ls -l dist
 
-      - name: Capture ALL .jar files
+      # В артефакт кладётся только сам мод: minecraft-patched-*.jar, jlayer-*.jar и прочее,
+      # что лежит в дереве сборки, модами не являются и в mods/ не ставятся.
+      - name: Upload the mod jar
         uses: actions/upload-artifact@v4
         with:
-          name: All-Jars-${{ matrix.platform }}
-          path: "**/*.jar"
+          name: SkinTotem-${{ matrix.platform }}
+          path: dist/*.jar
+          if-no-files-found: error
