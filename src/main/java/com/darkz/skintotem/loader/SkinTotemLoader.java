@@ -89,7 +89,7 @@ import org.jetbrains.annotations.Nullable;
 
 public final class SkinTotemLoader {
 
-	/** Идентификатор загрузчика, на котором собран мод: "fabric" или "neoforge". */
+	// Идентификатор загрузчика, на котором собран мод: "fabric" или "neoforge".
 	public static final String LOADER_ID = "neoforge";
 
 	private SkinTotemLoader() {
