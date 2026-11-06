@@ -5,7 +5,9 @@ import com.google.gson.stream.JsonReader;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.Consumer;
@@ -117,7 +119,47 @@ public class BlockBenchModelManager {
 	private static Response<BBModel> parseModel(Identifier id) {
 		try {
 			JsonObject jsonObject = readAsJsonObject(id);
+			return parseModelJson(id, jsonObject);
+		} catch (NoSuchFileException | FileNotFoundException e) {
+			LOGGER.warn("Failed to find bbmodel find with id \"{}\"", id.toString());
+		} catch (Exception e) {
+			LOGGER.warn("Failed to load bbmodel find with id \"%s\"".formatted(id.toString()), e);
+		}
+		return Response.empty(100);
+	}
 
+	/**
+	 * Регистрирует модель из произвольного файла на диске (например, {@code .bbmodel} из аватара
+	 * Figura в {@code figura/avatars/<имя>/}) под синтетическим идентификатором — дальше модель
+	 * используется так же, как обычные bbmodel из ресурсов.
+	 *
+	 * @return идентификатор, под которым модель зарегистрирована
+	 */
+	public static Identifier registerFileModel(Path file) {
+		Identifier id = SkinTotem.id("figura/%s.bbmodel".formatted(Math.abs(file.toAbsolutePath().toString().hashCode())));
+		LOADED_MODELS.computeIfAbsent(id, (key) -> CompletableFuture.completedFuture(createMModelFactoryFromFile(file, id)));
+		return id;
+	}
+
+	private static @NotNull Response<MModelFactory> createMModelFactoryFromFile(Path file, Identifier id) {
+		try (InputStream inputStream = Files.newInputStream(file)) {
+			JsonObject jsonObject = new Gson().fromJson(new JsonReader(new InputStreamReader(inputStream)), JsonObject.class);
+			Response<BBModel> response = parseModelJson(id, jsonObject);
+			int statusCode = response.statusCode();
+			BBModel value = response.value();
+			if (value == null) {
+				return Response.empty(statusCode);
+			}
+			return Response.of(statusCode, createMModelFactory(value));
+		} catch (Exception e) {
+			LOGGER.warn("Failed to load bbmodel from file \"{}\"", file, e);
+			return Response.empty(-10);
+		}
+	}
+
+	@NotNull
+	private static Response<BBModel> parseModelJson(Identifier id, JsonObject jsonObject) {
+		try {
 			String name = CodecUtils.decode("name", Codec.STRING, jsonObject);
 			BBModelMeta meta = CodecUtils.decode("meta", BBModelMeta.CODEC, jsonObject);
 			if (meta == null) {

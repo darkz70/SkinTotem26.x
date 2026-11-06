@@ -8,6 +8,7 @@ import com.darkz.skintotem.SkinTotem;
 import com.darkz.skintotem.atlas.manager.SkinTotemAtlasSpriteManager;
 import com.darkz.skintotem.client.SkinTotemClient;
 import com.darkz.skintotem.config.SkinTotemConfig;
+import com.darkz.skintotem.config.totem.SkinTotemArmsType;
 import com.darkz.skintotem.config.totem.SkinTotemSkinType;
 import com.darkz.skintotem.doll.data.*;
 import com.darkz.skintotem.skin.provider.extended.MojangSkinProvider;
@@ -84,6 +85,9 @@ public class StandardSkinTotemManager {
 
 			try (InputStream inputStream = Files.newInputStream(Path.of(data))) {
 				NativeImage nativeImage = NativeImage.read(inputStream);
+
+				// Как в Figura: slim/classic руки определяем по самомоу PNG скина
+				textures.setArmsType(SkinTotemArmsType.of(PlayerSkinUtils.isSlimSkin(nativeImage)));
 
 				SkinTotemAtlasSpriteManager.registerSpecialSkinSprite(id, nativeImage, true, (sprite) -> {
 					textures.setSkinSprite(sprite);

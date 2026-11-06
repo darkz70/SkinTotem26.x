@@ -6,11 +6,18 @@
 
 Replaces the Totem of Undying with a 3D doll using your Minecraft skin
 
-![Minecraft](https://img.shields.io/badge/Minecraft-1.20.1--26.1.2-green?style=for-the-badge)
+![Minecraft](https://img.shields.io/badge/Minecraft-1.20.1--26.2-green?style=for-the-badge)
 [![Fabric](https://img.shields.io/badge/Loader-Fabric-blue?style=for-the-badge)](https://fabricmc.net)
-![Version](https://img.shields.io/badge/Version-1.0.0-orange?style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-2.2.1-orange?style=for-the-badge)
 
 </div>
+
+---
+
+## 📜 Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) — it always describes the latest update, in English and Russian.
+См. [CHANGELOG.md](CHANGELOG.md) — там всегда описано последнее обновление, на английском и русском.
 
 ---
 
@@ -34,9 +41,11 @@ Replaces the Totem of Undying with a 3D doll using your Minecraft skin
 | 💾 Caching | Skins are cached for 10 minutes to reduce API requests |
 | 🎨 Slim / Classic Support | Supports both Alex and Steve player models |
 | 🌐 Multiplayer Compatible | Works on any server without requiring a server-side mod |
-| ⚙️ Configurable | Fully configurable through ModMenu + Cloth Config |
+| ⚙️ Configurable | Fully configurable through ModMenu + YACL |
 | 🔧 NBT Customization | Customize individual totems via an anvil |
 | 🎬 Activation Animation | Smooth and immersive totem activation animation |
+| 🤸 Emotecraft Emotes | Doll mirrors the emote of the player holding the totem; an emote of your choice (picked from a list) plays when the totem saves you |
+| 🖼️ Custom Skin Folder | Pick your own PNG skin from `config/skintotem/skins/` in the config (Figura-style), or via URL/file path |
 
 ---
 

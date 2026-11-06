@@ -11,6 +11,7 @@ import com.darkz.skintotem.api.MojangAPI;
 import com.darkz.skintotem.client.SkinTotemClient;
 import com.darkz.skintotem.client.command.builder.CommandTextBuilder;
 import com.darkz.skintotem.doll.manager.SkinTotemManager;
+import com.darkz.skintotem.sound.SkinTotemSounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.network.chat.Component;
@@ -54,6 +55,8 @@ public class RefreshCommand {
 			}
 		});
 
+		SkinTotemSounds.onSkinChanged();
+
 		MojangAPI.useFallbackAPI = false;
 
 		return Command.SINGLE_SUCCESS;
@@ -84,6 +87,8 @@ public class RefreshCommand {
 			});
 			RELOADING_FUTURES.put(nickname, fc);
 		}
+
+		SkinTotemSounds.onSkinChanged();
 
 		return Command.SINGLE_SUCCESS;
 	}

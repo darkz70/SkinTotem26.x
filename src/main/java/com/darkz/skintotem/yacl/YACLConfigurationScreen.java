@@ -18,6 +18,8 @@ public class YACLConfigurationScreen {
 				.categories(GeneralCategory.get(defConfig, config))
 				.categories(RenderingCategory.get(defConfig, config))
 				.categories(StandardDollCategory.get(defConfig, config))
+				.categories(SoundsCategory.get(defConfig, config))
+				.categories(EmotesCategory.get(defConfig, config))
 				.build();
 	}
 

@@ -26,15 +26,52 @@ repositories {
 		name = "Mixin Squared"
 		url = "https://maven.bawnorton.com/releases"
 	}
+	// Emotecraft API
+	maven {
+		name = "KosmX"
+		url = "https://maven.kosmx.dev/"
+	}
+	// Player Animation Library (транзитивная зависимость Emotecraft)
+	maven {
+		name = "Redlance"
+		url = "https://repo.redlance.org/public"
+	}
 }
 
 dependencies {
 	// Mixin^2
 	include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:${prop("build.mixin_squared")}")))
 
+	// MP3/other форматы пользовательских звуков без внешних программ: декодер JLayer кладётся внутрь jar (JiJ), лицензия LGPL 2.1.
+	include(implementation("javazoom:jlayer:${prop("base.jlayer_version")}"))
+
 	// Lombok (explicit fallback in case mossyDependencies' automatic wiring doesn't apply)
 	compileOnly "org.projectlombok:lombok:${prop("base.lombok_version")}"
 	annotationProcessor "org.projectlombok:lombok:${prop("base.lombok_version")}"
+
+	// Emotecraft: только для компиляции — мод полностью опционален в рантайме.
+	// emotesAPI транзитивно тянет PlayerAnimationLibCore, MC-часть библиотеки нужна отдельно.
+	// Общие библиотеки (netty, slf4j, fastutil, guava, gson) приходят вместе с Minecraft и жёстко
+	// закреплены по версиям, поэтому транзитивные копии исключаются — иначе ломаются строгие версии.
+	compileOnly("io.github.kosmx.emotes:emotesAPI:${prop("compat.emotecraft_api")}") {
+		exclude group: "com.plasmoverse"
+		exclude group: "io.netty"
+		exclude group: "org.slf4j"
+		exclude group: "it.unimi.dsi"
+		exclude group: "com.google.guava"
+		exclude group: "com.google.code.gson"
+		exclude group: "com.mojang"
+		exclude group: "org.apache.logging.log4j"
+	}
+	compileOnly("com.zigythebird.playeranim:PlayerAnimationLibCommon:${prop("compat.player_anim_lib")}") {
+		exclude group: "io.netty"
+		exclude group: "org.slf4j"
+		exclude group: "it.unimi.dsi"
+		exclude group: "com.google.guava"
+		exclude group: "com.google.code.gson"
+		exclude group: "com.mojang"
+		exclude group: "org.apache.logging.log4j"
+	}
 
 	// CIT Resewn
 	def cit = prop("dep.cit-resewn")

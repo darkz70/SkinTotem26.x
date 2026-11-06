@@ -74,6 +74,7 @@ public class SkinTotemCommand {
                 "  §f/skintotem tl\n" +
                 "  §f/skintotem ely\n" +
                 "  §f/skintotem url <url>\n" +
+                "  §f/skintotem sounds [reload|list]\n" +
                 "  §f/skintotem credits"
             ));
             return 1;

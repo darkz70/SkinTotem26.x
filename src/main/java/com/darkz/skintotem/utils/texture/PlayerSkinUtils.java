@@ -58,6 +58,19 @@ public class PlayerSkinUtils {
 		return image;
 	}
 
+	/**
+	 * Автоопределение slim-рук по PNG скина (как в Figura): в 64x64 скине правая рука занимает
+	 * колонки 40–55, у slim-модели (3 пикселя вместо 4) колонка x=55 прозрачная.
+	 * Для старых 64x32 скинов — всегда wide.
+	 */
+	public static boolean isSlimSkin(@NotNull NativeImage image) {
+		if (image.getWidth() != 64 || image.getHeight() < 64) {
+			return false;
+		}
+		int pixel = image.getPixel(55, 20);
+		return ((pixel >>> 24) & 0xFF) == 0;
+	}
+
 	public static @NotNull NativeImage remapTextureToStandardSize(NativeImage image, boolean closeOriginal) {
 		if (image.getWidth() == 64 && image.getHeight() == 64) {
 			return image;

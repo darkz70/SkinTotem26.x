@@ -10,6 +10,7 @@ import com.darkz.skintotem.doll.data.*;
 import com.darkz.skintotem.doll.model.SkinTotemModel;
 import com.darkz.skintotem.doll.renderer.*;
 import com.darkz.skintotem.extension.MatrixStackEntryExtension;
+import com.darkz.skintotem.sound.SkinTotemSounds;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.*;
 import org.jetbrains.annotations.Nullable;
@@ -66,6 +67,10 @@ public class SkinTotemRenderRequestsCollector {
 		SkinTotemModel modelToRender = data.getModelToRender();
 		modelToRender.resetPartsVisibility();
 		data.getRenderProperties().applyToModel(modelToRender);
+
+		if (request.context().isHand()) {
+			SkinTotemSounds.onDollRendered(data.getNickname(), request.holdingPlayer());
+		}
 
 		SkinTotemRenderer.renderDoll(this.matrices, data, request.holdingPlayer(), request.context(), mainProvider, request.light(), request.overlay());
 

@@ -1,24 +1,34 @@
 pluginManagement {
 	repositories {
+		// Сначала крупные зеркала: они отдают gson, foojay, plexus и прочие "обычные" артефакты
+		// плагинов. Так сборка не падает, когда маленький сторонний репозиторий временно недоступен.
+		mavenCentral()
+		gradlePluginPortal()
 		maven {
 			name "Fabric"
 			url "https://maven.fabricmc.net/"
 		}
 		maven {
-			name "Kiku Snapshots"
-			url "https://maven.kikugie.dev/snapshots"
-		}
-		maven {
-			name "Kiku Releases"
-			url "https://maven.kikugie.dev/releases"
-		}
-		maven {
 			name "Mossy Projects"
 			url "https://maven.lopymine.net/releases"
 		}
+		// Зеркала Kiku регулярно не отвечают, а отключённый по таймауту репозиторий валит
+		// резолв целиком. Поэтому к ним обращаемся только за самим Stonecutter.
+		maven {
+			name "Kiku Releases"
+			url "https://maven.kikugie.dev/releases"
+			content {
+				includeGroupByRegex("dev\\.kikugie.*")
+			}
+		}
+		maven {
+			name "Kiku Snapshots"
+			url "https://maven.kikugie.dev/snapshots"
+			content {
+				includeGroupByRegex("dev\\.kikugie.*")
+			}
+		}
 		mavenLocal()
-		mavenCentral()
-		gradlePluginPortal()
 	}
 }
 
