@@ -178,8 +178,6 @@ public class BlockBenchModelManager {
 			} else if (modelVersion.compareTo((Version) SemanticVersion.parse("4.10")) >= 0) {
 				return processBBModel410(id, jsonObject, name, meta);
 			}
-		} catch (NoSuchFileException | FileNotFoundException e) {
-			LOGGER.warn("Failed to find bbmodel find with id \"{}\"", id.toString());
 		} catch (Exception e) {
 			LOGGER.warn("Failed to load bbmodel find with id \"%s\"".formatted(id.toString()), e);
 		}
