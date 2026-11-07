@@ -68,7 +68,7 @@ jobs:
             fi
             # Повторяем только сетевые сбои сторонних maven-зеркал, ошибки кода повторять бессмысленно.
             if ! grep -qE "kikugie\.dev|failed to respond|Could not (GET|HEAD)|Connection (timed out|reset)" /tmp/build.log; then
-              { echo '### Build failed — last 120 lines of log'; echo '```'; tail -120 /tmp/build.log >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || tail -120 /tmp/build.log; echo '```'; } >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || true
+              grep -E "error:|FAILED|Could not (find|GET)|Task .* not found|Execution failed" /tmp/build.log | tail -10 | while IFS= read -r l; do echo "::error::$l"; done
               exit 1
             fi
           done
