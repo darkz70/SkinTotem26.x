@@ -50,7 +50,9 @@ jobs:
             ./gradlew --stop >/dev/null 2>&1 || true
             rm -rf ~/.gradle/caches/fabric-loom ~/.gradle/caches/*/fabric-loom \
                    .gradle/loom-cache build/loom-cache versions/*/build/loom-cache 2>/dev/null || true
-            if ./gradlew "buildAndCollect+fabric+All" -Pci_loader=fabric $GRADLE_ARGS 2>&1 | tee /tmp/build.log; then
+            if ./gradlew buildAndCollect+All $GRADLE_ARGS 2>&1 | tee /tmp/build.log || \
+               ./gradlew buildAndCollect $GRADLE_ARGS 2>&1 | tee -a /tmp/build.log || \
+               ./gradlew build $GRADLE_ARGS 2>&1 | tee -a /tmp/build.log; then
               echo "::endgroup::"
               exit 0
             fi
