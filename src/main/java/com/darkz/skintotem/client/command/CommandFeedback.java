@@ -16,7 +16,7 @@ public final class CommandFeedback {
 	public static void send(Component text) {
 		Minecraft client = Minecraft.getInstance();
 		if (client.gui != null) {
-			client.gui.getChat().addClientSystemMessage(text);
+			client.gui.hud.getChat().addClientSystemMessage(text);
 			return;
 		}
 		SkinTotemClient.LOGGER.info("{}", text.getString());
