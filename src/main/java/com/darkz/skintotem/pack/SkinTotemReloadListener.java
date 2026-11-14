@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
 import com.darkz.skintotem.SkinTotem;
 import com.darkz.skintotem.atlas.manager.*;
 import com.darkz.skintotem.model.bb.manager.BlockBenchModelManager;
+import com.darkz.skintotem.sound.custom.CustomSoundPack;
 import com.darkz.skintotem.tag.manager.TagsManager;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackType;
@@ -37,6 +38,7 @@ public class SkinTotemReloadListener implements PreparableReloadListener {
 		BlockBenchModelManager.reload();
 		SkinTotemModelFinder.reload(resourceManager);
 		TagsManager.reloadCustomModelIdsTags();
+		CustomSoundPack.scanAsync();
 	}
 
 	private void reloadAtlas(PreparationBarrier synchronizer, Executor prepareExecutor, Executor applyExecutor) {

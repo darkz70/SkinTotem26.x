@@ -32,6 +32,9 @@ dependencies {
 	// Mixin^2
 	include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:${prop("build.mixin_squared")}")))
 
+	// MP3 playback for custom sounds without external software: JLayer bundled via JiJ (LGPL 2.1)
+	include(implementation("javazoom:jlayer:${prop("base.jlayer_version")}"))
+
 	// Lombok (explicit fallback in case mossyDependencies' automatic wiring doesn't apply)
 	compileOnly "org.projectlombok:lombok:${prop("base.lombok_version")}"
 	annotationProcessor "org.projectlombok:lombok:${prop("base.lombok_version")}"

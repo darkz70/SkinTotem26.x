@@ -17,6 +17,8 @@
 	    "ItemStackMixin",
 	    "TextureManagerMixin",
 	    "GameRendererDollRenderingMixin",
+	    "ClientPacketListenerTotemSoundMixin",
+	    "SoundBufferLibraryMixin",
 	    "SpriteContentsMixin",
 	    "AbstractContainerScreenMixin",
 	    "AbstractSelectionListMixin",

@@ -1,24 +1,30 @@
 pluginManagement {
 	repositories {
+		mavenCentral()
+		gradlePluginPortal()
 		maven {
 			name "Fabric"
 			url "https://maven.fabricmc.net/"
 		}
 		maven {
-			name "Kiku Snapshots"
-			url "https://maven.kikugie.dev/snapshots"
+			name "Mossy Projects"
+			url "https://maven.lopymine.net/releases"
 		}
 		maven {
 			name "Kiku Releases"
 			url "https://maven.kikugie.dev/releases"
+			content {
+				includeGroupByRegex("dev\\.kikugie.*")
+			}
 		}
 		maven {
-			name "Mossy Projects"
-			url "https://maven.lopymine.net/releases"
+			name "Kiku Snapshots"
+			url "https://maven.kikugie.dev/snapshots"
+			content {
+				includeGroupByRegex("dev\\.kikugie.*")
+			}
 		}
 		mavenLocal()
-		mavenCentral()
-		gradlePluginPortal()
 	}
 }
 
